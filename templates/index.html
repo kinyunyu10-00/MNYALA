@@ -1,0 +1,344 @@
+{% extends "layout.html" %}
+
+{% block title %}Mnyala Co. Ltd | Nishati Safi ya Kisasa{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>
+            Nishati Safi Kutoka Asili
+            <br><span style="color: var(--accent);">Kwa Maisha Bora</span>
+        </h1>
+        <p>
+            Mnyala Co. Ltd inakuletea mkaa safi wa kisasa, majiko ya ufanisi, mbegu za mnyaa,
+            na mbolea asilia kutokana na mabaki ya uzalishaji. Suluhisho la nishati safi kwa nyumba,
+            hoteli, na viwanda.
+        </p>
+        <div class="hero-buttons">
+    <a href="{{ url_for('public.products') }}" class="btn">
+        <i class="fa-solid fa-bag-shopping"></i>
+        Angalia Bidhaa
+    </a>
+
+    <a href="{{ url_for('public.contact') }}" class="btn-secondary">
+        <i class="fa-solid fa-phone"></i>
+        Wasiliana Nasi
+    </a>
+</div>
+    </div>
+</section>
+
+
+<!-- =========================
+     WHY CHOOSE US
+========================= -->
+<section class="why-choose">
+    <div class="section-header">
+        <span class="section-tag">Kwanini Mnyala?</span>
+        <h2>Kwa Nini Wateja Wanatuamini</h2>
+        <p>
+            Tumejitolea kutoa suluhisho za nishati endelevu kupitia uzalishaji wa mkaa safi
+            unaolinda mazingira na kuokoa misitu.
+        </p>
+    </div>
+
+    <div class="choose-container">
+        <div class="choose-card">
+            <i class="fa-solid fa-leaf"></i>
+            <h3>Eco-Friendly</h3>
+            <p>
+                Mkaa wetu unatengenezwa kutokana na matunda ya mnyaa,
+                hivyo kupunguza ukataji wa miti na kuhifadhi mazingira.
+            </p>
+        </div>
+
+        <div class="choose-card">
+            <i class="fa-solid fa-fire"></i>
+            <h3>Moto Mrefu</h3>
+            <p>
+                Unawaka kwa muda mrefu na joto la kudumu,
+                hivyo kuwa bora kwa kupikia majumbani na biashara.
+            </p>
+        </div>
+
+        <div class="choose-card">
+            <i class="fa-solid fa-smog"></i>
+            <h3>Moshi Mdogo</h3>
+            <p>
+                Hutoa moshi mdogo sana na majivu machache,
+                hivyo kuwa salama kwa afya ya familia yako.
+            </p>
+        </div>
+
+        <div class="choose-card">
+            <i class="fa-solid fa-recycle"></i>
+            <h3>Kuzalisha Mbolea</h3>
+            <p>
+                Mabaki ya uzalishaji tunayageuza kuwa mbolea asilia
+                bora kwa kilimo cha mazao ya chakula.
+            </p>
+        </div>
+
+        <div class="choose-card">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h3>Uwasilishaji Wa Uhakika</h3>
+            <p>
+                Tunahakikisha bidhaa zinafika kwa wakati kwa wateja wa majumbani,
+                hoteli, viwanda, na masoko.
+            </p>
+        </div>
+
+        <div class="choose-card">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <h3>Bei Nafuu</h3>
+            <p>
+                Mkaa wa ubora wa juu kwa bei ya kushindana,
+                bila kupoteza ufanisi au ubora wa bidhaa.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     OUR SERVICES
+========================= -->
+<section class="services" id="services">
+    <div class="section-header">
+        <span class="section-tag">Huduma Zetu</span>
+        <h2>Tunachokifanya</h2>
+        <p>
+            Tunatoa suluhisho mbalimbali za mazingira kupitia bidhaa za nishati mbadala,
+            usaidizi wa kilimo, na maendeleo ya jamii.
+        </p>
+    </div>
+
+    <div class="services-container">
+        <div class="service-card">
+            <i class="fa-solid fa-fire-burner"></i>
+            <h3>Uuzaji wa Mkaa Safi</h3>
+            <p>
+                Tunatengeneza na kuuza mkaa safi wa kisasa unaofaa kwa matumizi ya nyumbani,
+                hoteli, na viwanda. Moto mrefu na moshi mdogo.
+            </p>
+        </div>
+
+        <div class="service-card">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+            <h3>Uuzaji wa Majiko</h3>
+            <p>
+                Tunauza majiko ya kisasa yaliyobuniwa kutumia mkaa wetu kwa ufanisi mkubwa,
+                yakokotoe joto zaidi na kuhifadhi nishati.
+            </p>
+        </div>
+
+        <div class="service-card">
+            <i class="fa-solid fa-seedling"></i>
+            <h3>Uuzaji wa Mbegu za Mnyaa</h3>
+            <p>
+                Tunatoa mbegu bora za mti wa mnyaa (Jatropha curcas) kwa wakulima
+                wanaotaka kuanza kilimo cha mti huu wa manufaa.
+            </p>
+        </div>
+
+        <div class="service-card">
+            <i class="fa-solid fa-flask"></i>
+            <h3>Uuzaji wa Mboji (Mbolea)</h3>
+            <p>
+                Mabaki ya mchakato wa kutengeneza mkaa tunayageuza kuwa mbolea asilia
+                yenye virutubisho bora kwa mimea.
+            </p>
+        </div>
+
+        <div class="service-card">
+            <i class="fa-solid fa-tree"></i>
+            <h3>Upandaji Miti</h3>
+            <p>
+                Tunaunga mkono watu, shule, taasisi, na jamii katika upandaji wa miti
+                ya mnyaa ili kulinda mazingira.
+            </p>
+        </div>
+
+        <div class="service-card">
+            <i class="fa-solid fa-users"></i>
+            <h3>Elimu ya Mazingira</h3>
+            <p>
+                Tunatoa mafunzo na kuhamasisha jamii kuhusu nishati safi,
+                kuchakata taka, na kulinda mazingira.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     FEATURED PRODUCTS
+========================= -->
+<section class="featured-products" id="products">
+    <div class="section-header">
+        <span class="section-tag">Bidhaa Zetu</span>
+        <h2>Bidhaa Zetu Bora Zinazouzika</h2>
+        <p>
+            Gundua bidhaa zetu zinazolinda mazingira zilizobuniwa kutoa nishati safi,
+            endelevu, na bei nafuu kwa kila mtu.
+        </p>
+    </div>
+
+    <div class="products-container">
+        <!-- Product 1: Mkaa -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/product3.jpg') }}" alt="Mkaa Safi wa Kisasa">
+            </div>
+            <div class="product-content">
+                <h3><i class="fa-solid fa-fire" style="color: var(--accent); margin-right: 6px;"></i>Mkaa Safi wa Kisasa
+                </h3>
+                <p>
+                    Mkaa wa ubora wa juu unaotokana na matunda ya mnyaa.
+                    Moto mrefu, moshi mdogo, na bei nafuu kwa matumizi ya nyumbani na biashara.
+                </p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">
+                    <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>Maelezo Zaidi
+                </a>
+            </div>
+        </div>
+
+        <!-- Product 2: Majiko -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/stove1.jpg') }}" alt="Majiko ya Ufanisi">
+            </div>
+            <div class="product-content">
+                <h3><i class="fa-solid fa-fire-burner" style="color: var(--accent); margin-right: 6px;"></i>Majiko ya
+                    Ufanisi</h3>
+                <p>
+                    Majiko ya kisasa yaliyobuniwa kutumia mkaa wetu kwa ufanisi mkubwa.
+                    Yakokotoe joto zaidi na kupunguza matumizi ya mkaa hadi 40%.
+                </p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">
+                    <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>Maelezo Zaidi
+                </a>
+            </div>
+        </div>
+
+        <!-- Product 3: Mbegu -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/mbegu.jpg') }}" alt="Mbegu za Mnyaa">
+            </div>
+            <div class="product-content">
+                <h3><i class="fa-solid fa-seedling" style="color: var(--accent); margin-right: 6px;"></i>Mbegu za Mnyaa
+                </h3>
+                <p>
+                    Mbegu bora za mti wa mnyaa kwa ajili ya upandaji. Mti huu unatoa matunda
+                    yanayotumika kutengeneza mkaa na mafuta, huku ukilinda mazingira.
+                </p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">
+                    <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>Maelezo Zaidi
+                </a>
+            </div>
+        </div>
+
+        <!-- Product 4: Mboji/Mbolea -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/mbolea.jpg') }}" alt="Mboji / Mbolea Asilia">
+            </div>
+            <div class="product-content">
+                <h3><i class="fa-solid fa-flask" style="color: var(--accent); margin-right: 6px;"></i>Mboji (Mbolea
+                    Asilia)</h3>
+                <p>
+                    Mbolea asilia kutokana na mabaki ya mchakato wa mkaa.
+                    Imeweka virutubisho vyote muhimu kwa mimea na mazao bora.
+                </p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">
+                    <i class="fa-solid fa-circle-info" style="margin-right: 6px;"></i>Maelezo Zaidi
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     CONTACT SECTION
+========================= -->
+<section id="contact" class="contact">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert {{ category }}">
+        <i class="fa-solid fa-circle-info" style="margin-right: 8px;"></i>{{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="section-header">
+        <span class="section-tag">Wasiliana Nasi</span>
+        <h2>Tufikie Leo</h2>
+        <p>
+            Je, una maswali kuhusu bidhaa zetu?
+            Tupigie simu au tutumie ujumbe leo. Tuko tayari kukusaidia.
+        </p>
+    </div>
+
+    <div class="contact-container">
+        <!-- LEFT SIDE -->
+        <div class="contact-info">
+            <div class="info-box">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <h3>Anwani</h3>
+                    <p>Mnyala Co. Ltd<br>Mbeya, Tanzania</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <h3>Simu</h3>
+                    <p>+255 758 730 108</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                    <h3>Barua Pepe</h3>
+                    <p>info@mnyala.co.tz</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fa-solid fa-clock"></i>
+                <div>
+                    <h3>Masaa ya Kazi</h3>
+                    <p>Jumatatu - Ijumaa: 8:00 AM - 5:00 PM</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="contact-form">
+            <form action="/contact" method="POST" id="contactForm">
+                <input type="text" id="name" name="name" placeholder="Jina Lako" required>
+                <input type="email" id="email" name="email" placeholder="Barua Pepe" required>
+                <input type="text" id="subject" name="subject" placeholder="Kichwa cha Ujumbe" required>
+                <textarea name="message" id="message" rows="6" placeholder="Andika ujumbe wako hapa..."
+                    required></textarea>
+                <button type="submit" class="btn">
+                    <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>Tuma Ujumbe
+                </button>
+                <p id="formMessage"></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

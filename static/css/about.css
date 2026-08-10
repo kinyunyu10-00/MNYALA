@@ -1,0 +1,483 @@
+/* =========================================
+   ABOUT PAGE - MNYALA ENTERPRISES
+   ========================================= */
+
+.about-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    linear-gradient(135deg, rgba(45, 122, 62, 0.85), rgba(26, 26, 26, 0.92)),
+    url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600")
+      center/cover no-repeat;
+  padding: 6rem 2rem;
+  margin-top: 0;
+}
+
+.about-overlay {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.about-overlay span {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  background: rgba(245, 166, 35, 0.18);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+.about-overlay h1 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.about-overlay p {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+}
+
+/* =========================================
+   ABOUT SECTION
+   ========================================= */
+.about-section {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  background: var(--white);
+}
+
+.about-image {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.about-image::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100px;
+  height: 100px;
+  border: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+  z-index: -1;
+}
+
+.about-image::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  border: 4px solid var(--primary);
+  border-radius: var(--radius-md);
+  z-index: -1;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.about-image:hover img {
+  transform: scale(1.05);
+}
+
+.about-text h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.about-text h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.about-text p {
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+  font-size: 1.05rem;
+}
+
+/* =========================================
+   COMPANY STORY
+   ========================================= */
+.company-story {
+  padding: 5rem 2rem;
+  background: var(--bg-light);
+  text-align: center;
+}
+
+.company-story h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 2rem;
+}
+
+.company-story p {
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--text-light);
+  line-height: 1.9;
+  font-size: 1.05rem;
+}
+
+/* =========================================
+   MISSION & VISION
+   ========================================= */
+.mission-vision {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.mission-card {
+  background: var(--white);
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.mission-card:hover::before {
+  transform: scaleX(1);
+}
+
+.mission-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.mission-card i {
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  transition: var(--transition);
+}
+
+.mission-card:hover i {
+  transform: scale(1.1) rotate(-8deg);
+  color: var(--accent);
+}
+
+.mission-card h3 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.mission-card p {
+  color: var(--text-light);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* =========================================
+   VALUES
+   ========================================= */
+.values {
+  padding: 6rem 2rem;
+  background: var(--bg-cream);
+  text-align: center;
+}
+
+.values h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 3rem;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.value-card {
+  background: var(--white);
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.value-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+.value-card i {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1.2rem;
+  transition: var(--transition);
+}
+
+.value-card:hover i {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.value-card h3 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.8rem;
+}
+
+.value-card p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* =========================================
+   PROCESS TIMELINE
+   ========================================= */
+.process {
+  padding: 6rem 2rem;
+  background: var(--bg-light);
+  text-align: center;
+}
+
+.process h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 3rem;
+}
+
+.timeline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.timeline > div {
+  background: var(--primary);
+  color: var(--white);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.timeline > div:hover {
+  background: var(--accent);
+  color: var(--dark);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+/* =========================================
+   IMPACT SECTION
+   ========================================= */
+.impact {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  text-align: center;
+  color: var(--white);
+}
+
+.impact h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.impact-grid > div {
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.impact-grid > div:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.impact-grid h3 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.impact-grid p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* =========================================
+   CTA SECTION
+   ========================================= */
+.about-cta {
+  padding: 5rem 2rem;
+  background: var(--dark);
+  text-align: center;
+  color: var(--white);
+}
+
+.about-cta h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.about-cta p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.about-cta .btn {
+  margin-top: 1rem;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 992px) {
+  .about-section {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .mission-vision {
+    grid-template-columns: 1fr;
+  }
+
+  .about-image::before,
+  .about-image::after {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    min-height: 50vh;
+  }
+
+  .company-story,
+  .values,
+  .process,
+  .impact {
+    padding: 4rem 1.5rem;
+  }
+
+  .timeline {
+    flex-direction: column;
+  }
+
+  .timeline > div {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .impact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .impact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-text h2 {
+    font-size: 1.8rem;
+  }
+}

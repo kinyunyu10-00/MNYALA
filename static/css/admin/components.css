@@ -1,0 +1,69 @@
+/* ==============================
+   MNYALA DESIGN SYSTEM
+
+
+   Hii ni maktaba (library) ya 
+   vipengele vinavyotumika mara kwa mara.
+============================== */
+
+:root{
+
+    /* Primary Colors */
+
+    --primary:#0B5ED7;
+    --primary-dark:#084298;
+
+    /* Secondary */
+
+    --secondary:#1E293B;
+
+    /* Background */
+
+    --background:#F8FAFC;
+
+    --surface:#FFFFFF;
+
+    /* Status */
+
+    --success:#22C55E;
+
+    --warning:#F59E0B;
+
+    --danger:#EF4444;
+
+    --info:#0EA5E9;
+
+    /* Text */
+
+    --text:#1E293B;
+
+    --text-light:#64748B;
+
+    --white:#FFFFFF;
+
+    /* Border */
+
+    --border:#E2E8F0;
+
+    /* Shadow */
+
+    --shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+    /* Radius */
+
+    --radius-sm:8px;
+
+    --radius:12px;
+
+    --radius-lg:20px;
+
+    /* Sidebar */
+
+    --sidebar-width:260px;
+
+    /* Transition */
+
+    --transition:.3s ease;
+
+}

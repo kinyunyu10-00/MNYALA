@@ -1,0 +1,377 @@
+/* ==========================================
+   MNYALA ADMIN LOGIN
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    linear-gradient(rgba(5, 35, 22, 0.85), rgba(5, 35, 22, 0.85)),
+    url("https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1600&q=80");
+
+  background-size: cover;
+  background-position: center;
+}
+
+/*============================*/
+
+.login-container {
+  width: 1100px;
+  max-width: 95%;
+
+  min-height: 650px;
+
+  background: white;
+
+  border-radius: 25px;
+
+  overflow: hidden;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+/*============================*/
+
+.login-left {
+  position: relative;
+
+  background:
+    linear-gradient(rgba(16, 97, 51, 0.85), rgba(10, 53, 33, 0.92)),
+    url("https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1200&q=80");
+
+  background-size: cover;
+
+  background-position: center;
+
+  color: white;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+.overlay {
+  padding: 60px;
+}
+
+.overlay h1 {
+  font-size: 48px;
+
+  margin-bottom: 15px;
+}
+
+.overlay p {
+  font-size: 18px;
+
+  opacity: 0.9;
+
+  margin-bottom: 40px;
+
+  line-height: 1.7;
+}
+
+.overlay ul {
+  list-style: none;
+}
+
+.overlay li {
+  margin-bottom: 18px;
+
+  font-size: 17px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.overlay i {
+  color: #ffd54f;
+}
+
+/*============================*/
+
+.login-right {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #f8fafc;
+
+  padding: 40px;
+}
+
+.login-box {
+  width: 100%;
+
+  max-width: 400px;
+
+  animation: fadeUp 0.8s ease;
+}
+
+.logo {
+  width: 90px;
+
+  height: 90px;
+
+  margin: auto;
+
+  background: #1e8e3e;
+
+  color: white;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 36px;
+
+  margin-bottom: 25px;
+}
+
+.login-box h2 {
+  text-align: center;
+
+  font-size: 30px;
+
+  margin-bottom: 8px;
+
+  color: #1b1b1b;
+}
+
+.login-box p {
+  text-align: center;
+
+  color: #666;
+
+  margin-bottom: 30px;
+}
+
+/*============================*/
+
+.input-group {
+  position: relative;
+
+  margin-bottom: 20px;
+}
+
+.input-group i {
+  position: absolute;
+
+  left: 18px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #888;
+}
+
+.input-group input {
+  width: 100%;
+
+  padding: 15px 20px 15px 50px;
+
+  border-radius: 12px;
+
+  border: 1px solid #ddd;
+
+  outline: none;
+
+  font-size: 15px;
+
+  transition: 0.3s;
+
+  background: white;
+}
+
+.input-group input:focus {
+  border-color: #1e8e3e;
+
+  box-shadow: 0 0 0 4px rgba(30, 142, 62, 0.15);
+}
+
+/*============================*/
+
+button {
+  width: 100%;
+
+  padding: 15px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #1e8e3e;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #166c2f;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 15px 30px rgba(22, 108, 47, 0.3);
+}
+
+/*============================*/
+
+.alert {
+  padding: 12px;
+
+  border-radius: 10px;
+
+  margin-bottom: 18px;
+
+  font-size: 14px;
+}
+
+.alert.success {
+  background: #d1fae5;
+
+  color: #065f46;
+}
+
+.alert.danger {
+  background: #fee2e2;
+
+  color: #991b1b;
+}
+
+/*============================*/
+
+small {
+  display: block;
+
+  text-align: center;
+
+  margin-top: 25px;
+
+  color: #888;
+}
+
+/*============================*/
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/*============================*/
+
+@media (max-width: 900px) {
+  .login-container {
+    grid-template-columns: 1fr;
+  }
+
+  .login-left {
+    display: none;
+  }
+
+  .login-right {
+    padding: 30px;
+  }
+}
+
+/*============================*/
+
+@media (max-width: 500px) {
+  .login-box {
+    max-width: 100%;
+  }
+
+  .login-box h2 {
+    font-size: 26px;
+  }
+
+  .input-group input {
+    padding: 14px 18px 14px 48px;
+  }
+
+  button {
+    padding: 14px;
+  }
+}
+
+/* VIEW SMS FOR ADMINI */
+.message-details {
+  padding: 20px;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 18px;
+}
+
+.detail-row strong {
+  width: 150px;
+  color: #444;
+}
+
+.message-box {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.btn-delete {
+  display: inline-block;
+  background: #dc2626;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+

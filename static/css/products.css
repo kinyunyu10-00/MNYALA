@@ -1,0 +1,446 @@
+/* =========================================
+   PRODUCTS PAGE - MNYALA ENTERPRISES
+   ========================================= */
+
+.products-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    linear-gradient(135deg, rgba(45, 122, 62, 0.85), rgba(26, 26, 26, 0.92)),
+    url("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1600")
+      center/cover no-repeat;
+  padding: 6rem 2rem;
+  margin-top: 0;
+}
+
+.products-overlay {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.products-overlay span {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(245, 166, 35, 0.2);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+.products-overlay h1 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.products-overlay p {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+}
+
+/* =========================================
+   PRODUCTS INTRO
+   ========================================= */
+.products-intro {
+  padding: 6rem 2rem;
+  background: var(--bg-light);
+  text-align: center;
+}
+
+.products-intro .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.products-intro h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1.2rem;
+}
+
+.products-intro p {
+  color: var(--text-light);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* =========================================
+   PRODUCTS GRID
+   ========================================= */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+.products-grid .product-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.products-grid .product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.products-grid .product-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.products-grid .product-card:hover img {
+  transform: scale(1.08);
+}
+
+.products-grid .product-content {
+  padding: 2rem;
+}
+
+.products-grid .product-content h3 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.products-grid .product-content p {
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.products-grid .product-content ul {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.products-grid .product-content ul li {
+  color: var(--text-light);
+  padding: 0.4rem 0;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.products-grid .product-content ul li::before {
+  content: "✓";
+  color: var(--primary);
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-light);
+  border-radius: 50%;
+  font-size: 0.75rem;
+}
+
+.products-grid .product-content .btn-product {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: var(--primary);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+}
+
+.products-grid .product-content .btn-product:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(45, 122, 62, 0.3);
+}
+
+/* =========================================
+   WHY PRODUCTS
+   ========================================= */
+.why-products {
+  padding: 6rem 2rem;
+  background: var(--bg-cream);
+}
+
+.section-title {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.section-title span {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+
+.section-title h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.benefit-card {
+  background: var(--white);
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid var(--border);
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+.benefit-card i {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+}
+
+.benefit-card:hover i {
+  transform: scale(1.1) rotate(-5deg);
+  color: var(--accent);
+}
+
+.benefit-card h3 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.8rem;
+}
+
+.benefit-card p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* =========================================
+   SPECIFICATIONS TABLE
+   ========================================= */
+.specifications {
+  padding: 6rem 2rem;
+  background: var(--white);
+}
+
+.specifications table {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.specifications table th {
+  background: var(--primary);
+  color: var(--white);
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.specifications table td {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.specifications table tr:nth-child(even) {
+  background: var(--bg-light);
+}
+
+.specifications table tr:last-child td {
+  border-bottom: none;
+}
+
+.specifications table tr:hover {
+  background: var(--primary-light);
+  transition: background 0.3s ease;
+}
+
+/* =========================================
+   PACKAGING
+   ========================================= */
+.packaging {
+  padding: 6rem 2rem;
+  background: var(--bg-light);
+}
+
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.package-grid > div {
+  background: var(--white);
+  padding: 2.5rem 1rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--dark);
+  border: 3px solid var(--primary);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.package-grid > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+
+.package-grid > div:hover::before {
+  transform: translateY(0);
+}
+
+.package-grid > div:hover {
+  color: var(--white);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.package-grid > div span {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   PRODUCTS CTA
+   ========================================= */
+.products-cta {
+  padding: 5rem 2rem;
+  background: var(--dark);
+  text-align: center;
+  color: var(--white);
+}
+
+.products-cta h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.products-cta p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 992px) {
+  .package-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-hero {
+    min-height: 45vh;
+  }
+
+  .specifications table th,
+  .specifications table td {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .package-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .package-grid > div {
+    padding: 1.5rem 1rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .package-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .specifications {
+    overflow-x: auto;
+    padding: 4rem 1rem;
+  }
+
+  .specifications table {
+    min-width: 500px;
+  }
+}

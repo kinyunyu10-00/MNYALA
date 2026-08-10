@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}MNYALA Admin{% endblock %}
+    </title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/variables.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/components.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/dashboard.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/responsive.css') }}">
+</head>
+
+<body>
+
+    <!-- ======================
+SIDEBAR
+====================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-store"></i>
+
+            <span>MNYALA</span>
+
+        </div>
+
+        <ul>
+
+            <li>
+
+                <a href="{{ url_for('auth.dashboard') }}" class="active">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Dashboard
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#">
+
+                    <i class="fa-solid fa-box-open"></i>
+
+                    Products
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#">
+
+                    <i class="fa-solid fa-images"></i>
+
+                    Gallery
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    Orders
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="#">
+
+                    <i class="fa-solid fa-users"></i>
+
+                    Customers
+
+                </a>
+
+            </li>
+
+            <li>
+                <a href="{{ url_for('auth.messages') }}">
+                    <i class="fa-solid fa-envelope"></i>
+                    Messages
+                    <span class="badge">{{ total_messages or 0 }}</span>
+                </a>
+            </li>
+
+            <li>
+
+                <a href="#">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    Reports
+
+                </a>
+
+            </li>
+
+            <li>
+
+
+                <a href="{{ url_for('auth.settings') }}">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="logout">
+
+            <a href="{{ url_for('auth.logout') }}">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- ======================
+MAIN CONTENT
+====================== -->
+
+    <div class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="top-left">
+
+                <button class="menu-btn">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+                <h2>
+
+                    {% block page_name %}
+
+                    Dashboard
+
+                    {% endblock %}
+
+                </h2>
+
+            </div>
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-search"></i>
+
+                <input type="text" placeholder="Search...">
+
+            </div>
+
+            <div class="top-right">
+
+                <div class="notification">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    <span class="count">
+
+                        0
+
+                    </span>
+
+                </div>
+
+                <div class="profile">
+
+                    <div>
+
+                        <h4>
+
+                            Admin
+
+                        </h4>
+
+                        <small>
+
+                            Administrator
+
+                        </small>
+
+                    </div>
+
+                    <div class="avatar">
+
+                        A
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- PAGE CONTENT -->
+
+        <main class="page-content">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </main>
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            © 2026 MNYALA Business Management System.
+
+        </footer>
+
+    </div>
+
+    <!-- JS -->
+
+    <script src="{{ url_for('static', filename='js/admin/sidebar.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/admin/dashboard.js') }}"></script>
+
+</body>
+
+</html>

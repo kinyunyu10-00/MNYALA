@@ -1,0 +1,73 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+View Message | MNYALA
+{% endblock %}
+
+{% block page_name %}
+View Message
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <div class="section-header">
+        <h2>Customer Message</h2>
+
+        <a href="{{ url_for('auth.messages') }}" class="btn">
+            ← Back
+        </a>
+    </div>
+
+    <div class="message-details">
+
+        <div class="detail-row">
+            <strong>Name:</strong>
+            <span>{{ message.fullname }}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Email:</strong>
+            <span>{{ message.email }}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Phone:</strong>
+            <span>{{ message.phone }}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Subject:</strong>
+            <span>{{ message.subject }}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Date:</strong>
+            <span>{{ message.created_at.strftime("%d %B %Y %H:%M") }}</span>
+        </div>
+
+        <hr>
+
+        <h3>Message</h3>
+
+        <div class="message-box">
+            {{ message.message }}
+        </div>
+
+        <br>
+
+        <a
+            href="{{ url_for('auth.delete_message', id=message.id) }}"
+            class="btn-delete"
+            onclick="return confirm('Delete this message?')">
+
+            Delete Message
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

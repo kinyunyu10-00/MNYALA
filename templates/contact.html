@@ -1,0 +1,176 @@
+{% extends 'layout.html' %}
+
+{% block title %}Wasiliana Nasi | Mnyala Co. Ltd{% endblock %}
+
+{% block content %}
+
+<!-- =====================================
+        CONTACT HERO
+====================================== -->
+<section class="contact-hero">
+    <div class="contact-overlay">
+        <span>WASILIANA NASI</span>
+        <h1>Tuwasiliane Kuhusu Nishati Safi</h1>
+        <p>
+            Tuko tayari kujibu maswali yako, kujadili ushirikiano, 
+            na kukupa bidhaa bora za mkaa safi, majiko, mbegu, na mbolea asilia.
+        </p>
+    </div>
+</section>
+
+
+<!-- =====================================
+        CONTACT INFO CARDS
+====================================== -->
+<section class="contact-info">
+    <div class="section-title">
+        <span>TUFIKIE</span>
+        <h2>Tuko Hapa Kukusaidia</h2>
+        <p>
+            Wasiliana nasi kupitia njia yoyote hapa chini au tutumie fomu ya mawasiliano.
+        </p>
+    </div>
+
+    <div class="contact-grid">
+        <!-- Address -->
+        <div class="contact-card">
+            <i class="fa-solid fa-location-dot"></i>
+            <h3>Anwani ya Ofisi</h3>
+            <p>
+                Mnyala Co. Ltd<br>
+                Mbeya, Tanzania
+            </p>
+        </div>
+
+        <!-- Phone -->
+        <div class="contact-card">
+            <i class="fa-solid fa-phone"></i>
+            <h3>Simu</h3>
+            <p>
+                +255 758 730 108
+            </p>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-card">
+            <i class="fa-solid fa-envelope"></i>
+            <h3>Barua Pepe</h3>
+            <p>
+                info@mnyala.co.tz
+            </p>
+        </div>
+
+        <!-- Hours -->
+        <div class="contact-card">
+            <i class="fa-solid fa-clock"></i>
+            <h3>Masaa ya Kazi</h3>
+            <p>
+                Jumatatu - Jumamosi<br>
+                8:00 AM - 6:00 PM
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================
+        CONTACT FORM
+====================================== -->
+<section class="contact-form-section">
+    <div class="contact-container">
+
+        <!-- Left -->
+        <div class="contact-text">
+            <span>TUMA UJUMBE</span>
+            <h2>Tungependa Kusikia Kutoka Kwako</h2>
+            <p>
+                Iwe unahitaji mkaa kwa ajili ya nyumba yako, unataka kuwa msambazaji, 
+                au una swali kuhusu majiko yetu, mbegu, au mbolea — timu yetu iko tayari kukusaidia.
+            </p>
+            <ul>
+                <li><i class="fa-solid fa-circle-check"></i> Majibu ya Haraka</li>
+                <li><i class="fa-solid fa-circle-check"></i> Usaidizi wa Kitaalamu</li>
+                <li><i class="fa-solid fa-circle-check"></i> Huduma ya Kuaminika</li>
+            </ul>
+        </div>
+
+        <!-- Right -->
+        <div class="contact-form">
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="alert {{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+{% endwith %}
+            
+            <form action="{{ url_for('public.contact') }}" method="POST">
+                <div class="input-group">
+                    <input type="text" name="fullname" placeholder="Jina Kamili" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Barua Pepe" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="phone" placeholder="Namba ya Simu">
+                </div>
+                <div class="input-group">
+                    <select name="subject" style="width: 100%; padding: 1rem 1.2rem; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: 'Inter', sans-serif; font-size: 0.95rem; background: var(--bg-light); color: var(--text-light);">
+                        <option value="">Chagua Kichwa cha Ujumbe</option>
+                        <option value="mkaa">Nahitaji Mkaa</option>
+                        <option value="majiko">Nahitaji Majiko</option>
+                        <option value="mbegu">Nahitaji Mbegu</option>
+                        <option value="mboji">Nahitaji Mboji/Mbolea</option>
+                        <option value="jumla">Nahitaji Kwa Kiwango Kikubwa</option>
+                        <option value="ngineo">Nyingine</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <textarea rows="6" name="message" placeholder="Andika ujumbe wako hapa..." required></textarea>
+                </div>
+                <button type="submit" class="btn-contact">
+                    <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>Tuma Ujumbe
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================
+        GOOGLE MAP
+====================================== -->
+<section class="contact-map">
+    <div class="section-title">
+        <span>MAHALI TULIPO</span>
+        <h2>Tembelea Ofisi Yetu</h2>
+    </div>
+    <iframe src="https://www.google.com/maps?q=Mbeya,Tanzania&output=embed" loading="lazy" allowfullscreen>
+    </iframe>
+</section>
+
+
+<!-- =====================================
+        CALL TO ACTION
+====================================== -->
+<section class="contact-cta">
+    <h2>
+        <i class="fa-solid fa-handshake" style="color: var(--accent); margin-right: 10px;"></i>
+        Tayari Kufanya Kazi na Mnyala?
+    </h2>
+    <p>
+        Wasiliana nasi leo na tuunde mustakabali wa kijani pamoja.
+    </p>
+    <a href="{{ url_for('public.products') }}" class="btn">
+        <i class="fa-solid fa-bag-shopping" style="margin-right: 8px;"></i>Angalia Bidhaa
+    </a>
+</section>
+
+{% endblock %}

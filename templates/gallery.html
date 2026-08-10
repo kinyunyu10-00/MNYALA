@@ -1,0 +1,104 @@
+{% extends 'layout.html' %}
+
+{% block title %}Matukio na Picha | Mnyala Co. Ltd{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     GALLERY HERO
+========================= -->
+<section class="contact-hero" style="min-height: 45vh; margin-top: 0;">
+    <div class="contact-overlay">
+        <span>MATUKIO NA PICHA</span>
+        <h1>Tazama Kazi Zetu</h1>
+        <p>
+            Picha za mchakato wetu wa uzalishaji, bidhaa zetu, na jamii tunayoihudumia.
+        </p>
+    </div>
+</section>
+
+<!-- =========================
+     GALLERY INTRO
+========================= -->
+<section class="gallery-intro">
+    <div class="section-header">
+        <span class="section-tag">Matukio na Picha</span>
+        <h2>Picha Zetu</h2>
+        <p>
+            Angalia picha za mchakato wetu wa uzalishaji, bidhaa zetu, na jamii inayotumika
+            kwa suluhisho la nishati safi kutoka kwa mti wa mnyaa.
+        </p>
+    </div>
+</section>
+
+<!-- =========================
+     GALLERY GRID
+========================= -->
+<section class="gallery-section">
+    <div class="gallery-container">
+        {% if images %}
+        {% for image in images %}
+        <div class="card">
+            <img src="{{ url_for('static', filename='uploads/gallery/' + image.image) }}" alt="{{ image.title }}">
+            <div class="overlay">
+                <h3>{{ image.title }}</h3>
+                <p>{{ image.description }}</p>
+                <span class="category-badge">{{ image.category }}</span>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <!-- Fallback gallery items when no images in database -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/product3.jpg') }}" alt="Mkaa Safi">
+            <div class="overlay">
+                <h3>Mkaa Safi wa Kisasa</h3>
+                <p>Mkaa wetu unaotokana na matunda ya mnyaa</p>
+                <span class="category-badge">Bidhaa</span>
+            </div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/stove1.jpg') }}" alt="Majiko">
+            <div class="overlay">
+                <h3>Majiko ya Ufanisi</h3>
+                <p>Majiko yetu yanayotumia mkaa kwa ufanisi</p>
+                <span class="category-badge">Bidhaa</span>
+            </div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/mbegu.jpg') }}" alt="Mbegu">
+            <div class="overlay">
+                <h3>Mbegu za Mnyaa</h3>
+                <p>Mbegu bora za mti wa mnyaa kwa upandaji</p>
+                <span class="category-badge">Bidhaa</span>
+            </div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/mbolea.jpg') }}" alt="Mboji">
+            <div class="overlay">
+                <h3>Mboji - Mbolea Asilia</h3>
+                <p>Mbolea kutokana na mabaki ya uzalishaji</p>
+                <span class="category-badge">Bidhaa</span>
+            </div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/uzalishaji mkaa.jpg') }}" alt="Uzalishaji">
+            <div class="overlay">
+                <h3>Mchakato wa Uzalishaji</h3>
+                <p>Wafanyakazi wetu wakitegemeza mkaa</p>
+                <span class="category-badge">Uzalishaji</span>
+            </div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/mkaa wa jumla.jpg') }}" alt="Mkaa wa Jumla">
+            <div class="overlay">
+                <h3>Uuzaji wa Jumla</h3>
+                <p>Mifuko ya mkaa iko tayari kusafirishwa</p>
+                <span class="category-badge">Usafirishaji</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

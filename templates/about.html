@@ -1,0 +1,250 @@
+{% extends 'layout.html' %}
+
+{% block title %}Kuhusu Sisi | Mnyala Co. Ltd{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     ABOUT HERO
+========================= -->
+<section class="about-hero">
+    <div class="about-overlay">
+        <span>KARIBU KWA MNYALA CO. LTD</span>
+        <h1>
+            Tunageuza Matunda ya Porini kuwa Nishati Endelevu
+        </h1>
+        <p>
+            Tunatengeneza mkaa safi, majiko, mbegu, na mbolea asilia kutokana na matunda
+            ya mti wa mnyaa (Jatropha curcas). Lengo letu ni kulinda misitu, kupunguza taka,
+            na kutoa nishati safi kwa jamii.
+        </p>
+    </div>
+</section>
+
+
+<!-- =========================
+     WHO WE ARE
+========================= -->
+<section class="about-section">
+    <div class="about-image">
+        <img src="{{ url_for('static', filename='images/staff.jpg') }}" alt="Mnyala Co. Ltd - Uzalishaji wa Mkaa">
+    </div>
+
+    <div class="about-text">
+        <h2>Sisi Ni Nani?</h2>
+        <p>
+            <strong>Mnyala Company Limited</strong> ni kampuni ya Kitanzania iliyojitolea
+            kutengeneza mkaa wa ubora wa juu kutokana na matunda ya mti wa mnyaa (Jatropha curcas).
+            Tunamini kuwa matunda haya ni rasilimali muhimu yanayoweza kugeuzwa kuwa nishati safi
+            huku tukilinda mazingira yetu.
+        </p>
+        <p>
+            Bidhaa zetu zinatoa suluhisho la gharama nafuu, salama, na endelevu badala ya mkaa
+            wa kawaida, zikisaidia familia na biashara kupunguza athari za mazingira.
+            Pia tunatengeneza <strong>mboji (mbolea asilia)</strong> kutokana na mabaki ya uzalishaji.
+        </p>
+        <p>
+            Zaidi ya mkaa, tunauza <strong>majiko ya kisasa</strong> yaliyobuniwa kutumia mkaa wetu
+            kwa ufanisi mkubwa, pamoja na <strong>mbegu za mnyaa</strong> kwa wakulima wanaotaka
+            kuanza kilimo cha mti huu wa thamani.
+        </p>
+    </div>
+</section>
+
+
+<!-- =========================
+     OUR STORY
+========================= -->
+<section class="company-story">
+    <h2>Hadithi Yetu</h2>
+    <p>
+        Mnyala Company ilianzishwa kwa dira moja rahisi: kugeuza rasilimali za kilimo
+        kuwa bidhaa za nishati zenye thamani. Tukiona kiwango cha ukataji wa miti
+        na taka zisizosimamiwa, tukatengeneza mkaa unaolinda mazingira unaopunguza
+        hewa ukaa huku ukiunga mkono jamii za mitaa.
+    </p>
+    <p>
+        Leo tunaendelea kuwekeza katika ubunifu, endelevu, na uzalishaji wa ubora.
+        Bidhaa zetu sasa zinajumuisha mkaa safi, majiko, mbegu, na mbolea asilia —
+        zote zikitokana na mti mmoja wa mnyaa.
+    </p>
+</section>
+
+
+<!-- =========================
+     MISSION & VISION
+========================= -->
+<section class="mission-vision">
+    <div class="mission-card">
+        <i class="fa-solid fa-bullseye"></i>
+        <h3>Dira Yetu (Mission)</h3>
+        <p>
+            Kutengeneza bidhaa za nishati zinazolinda mazingira kutokana na matunda
+            ya mnyaa, kupunguza ukataji wa miti, na kutoa ajira kwa jamii.
+        </p>
+    </div>
+
+    <div class="mission-card">
+        <i class="fa-solid fa-eye"></i>
+        <h3>Malengo Yetu (Vision)</h3>
+        <p>
+            Kuwa kampuni bora zaidi ya nishati endelevu Afrika Mashariki,
+            ikileta mustakabali wa kijani kupitia uzalishaji wa mkaa, majiko, mbegu, na mbolea.
+        </p>
+    </div>
+</section>
+
+
+<!-- =========================
+     CORE VALUES
+========================= -->
+<section class="values">
+    <h2>Thamani Zetu Ku</h2>
+    <div class="values-grid">
+        <div class="value-card">
+            <i class="fa-solid fa-leaf"></i>
+            <h3>Kuhifadhi Mazingira</h3>
+            <p>Kulinda asili kupitia nishati mbadala na upandaji miti.</p>
+        </div>
+
+        <div class="value-card">
+            <i class="fa-solid fa-award"></i>
+            <h3>Ubora wa Juu</h3>
+            <p>Kutoa bidhaa bora zaidi kwa kila mteja wetu.</p>
+        </div>
+
+        <div class="value-card">
+            <i class="fa-solid fa-lightbulb"></i>
+            <h3>Ubunifu</h3>
+            <p>Kutumia teknolojia ya kisasa kuboresha uzalishaji.</p>
+        </div>
+
+        <div class="value-card">
+            <i class="fa-solid fa-handshake"></i>
+            <h3>Uaminifu</h3>
+            <p>Kujenga imani kupitia ukweli na uwazi katika biashara.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     PROCESS TIMELINE
+========================= -->
+<section class="process">
+    <h2>Jinsi Tunavyotengeneza Mkaa Wetu</h2>
+    <div class="timeline">
+        <div><i class="fa-solid fa-basket-shopping" style="margin-right: 6px;"></i>Kusanya Matunda</div>
+        <div><i class="fa-solid fa-sun" style="margin-right: 6px;"></i>Kukausha</div>
+        <div><i class="fa-solid fa-mortar-pestle" style="margin-right: 6px;"></i>Kuobra na Kusaga</div>
+        <div><i class="fa-solid fa-blender" style="margin-right: 6px;"></i>Kuchanganya</div>
+        <div><i class="fa-solid fa-compress" style="margin-right: 6px;"></i>Kusukuma</div>
+        <div><i class="fa-solid fa-box" style="margin-right: 6px;"></i>Kufunga</div>
+    </div>
+</section>
+
+
+<!-- =========================
+     PRODUCTS HIGHLIGHT
+========================= -->
+<section class="featured-products" style="background: var(--white); padding: 5rem 2rem;">
+    <div class="section-header">
+        <span class="section-tag">Bidhaa Zetu</span>
+        <h2>Tunachotoa Soko</h2>
+        <p>
+            Kutoka kwenye mti mmoja wa mnyaa, tunakuletea bidhaa nne zenye thamani kubwa
+            kwa nyumba yako, shamba lako, na biashara yako.
+        </p>
+    </div>
+
+    <div class="products-container">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/product3.jpg') }}" alt="Mkaa Safi">
+            </div>
+            <div class="product-content">
+                <h3>Mkaa Safi wa Kisasa</h3>
+                <p>Moto mrefu, moshi mdogo, na bei nafuu kwa matumizi ya nyumbani na biashara.</p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">Gundua Zaidi</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/stove1.jpg') }}" alt="Majiko">
+            </div>
+            <div class="product-content">
+                <h3>Majiko ya Ufanisi</h3>
+                <p>Yanayokokotoa joto zaidi na kuhifadhi mkaa hadi 40% ikilinganishwa na majiko ya kawaida.</p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">Gundua Zaidi</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/mbegu.jpg') }}" alt="Mbegu">
+            </div>
+            <div class="product-content">
+                <h3>Mbegu za Mnyaa</h3>
+                <p>Mbegu bora kwa ajili ya upandaji wa miti ya mnyaa inayotoa matunda ya uzalishaji.</p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">Gundua Zaidi</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename='images/mbolea.jpg') }}" alt="Mboji">
+            </div>
+            <div class="product-content">
+                <h3>Mboji (Mbolea Asilia)</h3>
+                <p>Mbolea kutokana na mabaki ya uzalishaji, yenye virutubisho vyote muhimu.</p>
+                <a href="{{ url_for('public.products') }}" class="btn-product">Gundua Zaidi</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     IMPACT SECTION
+========================= -->
+<section class="impact">
+    <h2>Mchango Wetu kwa Mazingira</h2>
+    <div class="impact-grid">
+        <div>
+            <h3>500+</h3>
+            <p>Tani za Taka Zilizochakaliwa</p>
+        </div>
+        <div>
+            <h3>1000+</h3>
+            <p>Wateja Wanaofurahia Bidhaa Zetu</p>
+        </div>
+        <div>
+            <h3>50+</h3>
+            <p>Washirika wa Biashara</p>
+        </div>
+        <div>
+            <h3>100%</h3>
+            <p>Bidhaa Zinazolinda Mazingira</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     CTA SECTION
+========================= -->
+<section class="about-cta">
+    <h2>
+        <i class="fa-solid fa-handshake" style="color: var(--accent); margin-right: 10px;"></i>
+        Jiunge Nasi Kutengeneza Mustakabali wa Kijani
+    </h2>
+    <p>
+        Chagua bidhaa zetu za nishati safi na usaidie kulinda misitu ya Tanzania.
+    </p>
+    <a href="{{ url_for('public.contact') }}" class="btn">
+        <i class="fa-solid fa-phone" style="margin-right: 8px;"></i>Wasiliana Nasi
+    </a>
+</section>
+
+{% endblock %}

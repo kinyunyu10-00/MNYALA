@@ -1,0 +1,221 @@
+/* =========================================
+   AUTH & LOGIN PAGES - MNYALA ENTERPRISES
+   ========================================= */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-light), var(--bg-cream));
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-container::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 600px;
+  height: 600px;
+  background: rgba(45, 122, 62, 0.05);
+  border-radius: 50%;
+}
+
+.auth-container::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -20%;
+  width: 400px;
+  height: 400px;
+  background: rgba(245, 166, 35, 0.05);
+  border-radius: 50%;
+}
+
+.auth-card {
+  background: var(--white);
+  padding: 3rem 2.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--border);
+}
+
+.auth-card .logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-card .logo i {
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.auth-card .logo h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.auth-card .logo p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.auth-form .input-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.auth-form .input-group label {
+  display: block;
+  font-weight: 500;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.auth-form .input-group input {
+  width: 100%;
+  padding: 1rem 1.2rem 1rem 3rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  transition: var(--transition);
+  background: var(--bg-light);
+}
+
+.auth-form .input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(45, 122, 62, 0.08);
+}
+
+.auth-form .input-group i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.auth-form .input-group input:focus + i,
+.auth-form .input-group input:not(:placeholder-shown) + i {
+  color: var(--primary);
+}
+
+.auth-form .btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.auth-form .forgot-password {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.auth-form .forgot-password a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.auth-form .forgot-password a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.auth-form .auth-switch {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.auth-form .auth-switch a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.auth-form .auth-switch a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Remember me checkbox */
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.remember-me input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.remember-me span {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .auth-card .logo h2 {
+    font-size: 1.5rem;
+  }
+
+  .auth-form .input-group input {
+    padding: 0.9rem 1rem 0.9rem 2.5rem;
+  }
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.hero-buttons .btn,
+.hero-buttons .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}

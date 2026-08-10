@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mnyala Co. Ltd{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div>
+            <i class="fa-solid fa-phone"></i>
+            +255 758 730 108
+        </div>
+
+        <div>
+            <i class="fa-solid fa-envelope"></i>
+            info@mnyala.co.tz
+        </div>
+
+        <div>
+            <i class="fa-solid fa-location-dot"></i>
+            Mbeya, Tanzania
+        </div>
+
+    </div>
+
+
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+
+
+        <!-- LEFT LOGO -->
+
+        <div class="header-logo left">
+
+            <img src="{{ url_for('static', filename='images/logo.png') }}">
+
+        </div>
+
+
+
+
+        <!-- CENTER TITLE -->
+
+        <div class="company-title">
+
+            <h4>
+                Sustainable Energy Solutions
+            </h4>
+
+
+            <h1>
+                MNYALA CO. LTD
+            </h1>
+
+
+            <p>
+                Producing Eco-Friendly Charcoal From Natural Fruits
+            </p>
+
+
+        </div>
+
+
+
+
+        <!-- RIGHT LOGO -->
+
+        <div class="header-logo right">
+
+            <img src="{{ url_for('static', filename='images/must.png') }}">
+
+        </div>
+
+
+    </header>
+
+
+
+
+
+    <!-- NAVIGATION MENU -->
+
+    <nav class="menu-bar">
+        <div class="nav-container">
+            <a href="{{ url_for('public.home') }}" class="nav-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Mnyala Logo">
+                <span>Mnyala</span>
+            </a>
+
+            <button class="hamburger" type="button" aria-label="Open Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <ul id="nav-menu" >
+            <li>
+                <a href="{{ url_for('public.home') }}">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('public.about') }}">
+                    About
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('public.products') }}">
+                    Products
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('public.gallery') }}">
+                    Gallery
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('public.contact') }}">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- MAIN CONTENT -->
+    {% block content %}{% endblock %}
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+
+            <!-- ABOUT -->
+            <div class="footer-box">
+                <h3><i class="fa-solid fa-leaf" style="color: var(--accent); margin-right: 8px;"></i>Mnyala Co. Ltd</h3>
+                <p>
+                    Tunageuza matunda ya mti wa mnyaa (Jatropha curcas) kuwa mkaa safi wa kisasa,
+                    majiko, mbegu, na mbolea asilia. Lengo letu ni kutoa nishati safi na kulinda mazingira Tanzania.
+                </p>
+            </div>
+
+            <!-- QUICK LINKS -->
+            <div class="footer-box">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('public.home') }}">Home</a></li>
+                    <li><a href="{{ url_for('public.about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('public.products') }}">Products</a></li>
+                    <li><a href="{{ url_for('public.gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- SERVICES -->
+            <div class="footer-box">
+                <h3>Our Services</h3>
+                <ul>
+                    <li><a href="{{ url_for('public.products') }}">Bio-charcoal Production</a></li>
+                    <li><a href="{{ url_for('public.products') }}">Stoves (Majiko) Sales</a></li>
+                    <li><a href="{{ url_for('public.products') }}">Jatropha Seeds Supply</a></li>
+                    <li><a href="{{ url_for('public.products') }}">Organic Manure (Mboji)</a></li>
+                    <li><a href="{{ url_for('public.contact') }}">Bulk Orders & Delivery</a></li>
+                </ul>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="footer-box">
+                <h3>Contact Us</h3>
+                <p><i class="fa-solid fa-phone"></i> +255 758 730 108</p>
+                <p><i class="fa-solid fa-envelope"></i> info@mnyala.co.tz</p>
+                <p><i class="fa-solid fa-location-dot"></i> Mbeya, Tanzania</p>
+
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Mnyala Co. Ltd. Haki Zote Zimehifadhiwa. | Sustainable Energy Solutions</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

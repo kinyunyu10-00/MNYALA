@@ -1,0 +1,297 @@
+{% extends 'layout.html' %}
+
+{% block title %}Bidhaa Zetu | Mnyala Co. Ltd{% endblock %}
+
+{% block content %}
+
+<!-- =====================================
+        PRODUCTS HERO
+====================================== -->
+<section class="products-hero">
+    <div class="products-overlay">
+        <span>BIDHAA ZETU</span>
+        <h1>
+            Suluhisho Lako la Nishati Safi
+        </h1>
+        <p>
+            Kutoka kwenye mti wa mnyaa (Jatropha curcas), tunakuletea mkaa safi wa kisasa, 
+            majiko ya ufanisi, mbegu bora, na mbolea asilia. Bidhaa zote kwa ajili ya nyumba, 
+            shamba, na biashara yako.
+        </p>
+    </div>
+</section>
+
+
+<!-- =====================================
+        PRODUCTS INTRO
+====================================== -->
+<section class="products-intro">
+    <div class="container">
+        <h2>Nishati Safi kwa Kila Mtu</h2>
+        <p>
+            Mnyala Co. Ltd inatengeneza na kuuza bidhaa nne kuu zinazotokana na mti wa mnyaa. 
+            Kila bidhaa imebuniwa kwa uangalifu ili kutoa thamani kubwa wakati ikilinda mazingira. 
+            Chagua kile unachohitaji leo.
+        </p>
+    </div>
+</section>
+
+
+<!-- =====================================
+        ALL PRODUCTS GRID
+====================================== -->
+<section class="featured-products" style="background: var(--white);">
+    <div class="section-title">
+        <span>BIDHAA ZOTE</span>
+        <h2>Chagua Kile Unachohitaji</h2>
+    </div>
+
+    <div class="products-grid">
+
+        <!-- ====== PRODUCT 1: MKAA SAFI ====== -->
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/product3.jpg') }}" alt="Mkaa Safi wa Kisasa">
+            <div class="product-content">
+                <h3><i class="fa-solid fa-fire" style="color: var(--accent); margin-right: 6px;"></i>Mkaa Safi wa Kisasa</h3>
+                <p>
+                    Mkaa wa ubora wa juu unaotokana na matunda ya mnyaa. 
+                    Bora kwa kupikia majumbani, hoteli, mikahawa, na viwanda.
+                </p>
+                <ul>
+                    <li>Moto mrefu zaidi kuliko mkaa wa kawaida</li>
+                    <li>Moshi mdogo na majivu machache</li>
+                    <li>Bei nafuu kwa kila mfuko</li>
+                    <li>Salama kwa afya ya familia</li>
+                </ul>
+                <a href="{{ url_for('public.contact') }}" class="btn-product">
+                    <i class="fa-solid fa-cart-shopping" style="margin-right: 6px;"></i>Agiza Sasa
+                </a>
+            </div>
+        </div>
+
+        <!-- ====== PRODUCT 2: MAJIKO ====== -->
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/stove1.jpg') }}" alt="Majiko ya Ufanisi">
+            <div class="product-content">
+                <h3><i class="fa-solid fa-fire-burner" style="color: var(--accent); margin-right: 6px;"></i>Majiko ya Ufanisi</h3>
+                <p>
+                    Majiko ya kisasa yaliyobuniwa kutumia mkaa wetu kwa ufanisi mkubwa. 
+                    Yanakokotoa joto zaidi na kupunguza matumizi ya mkaa.
+                </p>
+                <ul>
+                    <li>Kupunguza matumizi ya mkaa hadi 40%</li>
+                    <li>Joto la kudumu na la kutosha</li>
+                    <li>Imara na ya kudumu kwa miaka mingi</li>
+                    <li>Rahisi kutumika na kusafisha</li>
+                </ul>
+                <a href="{{ url_for('public.contact') }}" class="btn-product">
+                    <i class="fa-solid fa-cart-shopping" style="margin-right: 6px;"></i>Agiza Sasa
+                </a>
+            </div>
+        </div>
+
+        <!-- ====== PRODUCT 3: MBEGU ====== -->
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/mbegu.jpg') }}" alt="Mbegu za Mnyaa">
+            <div class="product-content">
+                <h3><i class="fa-solid fa-seedling" style="color: var(--accent); margin-right: 6px;"></i>Mbegu za Mnyaa</h3>
+                <p>
+                    Mbegu bora za mti wa mnyaa kwa ajili ya upandaji. 
+                    Mti huu unalinda mazingira huku ukileta faida kiuchumi.
+                </p>
+                <ul>
+                    <li>Mbegu zenye uhai wa juu na uzalishaji mzuri</li>
+                    <li>Mti unayekua haraka katika hali mbalimbali</li>
+                    <li>Unaweza kupandwa kama ukuta wa miti</li>
+                    <li>Matunda yake yanatumika kutengeneza mkaa na mafuta</li>
+                </ul>
+                <a href="{{ url_for('public.contact') }}" class="btn-product">
+                    <i class="fa-solid fa-cart-shopping" style="margin-right: 6px;"></i>Agiza Sasa
+                </a>
+            </div>
+        </div>
+
+        <!-- ====== PRODUCT 4: MBOJI ====== -->
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/mbolea.jpg') }}" alt="Mboji - Mbolea Asilia">
+            <div class="product-content">
+                <h3><i class="fa-solid fa-flask" style="color: var(--accent); margin-right: 6px;"></i>Mboji (Mbolea Asilia)</h3>
+                <p>
+                    Mbolea asilia kutokana na mabaki ya mchakato wa mkaa. 
+                    Imeweka virutubisho vyote vya mimea kwa mazao bora.
+                </p>
+                <ul>
+                    <li>Imeweka Nitrogen, Phosphorus, na Potassium</li>
+                    <li>Inaboresha udongo na uimara wa mimea</li>
+                    <li>Salama kwa mazingira na afya ya binadamu</li>
+                    <li>Inafaa kwa mazao yote ya chakula</li>
+                </ul>
+                <a href="{{ url_for('public.contact') }}" class="btn-product">
+                    <i class="fa-solid fa-cart-shopping" style="margin-right: 6px;"></i>Agiza Sasa
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =====================================
+        WHY CHOOSE US
+====================================== -->
+<section class="why-products">
+    <div class="section-title">
+        <span>FAIKA ZA BIDHAA ZETU</span>
+        <h2>Kwa Nini Uchague Bidhaa za Mnyala?</h2>
+    </div>
+
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <i class="fa-solid fa-fire"></i>
+            <h3>Moto Mrefu</h3>
+            <p>
+                Mkaa wetu unawaka kwa muda mrefu na kutoa joto la kudumu 
+                kwa kipindi cha kupikia chakula chako.
+            </p>
+        </div>
+
+        <div class="benefit-card">
+            <i class="fa-solid fa-leaf"></i>
+            <h3>Kulinda Misitu</h3>
+            <p>
+                Kutokana na matunda ya mnyaa, sio miti. 
+                Hivyo kupunguza ukataji wa miti porini.
+            </p>
+        </div>
+
+        <div class="benefit-card">
+            <i class="fa-solid fa-wind"></i>
+            <h3>Moshi Mdogo</h3>
+            <p>
+                Kiwango kikubwa cha moshi hakipo. 
+                Bora kwa afya ya familia na mazingira ya nyumbani.
+            </p>
+        </div>
+
+        <div class="benefit-card">
+            <i class="fa-solid fa-seedling"></i>
+            <h3>Endelevu</h3>
+            <p>
+                Mti wa mnyaa unazalisha matunda kila mwaka. 
+                Rasilimali isiyokwisha.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================
+        SPECIFICATIONS TABLE
+====================================== -->
+<section class="specifications">
+    <div class="section-title">
+        <span>VIGEZO VYA BIDHAA</span>
+        <h2>Sifa za Mkaa Wetu</h2>
+    </div>
+
+    <table>
+        <tr>
+            <th>Kipimo</th>
+            <th>Maelezo</th>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-tree" style="color: var(--primary); margin-right: 6px;"></i>Mnyenzo</td>
+            <td>Matunda ya mnyaa (Jatropha curcas)</td>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-clock" style="color: var(--primary); margin-right: 6px;"></i>Muda wa Kuwaka</td>
+            <td>Dakika 30 kwa kila gramu 100</td>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-temperature-high" style="color: var(--primary); margin-right: 6px;"></i>Joto (Calorific Value)</td>
+            <td>17.46 kJ/g</td>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-weight-hanging" style="color: var(--primary); margin-right: 6px;"></i>Carbon Imara</td>
+            <td>22%</td>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-cloud" style="color: var(--primary); margin-right: 6px;"></i>Volatile Matter</td>
+            <td>74.2%</td>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-layer-group" style="color: var(--primary); margin-right: 6px;"></i>Yaliyobaki (Ash)</td>
+            <td>4%</td>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-droplet" style="color: var(--primary); margin-right: 6px;"></i>Unyevu</td>
+            <td>9.1%</td>
+        </tr>
+        <tr>
+            <td><i class="fa-solid fa-star" style="color: var(--primary); margin-right: 6px;"></i>Bora Kwa</td>
+            <td>Kupikia Nyumbani, Hoteli, Mikahawa, na Viwanda</td>
+        </tr>
+    </table>
+</section>
+
+
+<!-- =====================================
+        PACKAGING OPTIONS
+====================================== -->
+<section class="packaging">
+    <div class="section-title">
+        <span>VIFUNGO VILIVYOPO</span>
+        <h2>Ukubwa wa Mifuko</h2>
+    </div>
+
+    <div class="package-grid">
+        <div><span>2 KG</span></div>
+        <div><span>5 KG</span></div>
+        <div><span>10 KG</span></div>
+        <div><span>25 KG</span></div>
+    </div>
+</section>
+
+
+<!-- =====================================
+        BULK ORDERS
+====================================== -->
+<section class="featured-products" style="background: var(--bg-cream);">
+    <div class="section-title">
+        <span>AGIZO KUBWA</span>
+        <h2>Uhitaji Kwa Kiwango Kikubwa?</h2>
+    </div>
+
+    <div class="products-container" style="max-width: 800px;">
+        <div class="product-card" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem;">
+            <i class="fa-solid fa-truck-fast" style="font-size: 4rem; color: var(--primary); margin-bottom: 1.5rem;"></i>
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Uuzaji wa Jumla na Usafirishaji</h3>
+            <p style="max-width: 500px; margin-bottom: 2rem;">
+                Tunatoa huduma za uuzaji wa jumla kwa wafanyabiashara, wauzaji, hoteli, 
+                viwanda, na wanaotaka kuagiza nje ya nchi. Tupigie simu leo upate bei maalum.
+            </p>
+            <a href="{{ url_for('public.contact') }}" class="btn-product" style="font-size: 1rem; padding: 0.9rem 2.5rem;">
+                <i class="fa-solid fa-phone" style="margin-right: 6px;"></i>Piga Simu Upate Ofa
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================
+        CTA
+====================================== -->
+<section class="products-cta">
+    <h2>
+        <i class="fa-solid fa-basket-shopping" style="color: var(--accent); margin-right: 10px;"></i>
+        Unahitaji Mkaa, Majiko, Mbegu, au Mboji?
+    </h2>
+    <p>
+        Wasiliana na Mnyala Co. Ltd leo na upate bei maalum kwa mahitaji yako.
+    </p>
+    <a href="{{ url_for('public.contact') }}" class="btn">
+        <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>Wasiliana Nasi
+    </a>
+</section>
+
+{% endblock %}

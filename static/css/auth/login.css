@@ -1,0 +1,508 @@
+/* ==========================================
+   MNYALA ADMIN LOGIN
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --primary:#16a34a;
+    --primary-dark:#15803d;
+    --secondary:#22c55e;
+    --background:#f4f7fb;
+    --text:#1f2937;
+    --gray:#6b7280;
+    --border:#dbe3eb;
+    --white:#ffffff;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(rgba(6,30,18,.85),rgba(6,30,18,.85)),
+    url("https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1600&q=80");
+
+    background-size:cover;
+
+    background-position:center;
+
+    padding:30px;
+
+}
+
+/*==============================*/
+
+.login-container{
+
+    width:1150px;
+
+    max-width:100%;
+
+    display:grid;
+
+    grid-template-columns:1fr 480px;
+
+    background:white;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:0 30px 80px rgba(0,0,0,.25);
+
+}
+
+/*================================*/
+
+.login-banner{
+
+    padding:70px;
+
+    color:white;
+
+    background:
+    linear-gradient(rgba(22,163,74,.75),rgba(21,128,61,.85)),
+    url("https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1200&q=80");
+
+    background-size:cover;
+
+    background-position:center;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.banner-content{
+
+    width:100%;
+
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:30px;
+
+}
+
+.brand i{
+
+    font-size:42px;
+
+}
+
+.brand h1{
+
+    font-size:40px;
+
+}
+
+.banner-content h2{
+
+    font-size:34px;
+
+    margin-bottom:15px;
+
+}
+
+.banner-content p{
+
+    line-height:1.8;
+
+    margin-bottom:45px;
+
+    opacity:.95;
+
+}
+
+/*===============================*/
+
+.features{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+.feature{
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(8px);
+
+    border-radius:15px;
+
+    padding:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.feature i{
+
+    font-size:22px;
+
+    color:#FFD54F;
+
+}
+
+.feature span{
+
+    font-weight:500;
+
+}
+
+/*===============================*/
+
+.login-form{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#ffffff;
+
+    padding:50px;
+
+}
+
+.form-card{
+
+    width:100%;
+
+}
+
+.form-card h2{
+
+    text-align:center;
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+    color:var(--text);
+
+}
+
+.form-card p{
+
+    text-align:center;
+
+    color:var(--gray);
+
+    margin-bottom:35px;
+
+}
+
+/*===============================*/
+
+.input-group{
+
+    position:relative;
+
+    margin-bottom:20px;
+
+}
+
+.input-group input{
+
+    width:100%;
+
+    height:56px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:0 50px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.input-group input:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(22,163,74,.15);
+
+}
+
+.input-group>i{
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#777;
+
+}
+
+/*===============================*/
+
+.password-group{
+
+    position:relative;
+
+}
+
+.toggle-password{
+
+    position:absolute;
+
+    right:12px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    background:none;
+
+    color:#777;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+}
+
+.toggle-password:hover{
+
+    color:var(--primary);
+
+}
+
+/*===============================*/
+
+.login-options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    font-size:14px;
+
+}
+
+.login-options label{
+
+    display:flex;
+
+    gap:8px;
+
+    align-items:center;
+
+    cursor:pointer;
+
+}
+
+.login-options a{
+
+    color:var(--primary);
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.login-options a:hover{
+
+    text-decoration:underline;
+
+}
+
+/*===============================*/
+
+.login-btn{
+
+    width:100%;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-2px);
+
+}
+
+/*===============================*/
+
+.alert{
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+    font-size:14px;
+
+}
+
+.alert.success{
+
+    background:#dcfce7;
+
+    color:#166534;
+
+}
+
+.alert.danger{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+
+}
+
+/*===============================*/
+
+.form-card small{
+
+    display:block;
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#888;
+
+}
+
+/*===============================*/
+
+@media(max-width:992px){
+
+.login-container{
+
+grid-template-columns:1fr;
+
+}
+
+.login-banner{
+
+display:none;
+
+}
+
+.login-form{
+
+padding:40px 30px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+body{
+
+padding:15px;
+
+}
+
+.login-form{
+
+padding:25px;
+
+}
+
+.form-card h2{
+
+font-size:28px;
+
+}
+
+.login-options{
+
+flex-direction:column;
+
+gap:15px;
+
+align-items:flex-start;
+
+}
+
+}

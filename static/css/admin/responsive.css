@@ -1,0 +1,119 @@
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width:1200px){
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media (max-width:992px){
+
+    .sidebar{
+
+        left:-260px;
+
+    }
+
+    .sidebar.active{
+
+        left:0;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+    .topbar{
+
+        padding:15px;
+
+    }
+
+    .search-box{
+
+        width:250px;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .page-content{
+
+        padding:20px;
+
+    }
+
+    .dashboard-cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .gallery-preview{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .topbar{
+
+        flex-wrap:wrap;
+
+        gap:15px;
+
+        height:auto;
+
+        padding:15px;
+
+    }
+
+    .search-box{
+
+        width:100%;
+
+    }
+
+    .welcome{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+}
+
+@media (max-width:576px){
+
+    .gallery-preview{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .profile small{
+
+        display:none;
+
+    }
+
+    .profile h4{
+
+        display:none;
+
+    }
+
+}
