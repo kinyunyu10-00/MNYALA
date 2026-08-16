@@ -311,6 +311,314 @@ Settings
             justify-content: center;
         }
     }
+
+
+    /* =========================================
+   CHANGE PASSWORD BUTTON
+========================================= */
+
+    .change-password-btn {
+        border: none;
+        background: #1264dc;
+        color: #ffffff;
+        padding: 10px 16px;
+        border-radius: 9px;
+
+        font-family: "Poppins", "Segoe UI", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+
+        transition: 0.2s ease;
+    }
+
+    .change-password-btn:hover {
+        background: #0b56c5;
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================================
+   PASSWORD MODAL
+========================================= */
+
+    .password-modal {
+        display: none;
+
+        position: fixed;
+        inset: 0;
+
+        background: rgba(15, 28, 48, 0.55);
+
+        z-index: 9999;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+    }
+
+    .password-modal.show {
+        display: flex;
+    }
+
+    .password-modal-box {
+        width: 100%;
+        max-width: 480px;
+
+        background: #ffffff;
+
+        border-radius: 18px;
+
+        padding: 28px;
+
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.20);
+
+        animation: passwordModalIn 0.2s ease;
+    }
+
+    @keyframes passwordModalIn {
+
+        from {
+            opacity: 0;
+            transform: translateY(15px) scale(0.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+    }
+
+    .password-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 22px;
+    }
+
+    .password-modal-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .password-modal-title-icon {
+        width: 44px;
+        height: 44px;
+
+        border-radius: 12px;
+
+        background: #eaf2ff;
+        color: #1264dc;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 18px;
+    }
+
+    .password-modal-title h3 {
+        margin: 0;
+
+        font-size: 19px;
+        font-weight: 700;
+
+        color: #13233f;
+    }
+
+    .password-modal-title p {
+        margin: 3px 0 0;
+
+        font-size: 12px;
+        color: #7a8597;
+    }
+
+    .close-password-modal {
+        width: 35px;
+        height: 35px;
+
+        border: none;
+        border-radius: 9px;
+
+        background: #f2f4f7;
+        color: #657188;
+
+        cursor: pointer;
+
+        font-size: 16px;
+
+        transition: 0.2s ease;
+    }
+
+    .close-password-modal:hover {
+        background: #ffe8e8;
+        color: #d52b2b;
+    }
+
+
+    /* Password fields */
+
+    .password-form-group {
+        margin-bottom: 17px;
+    }
+
+    .password-form-group label {
+        display: block;
+
+        margin-bottom: 7px;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        color: #26364f;
+    }
+
+    .password-input-wrapper {
+        position: relative;
+    }
+
+    .password-input-wrapper input {
+        width: 100%;
+        box-sizing: border-box;
+
+        padding: 13px 45px 13px 14px;
+
+        border: 1px solid #dce2eb;
+        border-radius: 10px;
+
+        background: #f9fafc;
+
+        color: #172943;
+
+        font-family: "Poppins", "Segoe UI", sans-serif;
+        font-size: 14px;
+
+        outline: none;
+
+        transition: 0.2s ease;
+    }
+
+    .password-input-wrapper input:focus {
+        border-color: #1264dc;
+
+        background: #ffffff;
+
+        box-shadow: 0 0 0 3px rgba(18, 100, 220, 0.10);
+    }
+
+    .toggle-password {
+        position: absolute;
+
+        right: 12px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        border: none;
+        background: transparent;
+
+        color: #7a8597;
+
+        cursor: pointer;
+
+        font-size: 15px;
+    }
+
+
+    /* Modal buttons */
+
+    .password-modal-actions {
+        display: flex;
+
+        justify-content: flex-end;
+
+        gap: 10px;
+
+        margin-top: 22px;
+    }
+
+    .password-cancel-btn,
+    .password-save-btn {
+
+        border: none;
+
+        border-radius: 9px;
+
+        padding: 11px 18px;
+
+        font-family: "Poppins", "Segoe UI", sans-serif;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+    }
+
+    .password-cancel-btn {
+        background: #eef1f5;
+        color: #435169;
+    }
+
+    .password-cancel-btn:hover {
+        background: #e2e6ec;
+    }
+
+    .password-save-btn {
+        background: #1264dc;
+        color: #ffffff;
+    }
+
+    .password-save-btn:hover {
+        background: #0b56c5;
+    }
+
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+
+        .password-modal-box {
+            padding: 22px;
+        }
+
+        .password-modal-actions {
+            flex-direction: column;
+        }
+
+        .password-cancel-btn,
+        .password-save-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .password-item {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .change-password-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+    }
 </style>
 
 
@@ -540,27 +848,32 @@ Settings
             </div>
 
 
-            <div class="security-item">
+            <div class="security-item password-item">
 
                 <div class="security-left">
 
                     <div class="security-icon">
-
-                        <i class="fa-solid fa-user-shield"></i>
-
+                        <i class="fa-solid fa-lock"></i>
                     </div>
 
                     <div>
 
-                        <h4>Administrator Account</h4>
+                        <h4>Password</h4>
 
                         <p>
-                            You have administrator access.
+                            Change your administrator password.
                         </p>
 
                     </div>
 
                 </div>
+
+                <button type="button" class="change-password-btn" onclick="openPasswordModal()">
+
+                    <i class="fa-solid fa-key"></i>
+                    Change Password
+
+                </button>
 
             </div>
 
@@ -649,4 +962,217 @@ Settings
 
 </div>
 
-{% endblock %}s
+<!-- =====================================
+     CHANGE PASSWORD MODAL
+====================================== -->
+
+<div class="password-modal" id="passwordModal">
+
+    <div class="password-modal-box">
+
+        <div class="password-modal-header">
+
+            <div class="password-modal-title">
+
+                <div class="password-modal-title-icon">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+
+                <div>
+
+                    <h3>Change Password</h3>
+
+                    <p>
+                        Keep your administrator account secure.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <button type="button" class="close-password-modal" onclick="closePasswordModal()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <form method="POST" action="{{ url_for('auth.change_password') }}">
+
+            <!-- Current Password -->
+
+            <div class="password-form-group">
+
+                <label for="current_password">
+                    Current Password
+                </label>
+
+                <div class="password-input-wrapper">
+
+                    <input type="password" id="current_password" name="current_password"
+                        placeholder="Enter current password" required>
+
+                    <button type="button" class="toggle-password" onclick="togglePassword('current_password', this)">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- New Password -->
+
+            <div class="password-form-group">
+
+                <label for="new_password">
+                    New Password
+                </label>
+
+                <div class="password-input-wrapper">
+
+                    <input type="password" id="new_password" name="new_password" placeholder="Enter new password"
+                        minlength="6" required>
+
+                    <button type="button" class="toggle-password" onclick="togglePassword('new_password', this)">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Confirm Password -->
+
+            <div class="password-form-group">
+
+                <label for="confirm_password">
+                    Confirm New Password
+                </label>
+
+                <div class="password-input-wrapper">
+
+                    <input type="password" id="confirm_password" name="confirm_password"
+                        placeholder="Confirm new password" minlength="6" required>
+
+                    <button type="button" class="toggle-password" onclick="togglePassword('confirm_password', this)">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="password-modal-actions">
+
+                <button type="button" class="password-cancel-btn" onclick="closePasswordModal()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancel
+
+                </button>
+
+
+                <button type="submit" class="password-save-btn">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    Change Password
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function openPasswordModal() {
+
+        const modal = document.getElementById("passwordModal");
+
+        modal.classList.add("show");
+
+    }
+
+
+    function closePasswordModal() {
+
+        const modal = document.getElementById("passwordModal");
+
+        modal.classList.remove("show");
+
+    }
+
+
+    function togglePassword(inputId, button) {
+
+        const input = document.getElementById(inputId);
+
+        const icon = button.querySelector("i");
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            icon.classList.remove("fa-eye");
+
+            icon.classList.add("fa-eye-slash");
+
+        } else {
+
+            input.type = "password";
+
+            icon.classList.remove("fa-eye-slash");
+
+            icon.classList.add("fa-eye");
+
+        }
+
+    }
+
+
+    /* Close modal by clicking outside */
+
+    document.getElementById("passwordModal").addEventListener("click", function (event) {
+
+        if (event.target === this) {
+
+            closePasswordModal();
+
+        }
+
+    });
+
+
+    /* Close modal with ESC */
+
+    document.addEventListener("keydown", function (event) {
+
+        if (event.key === "Escape") {
+
+            closePasswordModal();
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}

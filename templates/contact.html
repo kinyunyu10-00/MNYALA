@@ -12,8 +12,8 @@
         <span>WASILIANA NASI</span>
         <h1>Tuwasiliane Kuhusu Nishati Safi</h1>
         <p>
-            Tuko tayari kujibu maswali yako, kujadili ushirikiano, 
-            na kukupa bidhaa bora za mkaa safi, majiko, mbegu, na mbolea asilia.
+            Tuko tayari kujibu maswali yako, kupokea ushauri au maoni
+            na kukupa bidhaa bora za mkaa safi, majiko, mbegu na mbolea asilia.
         </p>
     </div>
 </section>
@@ -66,7 +66,7 @@
             <h3>Masaa ya Kazi</h3>
             <p>
                 Jumatatu - Jumamosi<br>
-                8:00 AM - 6:00 PM
+                8:00 AM - 5:00 PM
             </p>
         </div>
     </div>
@@ -84,8 +84,8 @@
             <span>TUMA UJUMBE</span>
             <h2>Tungependa Kusikia Kutoka Kwako</h2>
             <p>
-                Iwe unahitaji mkaa kwa ajili ya nyumba yako, unataka kuwa msambazaji, 
-                au una swali kuhusu majiko yetu, mbegu, au mbolea — timu yetu iko tayari kukusaidia.
+                Iwe unahitaji mkaa kwa ajili ya nyumba yako, unataka kuwa msambazaji,ushauri
+                au una swali kuhusu majiko yetu, mbegu, au mbolea. Timu yetu iko tayari kukusaidia.
             </p>
             <ul>
                 <li><i class="fa-solid fa-circle-check"></i> Majibu ya Haraka</li>
@@ -96,21 +96,21 @@
 
         <!-- Right -->
         <div class="contact-form">
-            
-            {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
 
-        {% for category, message in messages %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+            {% for category, message in messages %}
 
             <div class="alert {{ category }}">
                 {{ message }}
             </div>
 
-        {% endfor %}
+            {% endfor %}
 
-    {% endif %}
-{% endwith %}
-            
+            {% endif %}
+            {% endwith %}
+
             <form action="{{ url_for('public.contact') }}" method="POST">
                 <div class="input-group">
                     <input type="text" name="fullname" placeholder="Jina Kamili" required>
@@ -122,7 +122,8 @@
                     <input type="text" name="phone" placeholder="Namba ya Simu">
                 </div>
                 <div class="input-group">
-                    <select name="subject" style="width: 100%; padding: 1rem 1.2rem; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: 'Inter', sans-serif; font-size: 0.95rem; background: var(--bg-light); color: var(--text-light);">
+                    <select name="subject"
+                        style="width: 100%; padding: 1rem 1.2rem; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: 'Inter', sans-serif; font-size: 0.95rem; background: var(--bg-light); color: var(--text-light);">
                         <option value="">Chagua Kichwa cha Ujumbe</option>
                         <option value="mkaa">Nahitaji Mkaa</option>
                         <option value="majiko">Nahitaji Majiko</option>

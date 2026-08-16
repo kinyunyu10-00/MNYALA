@@ -8,7 +8,7 @@ from flask import (
     session
 )
 
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from extensions import db
 from models import User, Message
@@ -211,7 +211,106 @@ def view_message(id):
         message=message
     )
 
+# ======================================
+# CHANGE PASSWORD
+# ======================================
 
+@auth.route("/settings/password", methods=["POST"])
+def change_password():
+
+    # Hakikisha admin ameingia
+    if "user_id" not in session:
+        return redirect(url_for("auth.login"))
+
+    user = User.query.get_or_404(session["user_id"])
+
+    current_password = request.form.get("current_password", "").strip()
+    new_password = request.form.get("new_password", "").strip()
+    confirm_password = request.form.get("confirm_password", "").strip()
+
+    # -------------------------------
+    # VALIDATION
+    # -------------------------------
+
+    if not current_password or not new_password or not confirm_password:
+
+        flash(
+            "All password fields are required.",
+            "danger"
+        )
+
+        return redirect(url_for("auth.settings"))
+
+    # -------------------------------
+    # CHECK CURRENT PASSWORD
+    # -------------------------------
+
+    if not check_password_hash(user.password, current_password):
+
+        flash(
+            "Current password is incorrect.",
+            "danger"
+        )
+
+        return redirect(url_for("auth.settings"))
+
+    # -------------------------------
+    # CHECK NEW PASSWORD
+    # -------------------------------
+
+    if len(new_password) < 6:
+
+        flash(
+            "New password must be at least 6 characters.",
+            "danger"
+        )
+
+        return redirect(url_for("auth.settings"))
+
+    # -------------------------------
+    # CONFIRM PASSWORD
+    # -------------------------------
+
+    if new_password != confirm_password:
+
+        flash(
+            "New passwords do not match.",
+            "danger"
+        )
+
+        return redirect(url_for("auth.settings"))
+
+    # -------------------------------
+    # PREVENT SAME PASSWORD
+    # -------------------------------
+
+    if check_password_hash(user.password, new_password):
+
+        flash(
+            "New password must be different from your current password.",
+            "danger"
+        )
+
+        return redirect(url_for("auth.settings"))
+
+    # -------------------------------
+    # HASH NEW PASSWORD
+    # -------------------------------
+
+    user.password = generate_password_hash(new_password)
+
+    # -------------------------------
+    # SAVE TO DATABASE
+    # -------------------------------
+
+    db.session.commit()
+
+    flash(
+        "Password changed successfully.",
+        "success"
+    )
+
+    return redirect(url_for("auth.settings"))
 # ======================================
 # DELETE MESSAGE
 # ======================================

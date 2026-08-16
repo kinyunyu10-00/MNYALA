@@ -38,125 +38,92 @@
     <!-- ======================
 SIDEBAR
 ====================== -->
+<aside class="sidebar">
 
-    <aside class="sidebar">
+    <div class="sidebar-logo">
+        <i class="fa-solid fa-store"></i>
+        <span>MNYALA</span>
+    </div>
 
-        <div class="logo">
+    <nav class="sidebar-nav">
 
-            <i class="fa-solid fa-store"></i>
+        <!-- Dashboard -->
+        <a href="{{ url_for('auth.dashboard') }}"
+           class="{% if request.endpoint == 'auth.dashboard' %}active{% endif %}">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+        </a>
 
-            <span>MNYALA</span>
+        <!-- Products -->
+        <a href="{{ url_for('public.products') }}"
+           class="{% if request.endpoint == 'public.products' %}active{% endif %}">
+            <i class="fa-solid fa-box"></i>
+            <span>Products</span>
+        </a>
 
-        </div>
+        <!-- Gallery -->
+        <a href="{{ url_for('public.gallery') }}"
+           class="{% if request.endpoint == 'public.gallery' %}active{% endif %}">
+            <i class="fa-solid fa-image"></i>
+            <span>Gallery</span>
+        </a>
 
-        <ul>
+        <!-- Orders -->
+        <a href="#"
+           class="{% if request.endpoint == 'admin.orders' %}active{% endif %}">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Orders</span>
+        </a>
 
-            <li>
+        <!-- Customers -->
+        <a href="#"
+           class="{% if request.endpoint == 'admin.customers' %}active{% endif %}">
+            <i class="fa-solid fa-users"></i>
+            <span>Customers</span>
+        </a>
 
-                <a href="{{ url_for('auth.dashboard') }}" class="active">
+        <!-- Messages -->
+        <a href="{{ url_for('auth.messages') }}"
+           class="{% if request.endpoint == 'auth.messages' or request.endpoint == 'auth.view_message' %}active{% endif %}">
+            <i class="fa-solid fa-envelope"></i>
+            <span>Messages</span>
 
-                    <i class="fa-solid fa-house"></i>
+            {% if unread_messages is defined and unread_messages > 0 %}
+                <span class="sidebar-badge">
+                    {{ unread_messages }}
+                </span>
+            {% endif %}
+        </a>
 
-                    Dashboard
+        <!-- Reports -->
+        <a href="#"
+           class="{% if request.endpoint == 'admin.reports' %}active{% endif %}">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Reports</span>
+        </a>
 
-                </a>
+        <!-- Settings -->
+        <a href="{{ url_for('auth.settings') }}"
+           class="{% if request.endpoint == 'auth.settings' %}active{% endif %}">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </a>
 
-            </li>
+    </nav>
 
-            <li>
+    <!-- Logout -->
+    <div class="sidebar-bottom">
 
-                <a href="#">
+        <a href="{{ url_for('auth.logout') }}" class="logout-link">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
 
-                    <i class="fa-solid fa-box-open"></i>
+    </div>
 
-                    Products
+</aside>
 
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="#">
-
-                    <i class="fa-solid fa-images"></i>
-
-                    Gallery
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="#">
-
-                    <i class="fa-solid fa-cart-shopping"></i>
-
-                    Orders
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="#">
-
-                    <i class="fa-solid fa-users"></i>
-
-                    Customers
-
-                </a>
-
-            </li>
-
-            <li>
-                <a href="{{ url_for('auth.messages') }}">
-                    <i class="fa-solid fa-envelope"></i>
-                    Messages
-                    <span class="badge">{{ total_messages or 0 }}</span>
-                </a>
-            </li>
-
-            <li>
-
-                <a href="#">
-
-                    <i class="fa-solid fa-chart-line"></i>
-
-                    Reports
-
-                </a>
-
-            </li>
-
-            <li>
-
-
-                <a href="{{ url_for('auth.settings') }}">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
-
-        </ul>
-
-        <div class="logout">
-
-            <a href="{{ url_for('auth.logout') }}">
-
-                <i class="fa-solid fa-right-from-bracket"></i>
-
-                Logout
-
-            </a>
-
-        </div>
-
-    </aside>
-
-    <!-- ======================
+<!-- ======================
 MAIN CONTENT
 ====================== -->
 
