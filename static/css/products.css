@@ -431,6 +431,12 @@
 }
 
 @media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem 3rem;
+  }
+
   .package-grid {
     grid-template-columns: 1fr;
   }
