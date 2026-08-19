@@ -8,7 +8,10 @@ from flask import (
     session
 )
 
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import (
+    check_password_hash,
+    generate_password_hash
+)
 
 from extensions import db
 from models import User, Message
@@ -17,50 +20,221 @@ from models import User, Message
 auth = Blueprint("auth", __name__)
 
 
-# ======================================
+# ==========================================================
+# ADMIN REQUIRED
+# ==========================================================
+
+def admin_required():
+
+    # User hajalogin
+    if "user_id" not in session:
+        return False
+
+    # Tafuta user kwenye database
+    user = User.query.get(session["user_id"])
+
+    # User hayupo tena kwenye database
+    if not user:
+        session.clear()
+        return False
+
+    # Admin na Super Admin wanaruhusiwa
+    return user.role in ["admin", "super_admin"]
+
+
+# ==========================================================
+# SUPER ADMIN REQUIRED
+# ==========================================================
+
+def super_admin_required():
+
+    # User hajalogin
+    if "user_id" not in session:
+        return False
+
+    # Tafuta user kwenye database
+    user = User.query.get(session["user_id"])
+
+    # User hayupo tena kwenye database
+    if not user:
+        session.clear()
+        return False
+
+    # Super Admin pekee
+    return user.role == "super_admin"
+
+
+# ==========================================================
 # LOGIN
-# ======================================
+# ==========================================================
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
 
-    # TEMPORARY LOGIN FOR TESTING
-    session["user_id"] = 1
+    # ------------------------------------------
+    # ALREADY LOGGED IN
+    # ------------------------------------------
 
-    return redirect(url_for("auth.dashboard"))
+    if "user_id" in session:
 
-    # REAL LOGIN - TUTAITUMIA BAADAYE
-    """
+        user = User.query.get(session["user_id"])
+
+        if user:
+
+            if user.role in ["admin", "super_admin"]:
+
+                return redirect(
+                    url_for("auth.dashboard")
+                )
+
+            elif user.role == "customer":
+
+                return redirect(
+                    url_for("public.home")
+                )
+
+        session.clear()
+
+    # ------------------------------------------
+    # LOGIN FORM
+    # ------------------------------------------
+
     if request.method == "POST":
 
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email = request.form.get(
+            "email",
+            ""
+        ).strip().lower()
 
-        user = User.query.filter_by(email=email).first()
+        password = request.form.get(
+            "password",
+            ""
+        ).strip()
 
-        if user and check_password_hash(user.password, password):
+        # --------------------------------------
+        # VALIDATION
+        # --------------------------------------
+
+        if not email or not password:
+
+            flash(
+                "Email and password are required.",
+                "danger"
+            )
+
+            return render_template(
+                "auth/login.html"
+            )
+
+        # --------------------------------------
+        # FIND USER
+        # --------------------------------------
+
+        user = User.query.filter_by(
+            email=email
+        ).first()
+
+        # --------------------------------------
+        # CHECK USER + PASSWORD
+        # --------------------------------------
+
+        if user and check_password_hash(
+            user.password,
+            password
+        ):
+
+            # ----------------------------------
+            # CREATE SESSION
+            # ----------------------------------
+
+            session.clear()
 
             session["user_id"] = user.id
+            session["user_role"] = user.role
 
-            flash("Welcome back!", "success")
+            # ----------------------------------
+            # SUCCESS MESSAGE
+            # ----------------------------------
 
-            return redirect(url_for("auth.dashboard"))
+            flash(
+                "Welcome back!",
+                "success"
+            )
 
-        flash("Invalid email or password.", "danger")
+            # ----------------------------------
+            # ROLE REDIRECTION
+            # ----------------------------------
 
-    return render_template("auth/login.html")
-    """
+            if user.role == "super_admin":
+
+                return redirect(
+                    url_for("auth.dashboard")
+                )
+
+            elif user.role == "admin":
+
+                return redirect(
+                    url_for("auth.dashboard")
+                )
+
+            elif user.role == "customer":
+
+                return redirect(
+                    url_for("public.home")
+                )
+
+            else:
+
+                session.clear()
+
+                flash(
+                    "Your account role is not recognized.",
+                    "danger"
+                )
+
+                return redirect(
+                    url_for("auth.login")
+                )
+
+        # --------------------------------------
+        # INVALID LOGIN
+        # --------------------------------------
+
+        flash(
+            "Invalid email or password.",
+            "danger"
+        )
+
+    return render_template(
+        "auth/login.html"
+    )
 
 
-# ======================================
-# DASHBOARD
-# ======================================
+# ==========================================================
+# ADMIN DASHBOARD
+# ==========================================================
 
 @auth.route("/dashboard")
 def dashboard():
 
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
+    # ------------------------------------------
+    # CHECK ADMIN ACCESS
+    # ------------------------------------------
+
+    if not admin_required():
+
+        flash(
+            "You are not authorized to access the admin dashboard.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    # ------------------------------------------
+    # MESSAGE STATISTICS
+    # ------------------------------------------
 
     total_messages = Message.query.count()
 
@@ -68,31 +242,64 @@ def dashboard():
         is_read=False
     ).count()
 
+    read_messages = Message.query.filter_by(
+        is_read=True
+    ).count()
+
+    # ------------------------------------------
+    # LATEST MESSAGES
+    # ------------------------------------------
+
     latest_messages = Message.query.order_by(
         Message.created_at.desc()
     ).limit(5).all()
+
+    # ------------------------------------------
+    # RENDER DASHBOARD
+    # ------------------------------------------
 
     return render_template(
         "admin/dashboard.html",
         total_messages=total_messages,
         unread_messages=unread_messages,
+        read_messages=read_messages,
         latest_messages=latest_messages
     )
 
 
-# ======================================
+# ==========================================================
 # MESSAGES
-# ======================================
+# ==========================================================
 
 @auth.route("/messages")
 def messages():
 
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
+    # ------------------------------------------
+    # CHECK ADMIN ACCESS
+    # ------------------------------------------
+
+    if not admin_required():
+
+        flash(
+            "You are not authorized to access messages.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    # ------------------------------------------
+    # GET ALL MESSAGES
+    # ------------------------------------------
 
     messages = Message.query.order_by(
         Message.created_at.desc()
     ).all()
+
+    # ------------------------------------------
+    # STATISTICS
+    # ------------------------------------------
 
     total = Message.query.count()
 
@@ -104,6 +311,10 @@ def messages():
         is_read=True
     ).count()
 
+    # ------------------------------------------
+    # RENDER
+    # ------------------------------------------
+
     return render_template(
         "admin/messages.html",
         messages=messages,
@@ -113,21 +324,136 @@ def messages():
     )
 
 
-# ======================================
+# ==========================================================
+# VIEW SINGLE MESSAGE
+# ==========================================================
+
+@auth.route("/messages/<int:id>")
+def view_message(id):
+
+    # ------------------------------------------
+    # CHECK ADMIN ACCESS
+    # ------------------------------------------
+
+    if not admin_required():
+
+        flash(
+            "You are not authorized to view this message.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    # ------------------------------------------
+    # FIND MESSAGE
+    # ------------------------------------------
+
+    message = Message.query.get_or_404(id)
+
+    # ------------------------------------------
+    # MARK AS READ
+    # ------------------------------------------
+
+    message.is_read = True
+
+    db.session.commit()
+
+    # ------------------------------------------
+    # RENDER MESSAGE
+    # ------------------------------------------
+
+    return render_template(
+        "admin/view_message.html",
+        message=message
+    )
+
+
+# ==========================================================
+# DELETE MESSAGE
+# ==========================================================
+
+@auth.route("/messages/delete/<int:id>")
+def delete_message(id):
+
+    # ------------------------------------------
+    # CHECK ADMIN ACCESS
+    # ------------------------------------------
+
+    if not admin_required():
+
+        flash(
+            "You are not authorized to delete messages.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    # ------------------------------------------
+    # FIND MESSAGE
+    # ------------------------------------------
+
+    message = Message.query.get_or_404(id)
+
+    # ------------------------------------------
+    # DELETE
+    # ------------------------------------------
+
+    db.session.delete(message)
+
+    db.session.commit()
+
+    # ------------------------------------------
+    # SUCCESS MESSAGE
+    # ------------------------------------------
+
+    flash(
+        "Message deleted successfully.",
+        "success"
+    )
+
+    return redirect(
+        url_for("auth.messages")
+    )
+
+
+# ==========================================================
 # SETTINGS
-# ======================================
+# ==========================================================
 
 @auth.route("/settings", methods=["GET", "POST"])
 def settings():
 
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
+    # ------------------------------------------
+    # CHECK ADMIN ACCESS
+    # ------------------------------------------
+
+    if not admin_required():
+
+        flash(
+            "You are not authorized to access settings.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    # ------------------------------------------
+    # GET CURRENT USER
+    # ------------------------------------------
 
     user = User.query.get_or_404(
         session["user_id"]
     )
 
+    # ------------------------------------------
     # UPDATE PROFILE
+    # ------------------------------------------
+
     if request.method == "POST":
 
         fullname = request.form.get(
@@ -138,7 +464,11 @@ def settings():
         email = request.form.get(
             "email",
             ""
-        ).strip()
+        ).strip().lower()
+
+        # --------------------------------------
+        # VALIDATION
+        # --------------------------------------
 
         if not fullname or not email:
 
@@ -151,7 +481,10 @@ def settings():
                 url_for("auth.settings")
             )
 
-        # CHECK EMAIL
+        # --------------------------------------
+        # CHECK DUPLICATE EMAIL
+        # --------------------------------------
+
         existing_user = User.query.filter(
             User.email == email,
             User.id != user.id
@@ -168,7 +501,10 @@ def settings():
                 url_for("auth.settings")
             )
 
-        # UPDATE DATABASE
+        # --------------------------------------
+        # UPDATE USER
+        # --------------------------------------
+
         user.fullname = fullname
         user.email = email
 
@@ -183,80 +519,108 @@ def settings():
             url_for("auth.settings")
         )
 
+    # ------------------------------------------
+    # DISPLAY SETTINGS
+    # ------------------------------------------
+
     return render_template(
         "admin/settings.html",
         user=user
     )
 
 
-# ======================================
-# VIEW MESSAGE
-# ======================================
-
-@auth.route("/messages/<int:id>")
-def view_message(id):
-
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-
-    message = Message.query.get_or_404(id)
-
-    # Mark as read
-    message.is_read = True
-
-    db.session.commit()
-
-    return render_template(
-        "admin/view_message.html",
-        message=message
-    )
-
-# ======================================
+# ==========================================================
 # CHANGE PASSWORD
-# ======================================
+# ==========================================================
 
-@auth.route("/settings/password", methods=["POST"])
+@auth.route(
+    "/settings/password",
+    methods=["POST"]
+)
 def change_password():
 
-    # Hakikisha admin ameingia
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
+    # ------------------------------------------
+    # CHECK ADMIN ACCESS
+    # ------------------------------------------
 
-    user = User.query.get_or_404(session["user_id"])
+    if not admin_required():
 
-    current_password = request.form.get("current_password", "").strip()
-    new_password = request.form.get("new_password", "").strip()
-    confirm_password = request.form.get("confirm_password", "").strip()
+        flash(
+            "You are not authorized to change password.",
+            "danger"
+        )
 
-    # -------------------------------
+        return redirect(
+            url_for("auth.login")
+        )
+
+    # ------------------------------------------
+    # GET USER
+    # ------------------------------------------
+
+    user = User.query.get_or_404(
+        session["user_id"]
+    )
+
+    # ------------------------------------------
+    # GET FORM DATA
+    # ------------------------------------------
+
+    current_password = request.form.get(
+        "current_password",
+        ""
+    ).strip()
+
+    new_password = request.form.get(
+        "new_password",
+        ""
+    ).strip()
+
+    confirm_password = request.form.get(
+        "confirm_password",
+        ""
+    ).strip()
+
+    # ------------------------------------------
     # VALIDATION
-    # -------------------------------
+    # ------------------------------------------
 
-    if not current_password or not new_password or not confirm_password:
+    if (
+        not current_password
+        or not new_password
+        or not confirm_password
+    ):
 
         flash(
             "All password fields are required.",
             "danger"
         )
 
-        return redirect(url_for("auth.settings"))
+        return redirect(
+            url_for("auth.settings")
+        )
 
-    # -------------------------------
+    # ------------------------------------------
     # CHECK CURRENT PASSWORD
-    # -------------------------------
+    # ------------------------------------------
 
-    if not check_password_hash(user.password, current_password):
+    if not check_password_hash(
+        user.password,
+        current_password
+    ):
 
         flash(
             "Current password is incorrect.",
             "danger"
         )
 
-        return redirect(url_for("auth.settings"))
+        return redirect(
+            url_for("auth.settings")
+        )
 
-    # -------------------------------
-    # CHECK NEW PASSWORD
-    # -------------------------------
+    # ------------------------------------------
+    # PASSWORD LENGTH
+    # ------------------------------------------
 
     if len(new_password) < 6:
 
@@ -265,11 +629,13 @@ def change_password():
             "danger"
         )
 
-        return redirect(url_for("auth.settings"))
+        return redirect(
+            url_for("auth.settings")
+        )
 
-    # -------------------------------
+    # ------------------------------------------
     # CONFIRM PASSWORD
-    # -------------------------------
+    # ------------------------------------------
 
     if new_password != confirm_password:
 
@@ -278,30 +644,39 @@ def change_password():
             "danger"
         )
 
-        return redirect(url_for("auth.settings"))
+        return redirect(
+            url_for("auth.settings")
+        )
 
-    # -------------------------------
+    # ------------------------------------------
     # PREVENT SAME PASSWORD
-    # -------------------------------
+    # ------------------------------------------
 
-    if check_password_hash(user.password, new_password):
+    if check_password_hash(
+        user.password,
+        new_password
+    ):
 
         flash(
             "New password must be different from your current password.",
             "danger"
         )
 
-        return redirect(url_for("auth.settings"))
+        return redirect(
+            url_for("auth.settings")
+        )
 
-    # -------------------------------
+    # ------------------------------------------
     # HASH NEW PASSWORD
-    # -------------------------------
+    # ------------------------------------------
 
-    user.password = generate_password_hash(new_password)
+    user.password = generate_password_hash(
+        new_password
+    )
 
-    # -------------------------------
-    # SAVE TO DATABASE
-    # -------------------------------
+    # ------------------------------------------
+    # SAVE
+    # ------------------------------------------
 
     db.session.commit()
 
@@ -310,46 +685,36 @@ def change_password():
         "success"
     )
 
-    return redirect(url_for("auth.settings"))
-# ======================================
-# DELETE MESSAGE
-# ======================================
-
-@auth.route("/messages/delete/<int:id>")
-def delete_message(id):
-
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-
-    message = Message.query.get_or_404(id)
-
-    db.session.delete(message)
-
-    db.session.commit()
-
-    flash(
-        "Message deleted successfully.",
-        "success"
-    )
-
     return redirect(
-        url_for("auth.messages")
+        url_for("auth.settings")
     )
 
 
-# ======================================
+# ==========================================================
 # LOGOUT
-# ======================================
+# ==========================================================
 
 @auth.route("/logout")
 def logout():
 
+    # ------------------------------------------
+    # CLEAR SESSION
+    # ------------------------------------------
+
     session.clear()
+
+    # ------------------------------------------
+    # MESSAGE
+    # ------------------------------------------
 
     flash(
         "Logged out successfully.",
         "success"
     )
+
+    # ------------------------------------------
+    # REDIRECT
+    # ------------------------------------------
 
     return redirect(
         url_for("auth.login")

@@ -6,64 +6,219 @@
    vipengele vinavyotumika mara kwa mara.
 ============================== */
 
-:root{
+:root {
+  /* Primary Colors */
 
-    /* Primary Colors */
+  --primary: #0b5ed7;
+  --primary-dark: #084298;
 
-    --primary:#0B5ED7;
-    --primary-dark:#084298;
+  /* Secondary */
 
-    /* Secondary */
+  --secondary: #1e293b;
 
-    --secondary:#1E293B;
+  /* Background */
 
-    /* Background */
+  --background: #f8fafc;
 
-    --background:#F8FAFC;
+  --surface: #ffffff;
 
-    --surface:#FFFFFF;
+  /* Status */
 
-    /* Status */
+  --success: #22c55e;
 
-    --success:#22C55E;
+  --warning: #f59e0b;
 
-    --warning:#F59E0B;
+  --danger: #ef4444;
 
-    --danger:#EF4444;
+  --info: #0ea5e9;
 
-    --info:#0EA5E9;
+  /* Text */
 
-    /* Text */
+  --text: #1e293b;
 
-    --text:#1E293B;
+  --text-light: #64748b;
 
-    --text-light:#64748B;
+  --white: #ffffff;
 
-    --white:#FFFFFF;
+  /* Border */
 
-    /* Border */
+  --border: #e2e8f0;
 
-    --border:#E2E8F0;
+  /* Shadow */
 
-    /* Shadow */
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 
-    --shadow:
-    0 10px 30px rgba(0,0,0,.08);
+  /* Radius */
 
-    /* Radius */
+  --radius-sm: 8px;
 
-    --radius-sm:8px;
+  --radius: 12px;
 
-    --radius:12px;
+  --radius-lg: 20px;
 
-    --radius-lg:20px;
+  /* Sidebar */
 
-    /* Sidebar */
+  --sidebar-width: 260px;
 
-    --sidebar-width:260px;
+  /* Transition */
 
-    /* Transition */
+  --transition: 0.3s ease;
+}
 
-    --transition:.3s ease;
+/* SEARCH BAR */
 
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 42px 12px 42px;
+}
+
+#clearMessageSearch {
+  position: absolute;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 28px;
+  height: 28px;
+
+  border: none;
+  background: transparent;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  color: #777;
+}
+
+/* =========================================================
+   MESSAGE SEARCH
+========================================================= */
+
+.messages-header .search-box {
+  position: relative;
+  width: 360px;
+}
+
+.messages-header .search-box i.fa-magnifying-glass {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #64748b;
+
+  z-index: 2;
+}
+
+.messages-header .search-box input {
+  width: 100%;
+
+  padding: 14px 45px 14px 45px;
+
+  border: none;
+  outline: none;
+
+  background: #fff;
+
+  border-radius: 40px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+
+  transition: 0.25s ease;
+}
+
+.messages-header .search-box input:focus {
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1),
+    0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Clear button */
+
+#clearSearch {
+  position: absolute;
+
+  right: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 30px;
+  height: 30px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #64748b;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  z-index: 3;
+}
+
+#clearSearch:hover {
+  background: #f1f5f9;
+  color: #ef4444;
+}
+
+/* Search result message */
+
+.search-result-info {
+  margin-top: 10px;
+
+  font-size: 13px;
+
+  color: #64748b;
+
+  display: none;
+}
+
+/* No results */
+
+.no-search-results td {
+  text-align: center;
+
+  padding: 45px 20px !important;
+
+  color: #64748b;
+}
+
+.no-search-results i {
+  display: block;
+
+  font-size: 35px;
+
+  margin-bottom: 10px;
+
+  color: #94a3b8;
+}
+
+/* Mobile */
+
+@media (max-width: 900px) {
+  .messages-header .search-box {
+    width: 100%;
+  }
 }

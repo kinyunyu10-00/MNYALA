@@ -1,13 +1,16 @@
-/* ==========================================
-   SIDEBAR TOGGLE
-========================================== */
+document.addEventListener("DOMContentLoaded", () => {
 
-const menuButton = document.querySelector(".menu-btn");
+    const menuButton = document.querySelector(".menu-btn");
+    const sidebar = document.querySelector(".sidebar");
 
-const sidebar = document.querySelector(".sidebar");
+    if (!menuButton || !sidebar) {
+        return;
+    }
 
-menuButton.addEventListener("click", () => {
+    menuButton.addEventListener("click", () => {
 
-    sidebar.classList.toggle("active");
+        sidebar.classList.toggle("sidebar-open");
+
+    });
 
 });

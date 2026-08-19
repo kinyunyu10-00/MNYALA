@@ -21,29 +21,24 @@ body {
 /* ===========================
 SIDEBAR
 =========================== */
-
 .sidebar {
   position: fixed;
 
+  top: 0;
   left: 0;
 
-  top: 0;
-
   width: 260px;
-
   height: 100vh;
 
   background: #1e293b;
 
-  color: white;
+  z-index: 1000;
 
-  overflow-y: auto;
+  transition: left 0.3s ease;
 
-  padding: 25px;
+  display: flex;
 
-  transition: 0.3s;
-
-  z-index: 999;
+  flex-direction: column;
 }
 
 .logo {
@@ -140,6 +135,12 @@ MAIN
   margin-left: 260px;
 
   min-height: 100vh;
+
+  width: calc(100% - 260px);
+
+  display: flex;
+
+  flex-direction: column;
 }
 
 /* ===========================
@@ -687,7 +688,7 @@ PAGE CONTENT
 
   padding: 20px 30px;
 
-  text-align: right;
+  text-align: center;
 
   color: #6b7280;
 

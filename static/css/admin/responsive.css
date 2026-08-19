@@ -1,119 +1,1261 @@
-/* ==========================================
-   RESPONSIVE DESIGN
-========================================== */
+/* =========================================================
+   MNYALA ADMIN DASHBOARD
+   RESPONSIVE.CSS
+   ========================================================= */
 
-@media (max-width:1200px){
+/* =========================================================
+   GLOBAL RESET / RESPONSIVE SAFETY
+   ========================================================= */
 
-    .dashboard-grid{
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 
-        grid-template-columns:1fr;
-
-    }
-
+  overflow-x: hidden;
 }
 
-@media (max-width:992px){
-
-    .sidebar{
-
-        left:-260px;
-
-    }
-
-    .sidebar.active{
-
-        left:0;
-
-    }
-
-    .main{
-
-        margin-left:0;
-
-    }
-
-    .topbar{
-
-        padding:15px;
-
-    }
-
-    .search-box{
-
-        width:250px;
-
-    }
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (max-width:768px){
+/* =========================================================
+   DEFAULT DESKTOP
+   1201px AND ABOVE
+   ========================================================= */
 
-    .page-content{
+.main {
+  width: calc(100% - 260px);
 
-        padding:20px;
+  margin-left: 260px;
 
-    }
+  min-height: 100vh;
+  min-width: 0;
 
-    .dashboard-cards{
+  display: flex;
+  flex-direction: column;
 
-        grid-template-columns:1fr;
-
-    }
-
-    .gallery-preview{
-
-        grid-template-columns:repeat(2,1fr);
-
-    }
-
-    .topbar{
-
-        flex-wrap:wrap;
-
-        gap:15px;
-
-        height:auto;
-
-        padding:15px;
-
-    }
-
-    .search-box{
-
-        width:100%;
-
-    }
-
-    .welcome{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
-        gap:15px;
-
-    }
-
+  transition:
+    margin-left 0.3s ease,
+    width 0.3s ease;
 }
 
-@media (max-width:576px){
+.sidebar {
+  width: 260px;
 
-    .gallery-preview{
+  position: fixed;
 
-        grid-template-columns:1fr;
+  left: 0;
+  top: 0;
+  bottom: 0;
 
-    }
+  z-index: 2000;
+}
 
-    .profile small{
+/* =========================================================
+   LARGE DESKTOP
+   1201px+
+   ========================================================= */
 
-        display:none;
+@media (min-width: 1201px) {
+  .sidebar {
+    width: 260px;
+    left: 0;
+  }
 
-    }
+  .main {
+    width: calc(100% - 260px);
+    margin-left: 260px;
+  }
 
-    .profile h4{
+  .topbar {
+    width: 100%;
+  }
 
-        display:none;
+  .page-content {
+    width: 100%;
+    max-width: 100%;
+  }
+}
 
-    }
+/* =========================================================
+   TABLET
+   993px - 1200px
 
+   Sidebar becomes ICON ONLY
+   ========================================================= */
+
+@media (min-width: 993px) and (max-width: 1200px) {
+  /* ==========================================
+       SIDEBAR
+    ========================================== */
+
+  .sidebar {
+    width: 72px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    z-index: 2000;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    transition:
+      width 0.3s ease,
+      left 0.3s ease;
+  }
+
+  /* ==========================================
+       HIDE SIDEBAR TEXT
+    ========================================== */
+
+  .sidebar-logo span,
+  .sidebar-nav span:not(.sidebar-badge),
+  .logout-link span {
+    display: none !important;
+  }
+
+  /* ==========================================
+       CENTER LOGO
+    ========================================== */
+
+  .sidebar-logo {
+    width: 72px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+  }
+
+  .sidebar-logo i {
+    margin: 0;
+
+    font-size: 20px;
+  }
+
+  /* ==========================================
+       NAVIGATION
+    ========================================== */
+
+  .sidebar-nav {
+    width: 72px;
+  }
+
+  .sidebar-nav a {
+    position: relative;
+
+    width: 48px;
+    height: 48px;
+
+    margin: 6px auto;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+  }
+
+  .sidebar-nav a i {
+    width: auto;
+
+    margin: 0;
+
+    font-size: 17px;
+  }
+
+  /* ==========================================
+       BADGE
+    ========================================== */
+
+  .sidebar-badge {
+    position: absolute;
+
+    top: 2px;
+    right: 2px;
+
+    min-width: 17px;
+    height: 17px;
+
+    padding: 0 4px;
+
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    border-radius: 50%;
+  }
+
+  /* ==========================================
+       LOGOUT
+    ========================================== */
+
+  .sidebar-bottom {
+    width: 72px;
+
+    padding-bottom: 20px;
+  }
+
+  .logout-link {
+    width: 48px;
+    height: 48px;
+
+    margin: 6px auto;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+  }
+
+  .logout-link i {
+    width: auto;
+
+    margin: 0;
+
+    font-size: 17px;
+  }
+
+  /* ==========================================
+       MAIN
+    ========================================== */
+
+  .main {
+    width: calc(100% - 72px);
+
+    margin-left: 72px;
+
+    min-width: 0;
+  }
+
+  /* ==========================================
+       PAGE CONTENT
+    ========================================== */
+
+  .page-content {
+    width: 100%;
+
+    max-width: 100%;
+
+    padding: 24px;
+
+    min-width: 0;
+  }
+
+  /* ==========================================
+       DASHBOARD
+    ========================================== */
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   SMALL TABLET
+   769px - 992px
+
+   Sidebar ICON ONLY
+   ========================================================= */
+
+@media (min-width: 769px) and (max-width: 992px) {
+  /* ==========================================
+       SIDEBAR
+    ========================================== */
+
+  .sidebar {
+    width: 72px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    z-index: 2000;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    transition:
+      width 0.3s ease,
+      left 0.3s ease;
+  }
+
+  /* ==========================================
+       HIDE TEXT
+    ========================================== */
+
+  .sidebar-logo span,
+  .sidebar-nav span:not(.sidebar-badge),
+  .logout-link span {
+    display: none !important;
+  }
+
+  /* ==========================================
+       LOGO
+    ========================================== */
+
+  .sidebar-logo {
+    width: 72px;
+    height: 70px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-logo i {
+    margin: 0;
+
+    font-size: 20px;
+  }
+
+  /* ==========================================
+       NAVIGATION
+    ========================================== */
+
+  .sidebar-nav {
+    width: 72px;
+  }
+
+  .sidebar-nav a {
+    position: relative;
+
+    width: 48px;
+    height: 48px;
+
+    margin: 6px auto;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+  }
+
+  .sidebar-nav a i {
+    width: auto;
+
+    margin: 0;
+
+    font-size: 17px;
+  }
+
+  /* ==========================================
+       BADGE
+    ========================================== */
+
+  .sidebar-badge {
+    position: absolute;
+
+    top: 2px;
+    right: 2px;
+
+    min-width: 17px;
+    height: 17px;
+
+    padding: 0 4px;
+
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    border-radius: 50%;
+  }
+
+  /* ==========================================
+       LOGOUT
+    ========================================== */
+
+  .sidebar-bottom {
+    width: 72px;
+
+    padding-bottom: 20px;
+  }
+
+  .logout-link {
+    width: 48px;
+    height: 48px;
+
+    margin: 6px auto;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+  }
+
+  .logout-link i {
+    width: auto;
+
+    margin: 0;
+
+    font-size: 17px;
+  }
+
+  /* ==========================================
+       MAIN
+    ========================================== */
+
+  .main {
+    width: calc(100% - 72px);
+
+    margin-left: 72px;
+
+    min-width: 0;
+  }
+
+  /* ==========================================
+       TOPBAR
+    ========================================== */
+
+  .topbar {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+  /* ==========================================
+       CONTENT
+    ========================================== */
+
+  .page-content {
+    width: 100%;
+
+    max-width: 100%;
+
+    padding: 20px;
+
+    min-width: 0;
+  }
+
+  /* ==========================================
+       DASHBOARD
+    ========================================== */
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   0px - 768px
+
+   ICON ONLY SIDEBAR
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* ==========================================
+       GLOBAL
+    ========================================== */
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: hidden;
+  }
+
+  /* ==========================================
+       SIDEBAR
+       
+       CLOSED:
+       left: -64px
+
+       OPEN:
+       left: 0
+    ========================================== */
+
+  .sidebar {
+    position: fixed;
+
+    width: 64px;
+    height: 100vh;
+
+    left: -64px;
+
+    top: 0;
+    bottom: 0;
+
+    z-index: 3000;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    box-shadow: 8px 0 25px rgba(0, 0, 0, 0.18);
+
+    transition: left 0.3s ease;
+  }
+
+  /* ==========================================
+       OPEN SIDEBAR
+    ========================================== */
+
+  .sidebar.sidebar-open {
+    left: 0;
+  }
+
+  /* ==========================================
+       HIDE ALL SIDEBAR TEXT
+    ========================================== */
+
+  .sidebar-logo span,
+  .sidebar-nav span:not(.sidebar-badge),
+  .logout-link span {
+    display: none !important;
+  }
+
+  /* ==========================================
+       SIDEBAR LOGO
+    ========================================== */
+
+  .sidebar-logo {
+    width: 64px;
+    height: 64px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-logo i {
+    margin: 0;
+
+    font-size: 20px;
+  }
+
+  /* ==========================================
+       NAVIGATION CONTAINER
+    ========================================== */
+
+  .sidebar-nav {
+    width: 64px;
+
+    padding: 5px 0;
+  }
+
+  /* ==========================================
+       NAVIGATION LINKS
+    ========================================== */
+
+  .sidebar-nav a {
+    position: relative;
+
+    width: 44px;
+    height: 44px;
+
+    margin: 6px auto;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  /* ==========================================
+       ICONS
+    ========================================== */
+
+  .sidebar-nav a i {
+    width: auto;
+
+    margin: 0;
+
+    font-size: 16px;
+  }
+
+  /* ==========================================
+       ACTIVE ICON
+    ========================================== */
+
+  .sidebar-nav a.active {
+    width: 44px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ==========================================
+       BADGE
+    ========================================== */
+
+  .sidebar-badge {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    min-width: 17px;
+    height: 17px;
+
+    padding: 0 4px;
+
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    line-height: 1;
+
+    border-radius: 50%;
+  }
+
+  /* ==========================================
+       SIDEBAR BOTTOM
+    ========================================== */
+
+  .sidebar-bottom {
+    width: 64px;
+
+    padding-bottom: 16px;
+  }
+
+  /* ==========================================
+       LOGOUT
+    ========================================== */
+
+  .logout-link {
+    width: 44px;
+    height: 44px;
+
+    margin: 6px auto;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+  }
+
+  .logout-link i {
+    width: auto;
+
+    margin: 0;
+
+    font-size: 16px;
+  }
+
+  /* ==========================================
+       MAIN
+       
+       IMPORTANT:
+       FULL WIDTH ON MOBILE
+    ========================================== */
+
+  .main {
+    width: 100%;
+
+    margin-left: 0;
+
+    min-width: 0;
+
+    min-height: 100vh;
+
+    transition: none;
+  }
+
+  /* ==========================================
+       TOPBAR
+    ========================================== */
+
+  .topbar {
+    width: 100%;
+
+    min-height: 70px;
+
+    padding: 14px 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================
+       TOP LEFT
+    ========================================== */
+
+  .top-left {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+  }
+
+  /* ==========================================
+       MENU BUTTON
+    ========================================== */
+
+  .menu-btn {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+    flex-shrink: 0;
+
+    cursor: pointer;
+  }
+
+  /* ==========================================
+       PAGE TITLE
+    ========================================== */
+
+  .top-left h2 {
+    margin: 0;
+
+    min-width: 0;
+
+    font-size: 19px;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+
+  /* ==========================================
+       SEARCH BOX
+    ========================================== */
+
+  .search-box {
+    width: 100%;
+
+    max-width: 100%;
+
+    order: 3;
+
+    flex-basis: 100%;
+
+    box-sizing: border-box;
+  }
+
+  .search-box input {
+    width: 100%;
+
+    max-width: 100%;
+
+    box-sizing: border-box;
+  }
+
+  /* ==========================================
+       TOP RIGHT
+    ========================================== */
+
+  .top-right {
+    margin-left: auto;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+  }
+
+  /* ==========================================
+       PROFILE
+       
+       Hide name and role.
+       Keep avatar.
+    ========================================== */
+
+  .profile > div:first-child {
+    display: none;
+  }
+
+  .avatar {
+    flex-shrink: 0;
+  }
+
+  /* ==========================================
+       PAGE CONTENT
+    ========================================== */
+
+  .page-content {
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    padding: 20px 16px;
+
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+  }
+
+  /* ==========================================
+       DASHBOARD GRID
+    ========================================== */
+
+  .dashboard-grid {
+    width: 100%;
+
+    max-width: 100%;
+
+    grid-template-columns: 1fr;
+
+    min-width: 0;
+  }
+
+  /* ==========================================
+       DASHBOARD CARDS
+    ========================================== */
+
+  .dashboard-cards {
+    width: 100%;
+
+    max-width: 100%;
+
+    grid-template-columns: 1fr;
+
+    min-width: 0;
+  }
+
+  /* ==========================================
+       WELCOME SECTION
+    ========================================== */
+
+  .welcome {
+    width: 100%;
+
+    max-width: 100%;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  /* ==========================================
+       GALLERY
+    ========================================== */
+
+  .gallery-preview {
+    width: 100%;
+
+    max-width: 100%;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  /* ==========================================
+       TABLES
+    ========================================== */
+
+  .table-container {
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  /* ==========================================
+       IMAGES
+    ========================================== */
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ==========================================
+       BUTTONS
+    ========================================== */
+
+  button,
+  .btn {
+    max-width: 100%;
+  }
+
+  /* ==========================================
+       FOOTER
+    ========================================== */
+
+  .footer {
+    width: 100%;
+
+    max-width: 100%;
+
+    padding: 16px 12px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   576px AND BELOW
+   ========================================================= */
+
+@media (max-width: 576px) {
+  /* ==========================================
+       TOPBAR
+    ========================================== */
+
+  .topbar {
+    min-height: 64px;
+
+    padding: 11px 13px;
+
+    gap: 9px;
+  }
+
+  /* ==========================================
+       MENU BUTTON
+    ========================================== */
+
+  .menu-btn {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+
+    border-radius: 9px;
+
+    font-size: 17px;
+  }
+
+  /* ==========================================
+       TITLE
+    ========================================== */
+
+  .top-left h2 {
+    font-size: 18px;
+  }
+
+  /* ==========================================
+       PAGE CONTENT
+    ========================================== */
+
+  .page-content {
+    padding: 16px 12px;
+  }
+
+  /* ==========================================
+       GALLERY
+    ========================================== */
+
+  .gallery-preview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+  }
+
+  /* ==========================================
+       DASHBOARD CARDS
+    ========================================== */
+
+  .dashboard-cards {
+    gap: 12px;
+  }
+
+  /* ==========================================
+       WELCOME
+    ========================================== */
+
+  .welcome {
+    padding: 18px;
+  }
+
+  /* ==========================================
+       SEARCH
+    ========================================== */
+
+  .search-box {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   EXTRA SMALL PHONES
+   400px AND BELOW
+   ========================================================= */
+
+@media (max-width: 400px) {
+  /* ==========================================
+       TOPBAR
+    ========================================== */
+
+  .topbar {
+    padding: 10px 11px;
+
+    gap: 8px;
+  }
+
+  /* ==========================================
+       MENU
+    ========================================== */
+
+  .menu-btn {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    font-size: 16px;
+  }
+
+  /* ==========================================
+       TITLE
+    ========================================== */
+
+  .top-left h2 {
+    font-size: 17px;
+  }
+
+  /* ==========================================
+       CONTENT
+    ========================================== */
+
+  .page-content {
+    padding: 14px 10px;
+  }
+
+  /* ==========================================
+       GALLERY
+    ========================================== */
+
+  .gallery-preview {
+    grid-template-columns: 1fr;
+  }
+
+  /* ==========================================
+       WELCOME
+    ========================================== */
+
+  .welcome {
+    padding: 15px;
+  }
+
+  /* ==========================================
+       FOOTER
+    ========================================== */
+
+  .footer {
+    padding: 13px 8px;
+
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   360px AND BELOW
+   ========================================================= */
+
+@media (max-width: 360px) {
+  /* ==========================================
+       SIDEBAR
+    ========================================== */
+
+  .sidebar {
+    width: 60px;
+
+    left: -60px;
+  }
+
+  .sidebar.sidebar-open {
+    left: 0;
+  }
+
+  .sidebar-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .sidebar-nav {
+    width: 60px;
+  }
+
+  .sidebar-nav a {
+    width: 42px;
+    height: 42px;
+  }
+
+  .logout-link {
+    width: 42px;
+    height: 42px;
+  }
+
+  .sidebar-bottom {
+    width: 60px;
+  }
+
+  /* ==========================================
+       TOPBAR
+    ========================================== */
+
+  .top-left {
+    gap: 8px;
+  }
+
+  .top-left h2 {
+    font-size: 16px;
+  }
+
+  /* ==========================================
+       CONTENT
+    ========================================== */
+
+  .page-content {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+}
+
+/* =========================================================
+   LANDSCAPE MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .sidebar {
+    width: 64px;
+
+    left: -64px;
+  }
+
+  .sidebar.sidebar-open {
+    left: 0;
+  }
+
+  .sidebar-logo {
+    height: 58px;
+  }
+
+  .sidebar-nav a {
+    height: 40px;
+
+    margin: 4px auto;
+  }
+
+  .logout-link {
+    height: 40px;
+
+    margin: 4px auto;
+  }
+
+  .topbar {
+    min-height: 60px;
+  }
+}
+
+/* =========================================================
+   FINAL MOBILE OVERFLOW PROTECTION
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .main,
+  .topbar,
+  .page-content,
+  .footer,
+  .dashboard-grid,
+  .dashboard-cards,
+  .welcome,
+  .gallery-preview {
+    max-width: 100%;
+  }
+
+  .main {
+    overflow-x: hidden;
+  }
+
+  .page-content {
+    overflow-x: hidden;
+  }
 }

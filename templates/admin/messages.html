@@ -268,13 +268,19 @@ Customer Messages
 <div class="messages-header">
 
     <div>
-        <h1>Customer Messages</h1>
+        <!-- <h1>Customer Messages</h1> -->
         <p>Manage all messages submitted from the website.</p>
     </div>
-
     <div class="search-box">
+
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search by name, email or subject...">
+
+        <input type="search" id="searchInput" placeholder="Search messages..." autocomplete="off">
+
+        <button type="button" id="clearSearch" title="Clear search" aria-label="Clear search">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
     </div>
 
 </div>
@@ -456,24 +462,184 @@ Customer Messages
 </div>
 
 {% endif %}
-
 <script>
 
-    const search = document.getElementById("searchInput");
+    document.addEventListener("DOMContentLoaded", function () {
 
-    search.addEventListener("keyup", function () {
+        const searchInput = document.getElementById("searchInput");
+        const clearButton = document.getElementById("clearSearch");
+        const table = document.getElementById("messagesTable");
 
-        let value = this.value.toLowerCase();
+        if (!searchInput || !table) {
+            return;
+        }
 
-        let rows = document.querySelectorAll("#messagesTable tbody tr");
 
-        rows.forEach(row => {
+        const tbody = table.querySelector("tbody");
 
-            let text = row.innerText.toLowerCase();
 
-            row.style.display = text.includes(value) ? "" : "none";
+        /* =====================================================
+           SEARCH FUNCTION
+        ===================================================== */
 
-        });
+        function searchMessages() {
+
+            const value =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const rows =
+                tbody.querySelectorAll(
+                    "tr:not(.no-search-results)"
+                );
+
+
+            let visibleCount = 0;
+
+
+            rows.forEach(row => {
+
+                const text =
+                    row.innerText.toLowerCase();
+
+
+                if (
+                    value === "" ||
+                    text.includes(value)
+                ) {
+
+                    row.style.display = "";
+
+                    visibleCount++;
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+
+            /* =================================================
+               CLEAR BUTTON
+            ================================================= */
+
+            if (clearButton) {
+
+                if (value.length > 0) {
+
+                    clearButton.style.display = "flex";
+
+                } else {
+
+                    clearButton.style.display = "none";
+
+                }
+
+            }
+
+
+            /* =================================================
+               NO RESULTS MESSAGE
+            ================================================= */
+
+            let noResults =
+                tbody.querySelector(".no-search-results");
+
+
+            if (visibleCount === 0 && value !== "") {
+
+                if (!noResults) {
+
+                    noResults =
+                        document.createElement("tr");
+
+                    noResults.className =
+                        "no-search-results";
+
+                    noResults.innerHTML = `
+                    <td colspan="6">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <strong>No messages found</strong>
+                        <br>
+                        <span>
+                            No message matches
+                            "<b>${value}</b>"
+                        </span>
+                    </td>
+                `;
+
+                    tbody.appendChild(noResults);
+                }
+
+                noResults.style.display = "";
+
+            } else {
+
+                if (noResults) {
+
+                    noResults.remove();
+
+                }
+
+            }
+
+        }
+
+
+        /* =====================================================
+           INPUT
+        ===================================================== */
+
+        searchInput.addEventListener(
+            "input",
+            searchMessages
+        );
+
+
+        /* =====================================================
+           CLEAR SEARCH
+        ===================================================== */
+
+        if (clearButton) {
+
+            clearButton.addEventListener(
+                "click",
+                function () {
+
+                    searchInput.value = "";
+
+                    searchMessages();
+
+                    searchInput.focus();
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           ESCAPE KEY
+        ===================================================== */
+
+        searchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Escape") {
+
+                    searchInput.value = "";
+
+                    searchMessages();
+
+                }
+
+            }
+        );
 
     });
 

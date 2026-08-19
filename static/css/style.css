@@ -291,8 +291,9 @@ nav ul li a:hover::after {
 }
 
 .section-header p {
-  color: var(--text-light);
-  font-size: 1.05rem;
+  /* color: var(--text-light); */
+  font-size: 1.5rem;
+  color: #08661e;
 }
 
 /* =========================================
@@ -358,7 +359,7 @@ nav ul li a:hover::after {
 
 .choose-card h3 {
   font-family: "Outfit", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 600;
   color: var(--dark);
   margin-bottom: 0.8rem;
@@ -366,7 +367,7 @@ nav ul li a:hover::after {
 
 .choose-card p {
   color: var(--text-light);
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   line-height: 1.7;
 }
 
@@ -438,7 +439,7 @@ nav ul li a:hover::after {
 
 .service-card h3 {
   font-family: "Outfit", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 600;
   color: var(--dark);
   margin-bottom: 0.8rem;
@@ -446,7 +447,7 @@ nav ul li a:hover::after {
 
 .service-card p {
   color: var(--text-light);
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   line-height: 1.7;
 }
 
@@ -521,7 +522,7 @@ nav ul li a:hover::after {
 
 .product-content p {
   color: var(--text-light);
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -608,7 +609,7 @@ nav ul li a:hover::after {
 
 .contact-info .info-box p {
   color: var(--text-light);
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .contact-form form {
@@ -727,7 +728,7 @@ nav ul li a:hover::after {
 
 .footer-box p {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.8;
   margin-bottom: 0.5rem;
 }
@@ -750,7 +751,7 @@ nav ul li a:hover::after {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   transition: var(--transition);
-  font-size: 1rem;
+  font-size: 1.1rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -952,7 +953,7 @@ nav ul li a:hover::after {
   }
 
   .hero-content p {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 
   .hero-content .btn-secondary {

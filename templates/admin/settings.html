@@ -619,6 +619,277 @@ Settings
         }
 
     }
+
+    /* =========================================================
+   ACCOUNT INFORMATION
+========================================================= */
+
+    .account-information {
+        width: 100%;
+
+        background: #ffffff;
+
+        border-radius: 18px;
+
+        padding: 28px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.05);
+
+        margin-bottom: 25px;
+    }
+
+
+    /* =========================================================
+   HEADER
+========================================================= */
+
+    .settings-card-header {
+        display: flex;
+
+        align-items: center;
+
+        gap: 16px;
+    }
+
+
+    .settings-icon {
+        width: 46px;
+        height: 46px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        background: #eef4ff;
+
+        color: #2563eb;
+
+        border-radius: 14px;
+
+        font-size: 18px;
+    }
+
+
+    .settings-card-header h2 {
+        margin: 0;
+
+        color: #14213d;
+
+        font-size: 21px;
+
+        font-weight: 700;
+    }
+
+
+    .settings-card-header p {
+        margin: 5px 0 0;
+
+        color: #64748b;
+
+        font-size: 13px;
+    }
+
+
+    /* =========================================================
+   DIVIDER
+========================================================= */
+
+    .settings-divider {
+        width: 100%;
+
+        height: 1px;
+
+        background: #e5e7eb;
+
+        margin: 20px 0 25px;
+    }
+
+
+    /* =========================================================
+   ACCOUNT GRID
+========================================================= */
+
+    .account-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 24px 22px;
+    }
+
+
+    /* =========================================================
+   ACCOUNT FIELD
+========================================================= */
+
+    .account-field {
+        min-width: 0;
+    }
+
+
+    .account-field label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #14213d;
+
+        font-size: 14px;
+
+        font-weight: 600;
+    }
+
+
+    /* =========================================================
+   VALUE
+========================================================= */
+
+    .account-value {
+        width: 100%;
+
+        min-height: 50px;
+
+        display: flex;
+
+        align-items: center;
+
+        padding: 0 15px;
+
+        background: #f8fafc;
+
+        border: 1px solid #dbe2ea;
+
+        border-radius: 10px;
+
+        color: #14213d;
+
+        font-size: 14px;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+    }
+
+
+    /* =========================================================
+   STATUS
+========================================================= */
+
+    .status-value {
+        color: #166534;
+
+        font-weight: 600;
+    }
+
+
+    .status-dot {
+        width: 9px;
+        height: 9px;
+
+        margin-right: 9px;
+
+        background: #16a34a;
+
+        border-radius: 50%;
+
+        display: inline-block;
+
+        flex-shrink: 0;
+    }
+
+
+    /* =========================================================
+   TABLET
+========================================================= */
+
+    @media (max-width: 768px) {
+
+        .account-information {
+            padding: 22px;
+        }
+
+        .account-grid {
+            grid-template-columns: 1fr;
+
+            gap: 18px;
+        }
+
+    }
+
+
+    /* =========================================================
+   MOBILE
+========================================================= */
+
+    @media (max-width: 480px) {
+
+        .account-information {
+            padding: 18px;
+
+            border-radius: 15px;
+        }
+
+
+        .settings-card-header {
+            align-items: flex-start;
+
+            gap: 12px;
+        }
+
+
+        .settings-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+        }
+
+
+        .settings-card-header h2 {
+            font-size: 18px;
+        }
+
+
+        .settings-card-header p {
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        .settings-divider {
+            margin: 18px 0 20px;
+        }
+
+
+        .account-grid {
+            gap: 15px;
+        }
+
+
+        .account-field label {
+            font-size: 13px;
+        }
+
+
+        .account-value {
+            min-height: 46px;
+
+            font-size: 13px;
+
+            padding: 0 13px;
+        }
+
+    }
 </style>
 
 
@@ -630,7 +901,7 @@ Settings
 
     <div class="settings-header">
 
-        <h1>Settings</h1>
+        <!-- <h1>Settings</h1> -->
 
         <p>
             Manage your account information and dashboard settings.
@@ -878,86 +1149,134 @@ Settings
             </div>
 
         </div>
+<!-- =====================================================
+     ACCOUNT INFORMATION
+===================================================== -->
+
+<section class="settings-card account-information">
+
+    <div class="settings-card-header">
+
+        <div class="settings-icon">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+
+        <div>
+            <h2>Account Information</h2>
+
+            <p>
+                Information about your MNYALA administrator account.
+            </p>
+        </div>
+
+    </div>
 
 
-        <!-- =================================
-             ACCOUNT INFORMATION
-        ================================== -->
+    <div class="settings-divider"></div>
 
-        <div class="settings-card full-width">
 
-            <div class="settings-card-header">
+    <div class="account-grid">
 
-                <div class="settings-card-icon">
+        <!-- ACCOUNT ID -->
+        <div class="account-field">
 
-                    <i class="fa-solid fa-circle-info"></i>
+            <label>Account ID</label>
 
-                </div>
-
-                <div>
-
-                    <h2>Account Information</h2>
-
-                    <p>
-                        Information about your MNYALA administrator account.
-                    </p>
-
-                </div>
-
+            <div class="account-value">
+                #{{ user.id }}
             </div>
 
-
-            <div class="settings-grid" style="margin-bottom:0;">
-
-                <div class="form-group">
-
-                    <label>
-                        Account ID
-                    </label>
-
-                    <input type="text" class="form-control" value="#{{ user.id }}" readonly>
-
-                </div>
+        </div>
 
 
-                <div class="form-group">
+        <!-- ACCOUNT ROLE -->
+        <div class="account-field">
 
-                    <label>
-                        Account Role
-                    </label>
+            <label>Account Role</label>
 
-                    <input type="text" class="form-control" value="{{ user.role|default('Administrator')|title }}"
-                        readonly>
+            <div class="account-value">
 
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Account Created
-                    </label>
-
-                    <input type="text" class="form-control"
-                        value="{{ user.created_at.strftime('%d %B %Y') if user.created_at else 'N/A' }}" readonly>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Account Status
-                    </label>
-
-                    <input type="text" class="form-control" value="Active" readonly>
-
-                </div>
+                {% if user.role %}
+                    {{ user.role.name }}
+                {% else %}
+                    Not assigned
+                {% endif %}
 
             </div>
 
         </div>
 
+
+        <!-- ACCOUNT CREATED -->
+        <div class="account-field">
+
+            <label>Account Created</label>
+
+            <div class="account-value">
+
+                {% if user.created_at %}
+
+                    {{ user.created_at.strftime("%d %B %Y") }}
+
+                {% else %}
+
+                    Not available
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ACCOUNT STATUS -->
+        <div class="account-field">
+
+            <label>Account Status</label>
+
+            <div class="account-value status-value">
+
+                <span class="status-dot"></span>
+
+                Active
+
+            </div>
+
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="account-field">
+
+            <label>Email Address</label>
+
+            <div class="account-value">
+
+                {{ user.email }}
+
+            </div>
+
+        </div>
+
+
+        <!-- USERNAME -->
+        <div class="account-field">
+
+            <label>Username</label>
+
+            <div class="account-value">
+
+                {{ user.username }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+       
     </div>
 
 </div>
