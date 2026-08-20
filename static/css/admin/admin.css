@@ -375,3 +375,99 @@ small {
   text-decoration: none;
 }
 
+/* ========================================= */
+/* HAMBURGER MENU (Ukubwa umeongezwa) */
+/* ========================================= */
+.hamburger-menu {
+  display: none; /* Imefichwa kwenye Desktop */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 4000px; /* UMEONGEZWA: Upana mkubwa zaidi */
+  height: 3000px; /* UMEONGEZWA: Urefu mkubwa zaidi */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+  margin-right: 15px;
+}
+
+.hamburger-menu span {
+  /* width: 100%; */
+  max-width:12000vh;
+  height: 40000px; /* UMEONGEZWA: Mistari minene zaidi kuonekana wazi */
+  background: #13233f;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Animation ya X inapofunguka */
+.hamburger-menu.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+.hamburger-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-menu.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
+/* ========================================= */
+/* SIDEBAR OVERLAY (Giza la nyuma) */
+/* ========================================= */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Giza la wastani */
+  z-index: 998;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+/* ========================================= */
+/* RESPONSIVE: Mobile & Tablet View */
+/* ========================================= */
+@media (max-width: 992px) {
+  .hamburger-menu {
+    display: flex; /* Inaonekana kwenye simu/tablet */
+  }
+
+  /* Sidebar inaelea JUU YA content, haikusi wala kuisukuma */
+  .sidebar {
+    position: fixed;
+    left: -300px; /* Imefichwa nje ya screen upande wa kushoto */
+    top: 0;
+    height: 100vh;
+    width: 280px; /* Upana wa sidebar */
+    transition: left 0.3s ease;
+    z-index: 1000; /* Juu ya content na overlay */
+    overflow-y: auto;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar.active {
+    left: 0; /* Inaingia ndani ya screen */
+  }
+
+  /* MUHIMU: Main content HAISOGEI, inabaki 100% */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw;
+    overflow-x: hidden; /* Inazuia content kusogea kulia/kushoto (horizontal scroll) */
+  }
+
+  /* Hakikisha body yote haina scroll ya mlalo */
+  body {
+    overflow-x: hidden;
+  }
+}

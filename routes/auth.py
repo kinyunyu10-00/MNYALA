@@ -21,8 +21,7 @@ from extensions import db
 
 from models import (
     User,
-    Message,
-    PasswordResetToken
+    Message
 )
 
 
@@ -76,11 +75,7 @@ def super_admin_required():
 # ==========================================================
 # LOGIN
 # ==========================================================
-
-@auth.route(
-    "/login",
-    methods=["GET", "POST"]
-)
+@auth.route("/login", methods=["GET", "POST"])
 def login():
 
     # ------------------------------------------------------
@@ -89,30 +84,20 @@ def login():
 
     if "user_id" in session:
 
-        user = User.query.get(
-            session["user_id"]
-        )
+        user = User.query.get(session["user_id"])
 
         if user:
 
-            # Admin / Super Admin
-            if user.role in [
-                "admin",
-                "super_admin"
-            ]:
-
+            if user.role in ["admin", "super_admin"]:
                 return redirect(
                     url_for("auth.dashboard")
                 )
 
-            # Customer
             elif user.role == "customer":
-
                 return redirect(
                     url_for("public.home")
                 )
 
-        # Invalid session
         session.clear()
 
     # ------------------------------------------------------
@@ -170,39 +155,56 @@ def login():
             session.clear()
 
             session["user_id"] = user.id
-
             session["user_role"] = user.role
 
             # ------------------------------------------------
-            # SUCCESS MESSAGE
-            # ------------------------------------------------
-
-            flash(
-                "Welcome back!",
-                "success"
-            )
-
-            # ------------------------------------------------
-            # ROLE REDIRECTION
+            # SUPER ADMIN
             # ------------------------------------------------
 
             if user.role == "super_admin":
 
+                flash(
+                    "Welcome, Super Administrator!",
+                    "success"
+                )
+
                 return redirect(
                     url_for("auth.dashboard")
                 )
+
+            # ------------------------------------------------
+            # ADMIN
+            # ------------------------------------------------
 
             elif user.role == "admin":
 
+                flash(
+                    "Welcome to the Admin Dashboard.",
+                    "success"
+                )
+
                 return redirect(
                     url_for("auth.dashboard")
                 )
 
+            # ------------------------------------------------
+            # CUSTOMER
+            # ------------------------------------------------
+
             elif user.role == "customer":
+
+                flash(
+                    "Welcome back!",
+                    "success"
+                )
 
                 return redirect(
                     url_for("public.home")
                 )
+
+            # ------------------------------------------------
+            # UNKNOWN ROLE
+            # ------------------------------------------------
 
             else:
 
@@ -229,7 +231,6 @@ def login():
     return render_template(
         "auth/login.html"
     )
-
 
 # ==========================================================
 # FORGOT PASSWORD
@@ -299,18 +300,6 @@ def forgot_password():
         )
 
     # ------------------------------------------------------
-    # DELETE OLD RESET TOKENS
-    # ------------------------------------------------------
-
-    PasswordResetToken.query.filter_by(
-        user_id=user.id
-    ).delete(
-        synchronize_session=False
-    )
-
-    db.session.commit()
-
-    # ------------------------------------------------------
     # GENERATE SECURE TOKEN
     # ------------------------------------------------------
 
@@ -326,18 +315,12 @@ def forgot_password():
     )
 
     # ------------------------------------------------------
-    # CREATE RESET TOKEN
+    # SAVE TOKEN DIRECTLY TO USER
     # ------------------------------------------------------
 
-    reset_token = PasswordResetToken(
-        user_id=user.id,
-        token=token,
-        expires_at=expires_at
-    )
+    user.reset_token = token
 
-    db.session.add(
-        reset_token
-    )
+    user.reset_token_expires = expires_at
 
     db.session.commit()
 
@@ -355,7 +338,7 @@ def forgot_password():
     # DEVELOPMENT TEST
     #
     # Kwa sasa link inaonekana terminal.
-    # Baadaye tutaipeleka kupitia email.
+    # Baadaye tunaweza kuiunganisha na email.
     # ------------------------------------------------------
 
     print()
@@ -387,18 +370,18 @@ def forgot_password():
 def reset_password(token):
 
     # ------------------------------------------------------
-    # FIND RESET TOKEN
+    # FIND USER USING RESET TOKEN
     # ------------------------------------------------------
 
-    reset_token = PasswordResetToken.query.filter_by(
-        token=token
+    user = User.query.filter_by(
+        reset_token=token
     ).first()
 
     # ------------------------------------------------------
     # TOKEN NOT FOUND
     # ------------------------------------------------------
 
-    if not reset_token:
+    if not user:
 
         flash(
             "Invalid or expired password reset link.",
@@ -413,45 +396,20 @@ def reset_password(token):
     # CHECK TOKEN EXPIRATION
     # ------------------------------------------------------
 
-    if datetime.utcnow() > reset_token.expires_at:
+    if (
+        not user.reset_token_expires
+        or datetime.utcnow() > user.reset_token_expires
+    ):
 
-        db.session.delete(
-            reset_token
-        )
+        # Clear expired token
+        user.reset_token = None
+
+        user.reset_token_expires = None
 
         db.session.commit()
 
         flash(
             "This password reset link has expired.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.forgot_password")
-        )
-
-    # ------------------------------------------------------
-    # FIND USER
-    # ------------------------------------------------------
-
-    user = User.query.get(
-        reset_token.user_id
-    )
-
-    # ------------------------------------------------------
-    # USER NOT FOUND
-    # ------------------------------------------------------
-
-    if not user:
-
-        db.session.delete(
-            reset_token
-        )
-
-        db.session.commit()
-
-        flash(
-            "User account was not found.",
             "danger"
         )
 
@@ -562,12 +520,12 @@ def reset_password(token):
     )
 
     # ------------------------------------------------------
-    # DELETE USED TOKEN
+    # CLEAR USED RESET TOKEN
     # ------------------------------------------------------
 
-    db.session.delete(
-        reset_token
-    )
+    user.reset_token = None
+
+    user.reset_token_expires = None
 
     # ------------------------------------------------------
     # SAVE DATABASE

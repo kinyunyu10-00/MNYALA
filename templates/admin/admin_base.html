@@ -5,6 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>
         {% block title %}MNYALA Admin{% endblock %}
@@ -40,6 +41,7 @@ SIDEBAR
 ====================== -->
     <aside class="sidebar">
 
+
         <div class="sidebar-logo">
             <i class="fa-solid fa-store"></i>
             <span>MNYALA</span>
@@ -54,33 +56,33 @@ SIDEBAR
                 <span>Dashboard</span>
             </a>
 
-        <!-- Products (preview only - management not built yet) -->
-        <a href="{{ url_for('public.products') }}" target="_blank" rel="noopener" class="sidebar-disabled">
-            <i class="fa-solid fa-box"></i>
-            <span>Products</span>
-            <span class="sidebar-soon">View site</span>
-        </a>
+            <!-- Products (preview only - management not built yet) -->
+            <a href="{{ url_for('public.products') }}" target="_blank" rel="noopener" class="sidebar-disabled">
+                <i class="fa-solid fa-box"></i>
+                <span>Products</span>
+                <span class="sidebar-soon">View site</span>
+            </a>
 
-        <!-- Gallery (preview only - management not built yet) -->
-        <a href="{{ url_for('public.gallery') }}" target="_blank" rel="noopener" class="sidebar-disabled">
-            <i class="fa-solid fa-image"></i>
-            <span>Gallery</span>
-            <span class="sidebar-soon">View site</span>
-        </a>
+            <!-- Gallery (preview only - management not built yet) -->
+            <a href="{{ url_for('public.gallery') }}" target="_blank" rel="noopener" class="sidebar-disabled">
+                <i class="fa-solid fa-image"></i>
+                <span>Gallery</span>
+                <span class="sidebar-soon">View site</span>
+            </a>
 
-        <!-- Orders (not built yet) -->
-        <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Orders</span>
-            <span class="sidebar-soon">Soon</span>
-        </a>
+            <!-- Orders (not built yet) -->
+            <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Orders</span>
+                <span class="sidebar-soon">Soon</span>
+            </a>
 
-        <!-- Customers (not built yet) -->
-        <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
-            <i class="fa-solid fa-users"></i>
-            <span>Customers</span>
-            <span class="sidebar-soon">Soon</span>
-        </a>
+            <!-- Customers (not built yet) -->
+            <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
+                <i class="fa-solid fa-users"></i>
+                <span>Customers</span>
+                <span class="sidebar-soon">Soon</span>
+            </a>
 
             <!-- Messages -->
             <a href="{{ url_for('auth.messages') }}"
@@ -88,19 +90,19 @@ SIDEBAR
                 <i class="fa-solid fa-envelope"></i>
                 <span>Messages</span>
 
-            {% if unread_messages is defined and unread_messages > 0 %}
+                {% if unread_messages is defined and unread_messages > 0 %}
                 <span class="badge">
                     {{ unread_messages }}
                 </span>
                 {% endif %}
             </a>
 
-        <!-- Reports (not built yet) -->
-        <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Reports</span>
-            <span class="sidebar-soon">Soon</span>
-        </a>
+            <!-- Reports (not built yet) -->
+            <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Reports</span>
+                <span class="sidebar-soon">Soon</span>
+            </a>
 
             <!-- Settings -->
             <a href="{{ url_for('auth.settings') }}"
@@ -108,7 +110,10 @@ SIDEBAR
                 <i class="fa-solid fa-gear"></i>
                 <span>Settings</span>
             </a>
-
+            <button class="mobile-sidebar-toggle" id="sidebarToggle"
+                style="display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: #13233f;">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </nav>
 
         <!-- Logout -->
@@ -130,92 +135,46 @@ MAIN CONTENT
     <div class="main">
 
         <!-- TOPBAR -->
-
         <header class="topbar">
 
             <div class="top-left">
 
-                <!-- <button class="menu-btn">
+                <!-- ========================================== -->
+                <!-- WEKA HAMBURGER BUTTON HAPA (Ndani ya top-left) -->
+                <!-- ========================================== -->
+                <button class="hamburger-menu" id="hamburgerMenu" onclick="toggleSidebar()" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
-                    <i class="fa-solid fa-bars"></i>
-
-                </button> -->
-
-                 <h2>
-
+                <h2>
                     {% block page_name %}
-
                     Dashboard
-
                     {% endblock %}
-
-                </h2> 
-
+                </h2>
             </div>
 
-            <!-- <div class="search-box">
-
-    <i class="fa-solid fa-search"></i>
-
-    <input
-        type="search"
-        id="messageSearch"
-        placeholder="Search messages..."
-        autocomplete="off"
-    >
-
-    <button
-        type="button"
-        id="clearMessageSearch"
-        aria-label="Clear search"
-    >
-        <i class="fa-solid fa-xmark"></i>
-    </button>
-
-</div> -->
             <div class="top-right">
-
                 <div class="notification">
-
                     <i class="fa-solid fa-bell"></i>
-
-                    <span class="count">
-
-                        0
-
-                    </span>
-
+                    <span class="count">0</span>
                 </div>
-
                 <div class="profile">
-
                     <div>
-
-                        <h4>
-
-                            Admin
-
-                        </h4>
-
-                        <small>
-
-                            Administrator
-
-                        </small>
-
+                        <h4>Admin</h4>
+                        <small>Administrator</small>
                     </div>
-
-                    <div class="avatar">
-
-                        A
-
-                    </div>
-
+                    <div class="avatar">A</div>
                 </div>
-
             </div>
 
         </header>
+        <!-- ========================================== -->
+        <!-- WEKA OVERLAY HAPA (Nje ya header, mwanzoni mwa content) -->
+        <!-- ========================================== -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
 
         <!-- PAGE CONTENT -->
 

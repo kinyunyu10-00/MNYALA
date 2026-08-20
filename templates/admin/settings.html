@@ -1149,134 +1149,134 @@ Settings
             </div>
 
         </div>
-<!-- =====================================================
+        <!-- =====================================================
      ACCOUNT INFORMATION
 ===================================================== -->
 
-<section class="settings-card account-information">
+        <section class="settings-card account-information">
 
-    <div class="settings-card-header">
+            <div class="settings-card-header">
 
-        <div class="settings-icon">
-            <i class="fa-solid fa-circle-info"></i>
-        </div>
+                <div class="settings-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
 
-        <div>
-            <h2>Account Information</h2>
+                <div>
+                    <h2>Account Information</h2>
 
-            <p>
-                Information about your MNYALA administrator account.
-            </p>
-        </div>
-
-    </div>
-
-
-    <div class="settings-divider"></div>
-
-
-    <div class="account-grid">
-
-        <!-- ACCOUNT ID -->
-        <div class="account-field">
-
-            <label>Account ID</label>
-
-            <div class="account-value">
-                #{{ user.id }}
-            </div>
-
-        </div>
-
-
-        <!-- ACCOUNT ROLE -->
-        <div class="account-field">
-
-            <label>Account Role</label>
-
-            <div class="account-value">
-
-                {% if user.role %}
-                    {{ user.role.name }}
-                {% else %}
-                    Not assigned
-                {% endif %}
+                    <p>
+                        Information about your MNYALA administrator account.
+                    </p>
+                </div>
 
             </div>
 
-        </div>
+
+            <div class="settings-divider"></div>
 
 
-        <!-- ACCOUNT CREATED -->
-        <div class="account-field">
+            <div class="account-grid">
 
-            <label>Account Created</label>
+                <!-- ACCOUNT ID -->
+                <div class="account-field">
 
-            <div class="account-value">
+                    <label>Account ID</label>
 
-                {% if user.created_at %}
+                    <div class="account-value">
+                        #{{ user.id }}
+                    </div>
 
-                    {{ user.created_at.strftime("%d %B %Y") }}
+                </div>
 
-                {% else %}
 
-                    Not available
+                <!-- ACCOUNT ROLE -->
+                <div class="account-field">
 
-                {% endif %}
+                    <label>Account Role</label>
+
+                    <div class="account-value">
+
+                        {% if user.role %}
+                        {{ user.role.name }}
+                        {% else %}
+                        Not assigned
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACCOUNT CREATED -->
+                <div class="account-field">
+
+                    <label>Account Created</label>
+
+                    <div class="account-value">
+
+                        {% if user.created_at %}
+
+                        {{ user.created_at.strftime("%d %B %Y") }}
+
+                        {% else %}
+
+                        Not available
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACCOUNT STATUS -->
+                <div class="account-field">
+
+                    <label>Account Status</label>
+
+                    <div class="account-value status-value">
+
+                        <span class="status-dot"></span>
+
+                        Active
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+                <div class="account-field">
+
+                    <label>Email Address</label>
+
+                    <div class="account-value">
+
+                        {{ user.email }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- USERNAME -->
+                <div class="account-field">
+
+                    <label>Username</label>
+
+                    <div class="account-value">
+
+                        {{ user.username }}
+
+                    </div>
+
+                </div>
 
             </div>
 
-        </div>
+        </section>
 
 
-        <!-- ACCOUNT STATUS -->
-        <div class="account-field">
-
-            <label>Account Status</label>
-
-            <div class="account-value status-value">
-
-                <span class="status-dot"></span>
-
-                Active
-
-            </div>
-
-        </div>
-
-
-        <!-- EMAIL -->
-        <div class="account-field">
-
-            <label>Email Address</label>
-
-            <div class="account-value">
-
-                {{ user.email }}
-
-            </div>
-
-        </div>
-
-
-        <!-- USERNAME -->
-        <div class="account-field">
-
-            <label>Username</label>
-
-            <div class="account-value">
-
-                {{ user.username }}
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-       
     </div>
 
 </div>
