@@ -119,6 +119,40 @@ SIDEBAR
   font-size: 11px;
 }
 
+.sidebar a.sidebar-disabled {
+  color: #64748b;
+
+  cursor: default;
+}
+
+.sidebar a.sidebar-disabled:hover {
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #94a3b8;
+}
+
+.sidebar-soon {
+  margin-left: auto;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
+  color: #94a3b8;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  padding: 3px 8px;
+
+  border-radius: 20px;
+
+  white-space: nowrap;
+}
+
 .logout {
   margin-top: 40px;
 }

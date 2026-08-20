@@ -1,6 +1,7 @@
-import os   
+import os
+
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:56789@localhost:5432/mnyala_db"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = "mysecretkey"
+    SECRET_KEY = os.environ.get("SECRET_KEY")

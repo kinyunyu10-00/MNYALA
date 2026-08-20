@@ -10,61 +10,314 @@ View Message
 
 {% block content %}
 
-<div class="card">
+<style>
+    .vm-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
 
-    <div class="section-header">
-        <h2>Customer Message</h2>
+    .vm-header h1 {
+        font-size: 30px;
+        font-weight: 700;
+        color: #14213d;
+    }
 
-        <a href="{{ url_for('auth.messages') }}" class="btn">
-            ← Back
-        </a>
+    .vm-header p {
+        color: #6b7280;
+        margin-top: 4px;
+    }
+
+    .vm-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #eef4ff;
+        color: #2563eb;
+        padding: 10px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+    .vm-back:hover {
+        background: #dbe8ff;
+    }
+
+    .vm-layout {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .vm-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
+    }
+
+    .vm-sender {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eef0f4;
+    }
+
+    .vm-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #2563eb;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+
+    .vm-sender-name {
+        font-size: 18px;
+        font-weight: 700;
+        color: #14213d;
+    }
+
+    .vm-status {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 5px 14px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .vm-status.read {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .vm-status.unread {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .vm-detail-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .vm-detail-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .vm-detail-row i {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 10px;
+        background: #f1f5f9;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .vm-detail-label {
+        font-size: 12px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 2px;
+    }
+
+    .vm-detail-value {
+        font-size: 15px;
+        color: #14213d;
+        font-weight: 600;
+        word-break: break-word;
+    }
+
+    .vm-message-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .vm-message-head h3 {
+        font-size: 20px;
+        color: #14213d;
+    }
+
+    .vm-subject {
+        font-size: 15px;
+        font-weight: 600;
+        color: #2563eb;
+        background: #eef4ff;
+        padding: 8px 16px;
+        border-radius: 30px;
+    }
+
+    .vm-message-box {
+        background: #f8fafc;
+        padding: 24px;
+        border-radius: 14px;
+        border: 1px solid #eef0f4;
+        line-height: 1.9;
+        color: #1e293b;
+        white-space: pre-wrap;
+        font-size: 15px;
+        min-height: 120px;
+    }
+
+    .vm-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .vm-btn-reply {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #16a34a;
+        color: #fff;
+        padding: 12px 22px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+    .vm-btn-reply:hover {
+        background: #15803d;
+    }
+
+    .vm-btn-delete {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff1f2;
+        color: #dc2626;
+        padding: 12px 22px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+    .vm-btn-delete:hover {
+        background: #fee2e2;
+    }
+
+    @media (max-width: 900px) {
+        .vm-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="vm-header">
+    <div>
+        <h1>Customer Message</h1>
+        <p>Full details of the message submitted from the contact page.</p>
     </div>
 
-    <div class="message-details">
+    <a href="{{ url_for('auth.messages') }}" class="vm-back">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Messages
+    </a>
+</div>
 
-        <div class="detail-row">
-            <strong>Name:</strong>
-            <span>{{ message.fullname }}</span>
+<div class="vm-layout">
+
+    <!-- SENDER INFO CARD -->
+    <div class="vm-card">
+
+        <div class="vm-sender">
+            <div class="vm-avatar">
+                {{ message.fullname[:1].upper() if message.fullname else "?" }}
+            </div>
+
+            <div class="vm-sender-name">{{ message.fullname }}</div>
+
+            {% if message.is_read %}
+                <span class="vm-status read">Read</span>
+            {% else %}
+                <span class="vm-status unread">Unread</span>
+            {% endif %}
         </div>
 
-        <div class="detail-row">
-            <strong>Email:</strong>
-            <span>{{ message.email }}</span>
+        <div class="vm-detail-row">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+                <div class="vm-detail-label">Email</div>
+                <div class="vm-detail-value">{{ message.email }}</div>
+            </div>
         </div>
 
-        <div class="detail-row">
-            <strong>Phone:</strong>
-            <span>{{ message.phone }}</span>
+        <div class="vm-detail-row">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+                <div class="vm-detail-label">Phone</div>
+                <div class="vm-detail-value">{{ message.phone or "—" }}</div>
+            </div>
         </div>
 
-        <div class="detail-row">
-            <strong>Subject:</strong>
-            <span>{{ message.subject }}</span>
+        <div class="vm-detail-row">
+            <i class="fa-solid fa-calendar-days"></i>
+            <div>
+                <div class="vm-detail-label">Date Received</div>
+                <div class="vm-detail-value">{{ message.created_at.strftime("%d %B %Y, %H:%M") }}</div>
+            </div>
         </div>
 
-        <div class="detail-row">
-            <strong>Date:</strong>
-            <span>{{ message.created_at.strftime("%d %B %Y %H:%M") }}</span>
+    </div>
+
+    <!-- MESSAGE CONTENT CARD -->
+    <div class="vm-card">
+
+        <div class="vm-message-head">
+            <h3>Message</h3>
+            {% if message.subject %}
+                <span class="vm-subject">{{ message.subject }}</span>
+            {% endif %}
         </div>
 
-        <hr>
+        <div class="vm-message-box">{{ message.message }}</div>
 
-        <h3>Message</h3>
+        <div class="vm-actions">
 
-        <div class="message-box">
-            {{ message.message }}
+            <a href="mailto:{{ message.email }}?subject=Re: {{ message.subject or 'Your message to MNYALA' }}"
+                class="vm-btn-reply">
+                <i class="fa-solid fa-reply"></i>
+                Reply by Email
+            </a>
+
+            <a
+                href="{{ url_for('auth.delete_message', id=message.id) }}"
+                class="vm-btn-delete"
+                onclick="return confirm('Delete this message? This cannot be undone.')">
+                <i class="fa-solid fa-trash"></i>
+                Delete Message
+            </a>
+
         </div>
-
-        <br>
-
-        <a
-            href="{{ url_for('auth.delete_message', id=message.id) }}"
-            class="btn-delete"
-            onclick="return confirm('Delete this message?')">
-
-            Delete Message
-
-        </a>
 
     </div>
 
