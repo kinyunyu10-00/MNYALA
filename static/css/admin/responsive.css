@@ -1,1261 +1,768 @@
 /* =========================================================
-   MNYALA ADMIN DASHBOARD
-   RESPONSIVE.CSS
+   MNYALA ADMIN - FIXED RESPONSIVE CSS
    ========================================================= */
 
 /* =========================================================
-   GLOBAL RESET / RESPONSIVE SAFETY
+   GLOBAL RESET
    ========================================================= */
-
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-
-  overflow-x: hidden;
+html, body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 /* =========================================================
-   DEFAULT DESKTOP
-   1201px AND ABOVE
+   SIDEBAR - DESKTOP (Default)
    ========================================================= */
-
-.main {
-  width: calc(100% - 260px);
-
-  margin-left: 260px;
-
-  min-height: 100vh;
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-
-  transition:
-    margin-left 0.3s ease,
-    width 0.3s ease;
-}
-
 .sidebar {
-  width: 260px;
-
-  position: fixed;
-
-  left: 0;
-  top: 0;
-  bottom: 0;
-
-  z-index: 2000;
-}
-
-/* =========================================================
-   LARGE DESKTOP
-   1201px+
-   ========================================================= */
-
-@media (min-width: 1201px) {
-  .sidebar {
     width: 260px;
+    position: fixed;
     left: 0;
-  }
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    background: #1e293b;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
 
-  .main {
-    width: calc(100% - 260px);
+/* =========================================================
+   MAIN CONTENT - DESKTOP
+   ========================================================= */
+.main {
     margin-left: 260px;
-  }
-
-  .topbar {
-    width: 100%;
-  }
-
-  .page-content {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-/* =========================================================
-   TABLET
-   993px - 1200px
-
-   Sidebar becomes ICON ONLY
-   ========================================================= */
-
-@media (min-width: 993px) and (max-width: 1200px) {
-  /* ==========================================
-       SIDEBAR
-    ========================================== */
-
-  .sidebar {
-    width: 72px;
-
-    position: fixed;
-
-    left: 0;
-    top: 0;
-    bottom: 0;
-
-    z-index: 2000;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    transition:
-      width 0.3s ease,
-      left 0.3s ease;
-  }
-
-  /* ==========================================
-       HIDE SIDEBAR TEXT
-    ========================================== */
-
-  .sidebar-logo span,
-  .sidebar-nav span:not(.sidebar-badge),
-  .logout-link span {
-    display: none !important;
-  }
-
-  /* ==========================================
-       CENTER LOGO
-    ========================================== */
-
-  .sidebar-logo {
-    width: 72px;
-    height: 70px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-  }
-
-  .sidebar-logo i {
-    margin: 0;
-
-    font-size: 20px;
-  }
-
-  /* ==========================================
-       NAVIGATION
-    ========================================== */
-
-  .sidebar-nav {
-    width: 72px;
-  }
-
-  .sidebar-nav a {
-    position: relative;
-
-    width: 48px;
-    height: 48px;
-
-    margin: 6px auto;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-  }
-
-  .sidebar-nav a i {
-    width: auto;
-
-    margin: 0;
-
-    font-size: 17px;
-  }
-
-  /* ==========================================
-       BADGE
-    ========================================== */
-
-  .sidebar-badge {
-    position: absolute;
-
-    top: 2px;
-    right: 2px;
-
-    min-width: 17px;
-    height: 17px;
-
-    padding: 0 4px;
-
-    display: flex !important;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 9px;
-
-    border-radius: 50%;
-  }
-
-  /* ==========================================
-       LOGOUT
-    ========================================== */
-
-  .sidebar-bottom {
-    width: 72px;
-
-    padding-bottom: 20px;
-  }
-
-  .logout-link {
-    width: 48px;
-    height: 48px;
-
-    margin: 6px auto;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-  }
-
-  .logout-link i {
-    width: auto;
-
-    margin: 0;
-
-    font-size: 17px;
-  }
-
-  /* ==========================================
-       MAIN
-    ========================================== */
-
-  .main {
-    width: calc(100% - 72px);
-
-    margin-left: 72px;
-
-    min-width: 0;
-  }
-
-  /* ==========================================
-       PAGE CONTENT
-    ========================================== */
-
-  .page-content {
-    width: 100%;
-
-    max-width: 100%;
-
-    padding: 24px;
-
-    min-width: 0;
-  }
-
-  /* ==========================================
-       DASHBOARD
-    ========================================== */
-
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================================================
-   SMALL TABLET
-   769px - 992px
-
-   Sidebar ICON ONLY
-   ========================================================= */
-
-@media (min-width: 769px) and (max-width: 992px) {
-  /* ==========================================
-       SIDEBAR
-    ========================================== */
-
-  .sidebar {
-    width: 72px;
-
-    position: fixed;
-
-    left: 0;
-    top: 0;
-    bottom: 0;
-
-    z-index: 2000;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    transition:
-      width 0.3s ease,
-      left 0.3s ease;
-  }
-
-  /* ==========================================
-       HIDE TEXT
-    ========================================== */
-
-  .sidebar-logo span,
-  .sidebar-nav span:not(.sidebar-badge),
-  .logout-link span {
-    display: none !important;
-  }
-
-  /* ==========================================
-       LOGO
-    ========================================== */
-
-  .sidebar-logo {
-    width: 72px;
-    height: 70px;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-  }
-
-  .sidebar-logo i {
-    margin: 0;
-
-    font-size: 20px;
-  }
-
-  /* ==========================================
-       NAVIGATION
-    ========================================== */
-
-  .sidebar-nav {
-    width: 72px;
-  }
-
-  .sidebar-nav a {
-    position: relative;
-
-    width: 48px;
-    height: 48px;
-
-    margin: 6px auto;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-  }
-
-  .sidebar-nav a i {
-    width: auto;
-
-    margin: 0;
-
-    font-size: 17px;
-  }
-
-  /* ==========================================
-       BADGE
-    ========================================== */
-
-  .sidebar-badge {
-    position: absolute;
-
-    top: 2px;
-    right: 2px;
-
-    min-width: 17px;
-    height: 17px;
-
-    padding: 0 4px;
-
-    display: flex !important;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 9px;
-
-    border-radius: 50%;
-  }
-
-  /* ==========================================
-       LOGOUT
-    ========================================== */
-
-  .sidebar-bottom {
-    width: 72px;
-
-    padding-bottom: 20px;
-  }
-
-  .logout-link {
-    width: 48px;
-    height: 48px;
-
-    margin: 6px auto;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 12px;
-  }
-
-  .logout-link i {
-    width: auto;
-
-    margin: 0;
-
-    font-size: 17px;
-  }
-
-  /* ==========================================
-       MAIN
-    ========================================== */
-
-  .main {
-    width: calc(100% - 72px);
-
-    margin-left: 72px;
-
-    min-width: 0;
-  }
-
-  /* ==========================================
-       TOPBAR
-    ========================================== */
-
-  .topbar {
-    width: 100%;
-
-    min-width: 0;
-  }
-
-  /* ==========================================
-       CONTENT
-    ========================================== */
-
-  .page-content {
-    width: 100%;
-
-    max-width: 100%;
-
-    padding: 20px;
-
-    min-width: 0;
-  }
-
-  /* ==========================================
-       DASHBOARD
-    ========================================== */
-
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================================================
-   MOBILE
-   0px - 768px
-
-   ICON ONLY SIDEBAR
-   ========================================================= */
-
-@media (max-width: 768px) {
-  /* ==========================================
-       GLOBAL
-    ========================================== */
-
-  html,
-  body {
-    width: 100%;
-    max-width: 100%;
-
-    overflow-x: hidden;
-  }
-
-  /* ==========================================
-       SIDEBAR
-       
-       CLOSED:
-       left: -64px
-
-       OPEN:
-       left: 0
-    ========================================== */
-
-  .sidebar {
-    position: fixed;
-
-    width: 64px;
-    height: 100vh;
-
-    left: -64px;
-
-    top: 0;
-    bottom: 0;
-
-    z-index: 3000;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    box-shadow: 8px 0 25px rgba(0, 0, 0, 0.18);
-
-    transition: left 0.3s ease;
-  }
-
-  /* ==========================================
-       OPEN SIDEBAR
-    ========================================== */
-
-  .sidebar.sidebar-open {
-    left: 0;
-  }
-
-  /* ==========================================
-       HIDE ALL SIDEBAR TEXT
-    ========================================== */
-
-  .sidebar-logo span,
-  .sidebar-nav span:not(.sidebar-badge),
-  .logout-link span {
-    display: none !important;
-  }
-
-  /* ==========================================
-       SIDEBAR LOGO
-    ========================================== */
-
-  .sidebar-logo {
-    width: 64px;
-    height: 64px;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-  }
-
-  .sidebar-logo i {
-    margin: 0;
-
-    font-size: 20px;
-  }
-
-  /* ==========================================
-       NAVIGATION CONTAINER
-    ========================================== */
-
-  .sidebar-nav {
-    width: 64px;
-
-    padding: 5px 0;
-  }
-
-  /* ==========================================
-       NAVIGATION LINKS
-    ========================================== */
-
-  .sidebar-nav a {
-    position: relative;
-
-    width: 44px;
-    height: 44px;
-
-    margin: 6px auto;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 11px;
-
-    transition:
-      background 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  /* ==========================================
-       ICONS
-    ========================================== */
-
-  .sidebar-nav a i {
-    width: auto;
-
-    margin: 0;
-
-    font-size: 16px;
-  }
-
-  /* ==========================================
-       ACTIVE ICON
-    ========================================== */
-
-  .sidebar-nav a.active {
-    width: 44px;
-
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* ==========================================
-       BADGE
-    ========================================== */
-
-  .sidebar-badge {
-    position: absolute;
-
-    top: 0;
-    right: 0;
-
-    min-width: 17px;
-    height: 17px;
-
-    padding: 0 4px;
-
-    display: flex !important;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 9px;
-
-    line-height: 1;
-
-    border-radius: 50%;
-  }
-
-  /* ==========================================
-       SIDEBAR BOTTOM
-    ========================================== */
-
-  .sidebar-bottom {
-    width: 64px;
-
-    padding-bottom: 16px;
-  }
-
-  /* ==========================================
-       LOGOUT
-    ========================================== */
-
-  .logout-link {
-    width: 44px;
-    height: 44px;
-
-    margin: 6px auto;
-
-    padding: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 11px;
-  }
-
-  .logout-link i {
-    width: auto;
-
-    margin: 0;
-
-    font-size: 16px;
-  }
-
-  /* ==========================================
-       MAIN
-       
-       IMPORTANT:
-       FULL WIDTH ON MOBILE
-    ========================================== */
-
-  .main {
-    width: 100%;
-
-    margin-left: 0;
-
-    min-width: 0;
-
     min-height: 100vh;
-
-    transition: none;
-  }
-
-  /* ==========================================
-       TOPBAR
-    ========================================== */
-
-  .topbar {
-    width: 100%;
-
-    min-height: 70px;
-
-    padding: 14px 16px;
-
+    width: calc(100% - 260px);
     display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease;
+}
 
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+.topbar {
+    background: white;
+    padding: 16px 30px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    min-height: 75px;
+}
 
-    flex-wrap: wrap;
-
-    gap: 12px;
-
-    box-sizing: border-box;
-  }
-
-  /* ==========================================
-       TOP LEFT
-    ========================================== */
-
-  .top-left {
-    min-width: 0;
-
-    flex: 1;
-
+.top-left {
     display: flex;
-
     align-items: center;
+    gap: 16px;
+}
 
-    gap: 12px;
-  }
+.top-left h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+}
 
-  /* ==========================================
-       MENU BUTTON
-    ========================================== */
-
-  .menu-btn {
-    width: 42px;
-    height: 42px;
-
-    min-width: 42px;
-
-    padding: 0;
-
-    display: flex;
-
+/* =========================================================
+   HAMBURGER MENU - HIDDEN ON DESKTOP
+   ========================================================= */
+.hamburger-menu {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 8px;
+    border-radius: 8px;
+    color: #1e293b;
+    width: 44px;
+    height: 44px;
     align-items: center;
     justify-content: center;
+}
 
-    border-radius: 10px;
+.hamburger-menu:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
 
-    font-size: 18px;
-
-    flex-shrink: 0;
-
-    cursor: pointer;
-  }
-
-  /* ==========================================
-       PAGE TITLE
-    ========================================== */
-
-  .top-left h2 {
-    margin: 0;
-
-    min-width: 0;
-
-    font-size: 19px;
-
-    line-height: 1.2;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-  }
-
-  /* ==========================================
-       SEARCH BOX
-    ========================================== */
-
-  .search-box {
-    width: 100%;
-
-    max-width: 100%;
-
-    order: 3;
-
-    flex-basis: 100%;
-
-    box-sizing: border-box;
-  }
-
-  .search-box input {
-    width: 100%;
-
-    max-width: 100%;
-
-    box-sizing: border-box;
-  }
-
-  /* ==========================================
-       TOP RIGHT
-    ========================================== */
-
-  .top-right {
-    margin-left: auto;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-  }
-
-  /* ==========================================
-       PROFILE
-       
-       Hide name and role.
-       Keep avatar.
-    ========================================== */
-
-  .profile > div:first-child {
+/* =========================================================
+   OVERLAY
+   ========================================================= */
+.sidebar-overlay {
     display: none;
-  }
-
-  .avatar {
-    flex-shrink: 0;
-  }
-
-  /* ==========================================
-       PAGE CONTENT
-    ========================================== */
-
-  .page-content {
-    width: 100%;
-
-    max-width: 100%;
-
-    min-width: 0;
-
-    padding: 20px 16px;
-
-    box-sizing: border-box;
-
-    overflow-x: hidden;
-  }
-
-  /* ==========================================
-       DASHBOARD GRID
-    ========================================== */
-
-  .dashboard-grid {
-    width: 100%;
-
-    max-width: 100%;
-
-    grid-template-columns: 1fr;
-
-    min-width: 0;
-  }
-
-  /* ==========================================
-       DASHBOARD CARDS
-    ========================================== */
-
-  .dashboard-cards {
-    width: 100%;
-
-    max-width: 100%;
-
-    grid-template-columns: 1fr;
-
-    min-width: 0;
-  }
-
-  /* ==========================================
-       WELCOME SECTION
-    ========================================== */
-
-  .welcome {
-    width: 100%;
-
-    max-width: 100%;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 15px;
-  }
-
-  /* ==========================================
-       GALLERY
-    ========================================== */
-
-  .gallery-preview {
-    width: 100%;
-
-    max-width: 100%;
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 10px;
-  }
-
-  /* ==========================================
-       TABLES
-    ========================================== */
-
-  .table-container {
-    width: 100%;
-
-    max-width: 100%;
-
-    overflow-x: auto;
-
-    -webkit-overflow-scrolling: touch;
-  }
-
-  table {
-    min-width: 600px;
-  }
-
-  /* ==========================================
-       IMAGES
-    ========================================== */
-
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* ==========================================
-       BUTTONS
-    ========================================== */
-
-  button,
-  .btn {
-    max-width: 100%;
-  }
-
-  /* ==========================================
-       FOOTER
-    ========================================== */
-
-  .footer {
-    width: 100%;
-
-    max-width: 100%;
-
-    padding: 16px 12px;
-
-    box-sizing: border-box;
-
-    text-align: center;
-
-    font-size: 12px;
-  }
-}
-
-/* =========================================================
-   SMALL MOBILE
-   576px AND BELOW
-   ========================================================= */
-
-@media (max-width: 576px) {
-  /* ==========================================
-       TOPBAR
-    ========================================== */
-
-  .topbar {
-    min-height: 64px;
-
-    padding: 11px 13px;
-
-    gap: 9px;
-  }
-
-  /* ==========================================
-       MENU BUTTON
-    ========================================== */
-
-  .menu-btn {
-    width: 40px;
-    height: 40px;
-
-    min-width: 40px;
-
-    border-radius: 9px;
-
-    font-size: 17px;
-  }
-
-  /* ==========================================
-       TITLE
-    ========================================== */
-
-  .top-left h2 {
-    font-size: 18px;
-  }
-
-  /* ==========================================
-       PAGE CONTENT
-    ========================================== */
-
-  .page-content {
-    padding: 16px 12px;
-  }
-
-  /* ==========================================
-       GALLERY
-    ========================================== */
-
-  .gallery-preview {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 9px;
-  }
-
-  /* ==========================================
-       DASHBOARD CARDS
-    ========================================== */
-
-  .dashboard-cards {
-    gap: 12px;
-  }
-
-  /* ==========================================
-       WELCOME
-    ========================================== */
-
-  .welcome {
-    padding: 18px;
-  }
-
-  /* ==========================================
-       SEARCH
-    ========================================== */
-
-  .search-box {
-    width: 100%;
-  }
-}
-
-/* =========================================================
-   EXTRA SMALL PHONES
-   400px AND BELOW
-   ========================================================= */
-
-@media (max-width: 400px) {
-  /* ==========================================
-       TOPBAR
-    ========================================== */
-
-  .topbar {
-    padding: 10px 11px;
-
-    gap: 8px;
-  }
-
-  /* ==========================================
-       MENU
-    ========================================== */
-
-  .menu-btn {
-    width: 38px;
-    height: 38px;
-
-    min-width: 38px;
-
-    font-size: 16px;
-  }
-
-  /* ==========================================
-       TITLE
-    ========================================== */
-
-  .top-left h2 {
-    font-size: 17px;
-  }
-
-  /* ==========================================
-       CONTENT
-    ========================================== */
-
-  .page-content {
-    padding: 14px 10px;
-  }
-
-  /* ==========================================
-       GALLERY
-    ========================================== */
-
-  .gallery-preview {
-    grid-template-columns: 1fr;
-  }
-
-  /* ==========================================
-       WELCOME
-    ========================================== */
-
-  .welcome {
-    padding: 15px;
-  }
-
-  /* ==========================================
-       FOOTER
-    ========================================== */
-
-  .footer {
-    padding: 13px 8px;
-
-    font-size: 11px;
-  }
-}
-
-/* =========================================================
-   VERY SMALL PHONES
-   360px AND BELOW
-   ========================================================= */
-
-@media (max-width: 360px) {
-  /* ==========================================
-       SIDEBAR
-    ========================================== */
-
-  .sidebar {
-    width: 60px;
-
-    left: -60px;
-  }
-
-  .sidebar.sidebar-open {
+    position: fixed;
+    top: 0;
     left: 0;
-  }
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-  .sidebar-logo {
-    width: 60px;
-    height: 60px;
-  }
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
 
-  .sidebar-nav {
-    width: 60px;
-  }
+/* =========================================================
+   TABLET: 769px - 1024px
+   Sidebar - Icon Only
+   ========================================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 72px;
+    }
 
-  .sidebar-nav a {
-    width: 42px;
-    height: 42px;
-  }
+    .sidebar-logo span,
+    .sidebar-nav span:not(.badge),
+    .logout-link span {
+        display: none !important;
+    }
 
-  .logout-link {
-    width: 42px;
-    height: 42px;
-  }
+    .sidebar-logo {
+        width: 72px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
 
-  .sidebar-bottom {
-    width: 60px;
-  }
+    .sidebar-logo i {
+        font-size: 22px;
+        margin: 0;
+    }
 
-  /* ==========================================
-       TOPBAR
-    ========================================== */
+    .sidebar-nav {
+        padding: 10px 0;
+    }
 
-  .top-left {
-    gap: 8px;
-  }
+    .sidebar-nav a {
+        width: 48px;
+        height: 48px;
+        margin: 6px auto;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
 
-  .top-left h2 {
-    font-size: 16px;
-  }
+    .sidebar-nav a i {
+        font-size: 18px;
+        margin: 0;
+    }
 
-  /* ==========================================
-       CONTENT
-    ========================================== */
+    .sidebar-nav a span:not(.badge) {
+        display: none !important;
+    }
 
-  .page-content {
-    padding-left: 9px;
-    padding-right: 9px;
-  }
+    .badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        font-size: 9px;
+        padding: 2px 6px;
+        min-width: 18px;
+        height: 18px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .sidebar-bottom {
+        padding: 10px 0;
+        width: 72px;
+    }
+
+    .logout-link {
+        width: 48px;
+        height: 48px;
+        margin: 6px auto;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .logout-link span {
+        display: none !important;
+    }
+
+    .logout-link i {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .main {
+        margin-left: 72px;
+        width: calc(100% - 72px);
+    }
+
+    .page-content {
+        padding: 24px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px;
+    }
+}
+
+/* =========================================================
+   MOBILE: 0px - 768px
+   ========================================================= */
+@media (max-width: 768px) {
+    /* ---------- SIDEBAR ---------- */
+    .sidebar {
+        width: 280px;
+        transform: translateX(-100%);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Show sidebar text on mobile when open */
+    .sidebar-logo span,
+    .sidebar-nav span:not(.badge),
+    .logout-link span {
+        display: inline !important;
+    }
+
+    .sidebar-logo {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .sidebar-logo i {
+        font-size: 24px;
+    }
+
+    .sidebar-logo span {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .sidebar-nav {
+        padding: 16px 12px;
+    }
+
+    .sidebar-nav a {
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 8px;
+        justify-content: flex-start;
+    }
+
+    .sidebar-nav a i {
+        font-size: 18px;
+        width: 20px;
+    }
+
+    .sidebar-nav a span:not(.badge) {
+        display: inline !important;
+        flex: 1;
+    }
+
+    .badge {
+        margin-left: auto;
+        position: static;
+        font-size: 11px;
+        padding: 2px 8px;
+        min-width: auto;
+        height: auto;
+        border-radius: 20px;
+        display: inline-flex !important;
+    }
+
+    .sidebar-bottom {
+        padding: 16px 20px;
+        width: 100%;
+    }
+
+    .logout-link {
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 8px;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .logout-link span {
+        display: inline !important;
+    }
+
+    .logout-link i {
+        font-size: 18px;
+    }
+
+    /* ---------- MAIN CONTENT ---------- */
+    .main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* ---------- TOPBAR ---------- */
+    .topbar {
+        padding: 12px 16px;
+        min-height: 64px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .top-left {
+        gap: 10px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .top-left h2 {
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+
+    /* Show hamburger on mobile */
+    .hamburger-menu {
+        display: flex !important;
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+
+    .hamburger-menu i {
+        font-size: 24px;
+    }
+
+    .hamburger-menu i.fa-xmark {
+        transform: rotate(90deg);
+    }
+
+    /* ---------- OVERLAY ---------- */
+    .sidebar-overlay.active {
+        display: block;
+        opacity: 1;
+    }
+
+    /* ---------- TOP RIGHT ---------- */
+    .top-right {
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .notification {
+        width: 36px;
+        height: 36px;
+    }
+
+    .notification i {
+        font-size: 18px;
+    }
+
+    .profile > div:first-child {
+        display: none;
+    }
+
+    .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    /* ---------- PAGE CONTENT ---------- */
+    .page-content {
+        padding: 16px !important;
+        overflow-x: hidden;
+    }
+
+    /* ---------- WELCOME SECTION ---------- */
+    .welcome-section {
+        padding: 24px 20px !important;
+        margin-bottom: 20px !important;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .welcome-section h1 {
+        font-size: 22px !important;
+    }
+
+    .welcome-section p {
+        font-size: 14px !important;
+    }
+
+    .btn-add-product {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 10px 20px !important;
+        font-size: 14px !important;
+    }
+
+    /* ---------- STATS GRID ---------- */
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+
+    .stat-card {
+        padding: 16px !important;
+        gap: 10px !important;
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    .stat-icon {
+        width: 40px !important;
+        height: 40px !important;
+        flex-shrink: 0;
+    }
+
+    .stat-icon i {
+        font-size: 18px !important;
+    }
+
+    .stat-number {
+        font-size: 22px !important;
+    }
+
+    .stat-label {
+        font-size: 12px !important;
+    }
+
+    /* ---------- TABLES ---------- */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -16px;
+        padding: 0 16px;
+    }
+
+    table {
+        min-width: 600px;
+        width: 100%;
+    }
+
+    table th, table td {
+        padding: 10px 12px !important;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    /* ---------- CARDS ---------- */
+    .card, .dashboard-card {
+        padding: 16px !important;
+        margin-bottom: 12px !important;
+    }
+
+    /* ---------- GRID LAYOUTS ---------- */
+    .dashboard-grid,
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* ---------- GALLERY ---------- */
+    .gallery-preview {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .gallery-box {
+        height: 100px !important;
+    }
+
+    /* ---------- FORMS ---------- */
+    input, select, textarea {
+        font-size: 16px !important;
+        padding: 10px 12px !important;
+        width: 100% !important;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .btn-group {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+        padding: 16px !important;
+        font-size: 12px !important;
+        text-align: center !important;
+    }
+
+    /* ---------- MESSAGES PAGE ---------- */
+    .messages-list .message-item {
+        padding: 12px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+
+    .message-avatar {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 16px !important;
+    }
+
+    .message-content {
+        width: 100% !important;
+    }
+
+    .message-content h4 {
+        font-size: 15px !important;
+    }
+
+    .message-content p {
+        font-size: 13px !important;
+    }
+
+    .message-meta {
+        font-size: 11px !important;
+    }
+
+    /* ---------- SEARCH ---------- */
+    .search-box {
+        width: 100% !important;
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .search-box input {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    /* ---------- PAGE HEADER ---------- */
+    .page-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .page-header .btn {
+        width: 100% !important;
+    }
+}
+
+/* =========================================================
+   SMALL MOBILE: 0px - 480px
+   ========================================================= */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .top-left h2 {
+        font-size: 16px;
+        max-width: 100px;
+    }
+
+    .hamburger-menu {
+        width: 36px;
+        height: 36px;
+    }
+
+    .hamburger-menu i {
+        font-size: 20px;
+    }
+
+    .topbar {
+        padding: 10px 12px;
+    }
+
+    .notification {
+        width: 32px;
+        height: 32px;
+    }
+
+    .notification i {
+        font-size: 16px;
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .page-content {
+        padding: 12px !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+    }
+
+    .stat-card {
+        padding: 12px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
+
+    .stat-icon {
+        width: 34px !important;
+        height: 34px !important;
+    }
+
+    .stat-icon i {
+        font-size: 16px !important;
+    }
+
+    .stat-number {
+        font-size: 20px !important;
+    }
+
+    .stat-label {
+        font-size: 11px !important;
+    }
+
+    .welcome-section {
+        padding: 20px 16px !important;
+    }
+
+    .welcome-section h1 {
+        font-size: 20px !important;
+    }
+
+    .welcome-section p {
+        font-size: 13px !important;
+    }
+
+    .gallery-preview {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+
+    .gallery-box {
+        height: 80px !important;
+    }
+
+    .footer {
+        padding: 12px !important;
+        font-size: 11px !important;
+    }
+}
+
+/* =========================================================
+   VERY SMALL: 0px - 360px
+   ========================================================= */
+@media (max-width: 360px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+
+    .stat-card {
+        padding: 10px !important;
+    }
+
+    .stat-number {
+        font-size: 18px !important;
+    }
+
+    .stat-label {
+        font-size: 10px !important;
+    }
+
+    .top-left h2 {
+        font-size: 14px;
+        max-width: 80px;
+    }
+
+    .welcome-section h1 {
+        font-size: 18px !important;
+    }
+
+    .gallery-preview {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 /* =========================================================
    LANDSCAPE MOBILE
    ========================================================= */
-
 @media (max-width: 768px) and (orientation: landscape) {
-  .sidebar {
-    width: 64px;
+    .sidebar {
+        width: 240px;
+    }
 
-    left: -64px;
-  }
+    .topbar {
+        min-height: 56px;
+        padding: 8px 16px;
+    }
 
-  .sidebar.sidebar-open {
-    left: 0;
-  }
+    .page-content {
+        padding: 12px 16px !important;
+    }
 
-  .sidebar-logo {
-    height: 58px;
-  }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
 
-  .sidebar-nav a {
-    height: 40px;
-
-    margin: 4px auto;
-  }
-
-  .logout-link {
-    height: 40px;
-
-    margin: 4px auto;
-  }
-
-  .topbar {
-    min-height: 60px;
-  }
+    .stat-card {
+        padding: 12px !important;
+    }
 }
 
 /* =========================================================
-   FINAL MOBILE OVERFLOW PROTECTION
+   PRINT STYLES
    ========================================================= */
+@media print {
+    .sidebar, .topbar, .footer, .sidebar-overlay {
+        display: none !important;
+    }
 
-@media (max-width: 768px) {
-  .main,
-  .topbar,
-  .page-content,
-  .footer,
-  .dashboard-grid,
-  .dashboard-cards,
-  .welcome,
-  .gallery-preview {
-    max-width: 100%;
-  }
-
-  .main {
-    overflow-x: hidden;
-  }
-
-  .page-content {
-    overflow-x: hidden;
-  }
+    .main {
+        margin-left: 0 !important;
+        padding: 20px !important;
+    }
 }

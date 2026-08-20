@@ -1,7 +1,28 @@
-/* ==========================================
-   MNYALA ADMIN LOGIN
-========================================== */
+/* ========================================
+   RESPONSIVE CSS - MNYALA Admin
+   ======================================== */
 
+/* ========================================
+   VARIABLES
+   ======================================== */
+:root {
+  --sidebar-width: 260px;
+  --primary-color: #4a6cf7;
+  --primary-dark: #3a5bd9;
+  --text-dark: #13233f;
+  --text-gray: #6b7280;
+  --bg-light: #f8fafc;
+  --white: #ffffff;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --border-radius: 12px;
+  --transition-speed: 0.3s;
+  --font-family: "Plus Jakarta Sans", "Poppins", sans-serif;
+}
+
+/* ========================================
+   RESET & BASE
+   ======================================== */
 * {
   margin: 0;
   padding: 0;
@@ -9,412 +30,147 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
+  font-family: var(--font-family);
+  background: var(--bg-light);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* ========================================
+   SIDEBAR
+   ======================================== */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: var(--white);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  overflow-y: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background:
-    linear-gradient(rgba(5, 35, 22, 0.85), rgba(5, 35, 22, 0.85)),
-    url("https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1600&q=80");
-
-  background-size: cover;
-  background-position: center;
-}
-
-/*============================*/
-
-.login-container {
-  width: 1100px;
-  max-width: 95%;
-
-  min-height: 650px;
-
-  background: white;
-
-  border-radius: 25px;
-
-  overflow: hidden;
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-}
-
-/*============================*/
-
-.login-left {
-  position: relative;
-
-  background:
-    linear-gradient(rgba(16, 97, 51, 0.85), rgba(10, 53, 33, 0.92)),
-    url("https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1200&q=80");
-
-  background-size: cover;
-
-  background-position: center;
-
-  color: white;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-}
-
-.overlay {
-  padding: 60px;
-}
-
-.overlay h1 {
-  font-size: 48px;
-
-  margin-bottom: 15px;
-}
-
-.overlay p {
-  font-size: 18px;
-
-  opacity: 0.9;
-
-  margin-bottom: 40px;
-
-  line-height: 1.7;
-}
-
-.overlay ul {
-  list-style: none;
-}
-
-.overlay li {
-  margin-bottom: 18px;
-
-  font-size: 17px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-}
-
-.overlay i {
-  color: #ffd54f;
-}
-
-/*============================*/
-
-.login-right {
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  background: #f8fafc;
-
-  padding: 40px;
-}
-
-.login-box {
-  width: 100%;
-
-  max-width: 400px;
-
-  animation: fadeUp 0.8s ease;
-}
-
-.logo {
-  width: 90px;
-
-  height: 90px;
-
-  margin: auto;
-
-  background: #1e8e3e;
-
-  color: white;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  font-size: 36px;
-
-  margin-bottom: 25px;
-}
-
-.login-box h2 {
-  text-align: center;
-
-  font-size: 30px;
-
-  margin-bottom: 8px;
-
-  color: #1b1b1b;
-}
-
-.login-box p {
-  text-align: center;
-
-  color: #666;
-
-  margin-bottom: 30px;
-}
-
-/*============================*/
-
-.input-group {
-  position: relative;
-
-  margin-bottom: 20px;
-}
-
-.input-group i {
-  position: absolute;
-
-  left: 18px;
-
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  color: #6b6b6b;
-}
-
-.input-group input {
-  width: 100%;
-
-  padding: 15px 20px 15px 50px;
-
-  border-radius: 12px;
-
-  border: 1px solid #ddd;
-
-  outline: none;
-
-  font-size: 15px;
-
-  transition: 0.3s;
-
-  background: white;
-}
-
-.input-group input:focus {
-  border-color: #1e8e3e;
-
-  box-shadow: 0 0 0 4px rgba(30, 142, 62, 0.15);
-}
-
-/*============================*/
-
-button {
-  width: 100%;
-
-  padding: 15px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  background: #1e8e3e;
-
-  color: white;
-
-  font-size: 16px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #166c2f;
-
-  transform: translateY(-2px);
-
-  box-shadow: 0 15px 30px rgba(22, 108, 47, 0.3);
-}
-
-/*============================*/
-
-.alert {
-  padding: 12px;
-
-  border-radius: 10px;
-
-  margin-bottom: 18px;
-
-  font-size: 14px;
-}
-
-.alert.success {
-  background: #d1fae5;
-
-  color: #065f46;
-}
-
-.alert.danger {
-  background: #fee2e2;
-
-  color: #991b1b;
-}
-
-/*============================*/
-
-small {
-  display: block;
-
-  text-align: center;
-
-  margin-top: 25px;
-
-  color: #6b6b6b;
-}
-
-/*============================*/
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-
-    transform: translateY(40px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/*============================*/
-
-@media (max-width: 900px) {
-  .login-container {
-    grid-template-columns: 1fr;
-  }
-
-  .login-left {
-    display: none;
-  }
-
-  .login-right {
-    padding: 30px;
-  }
-}
-
-/*============================*/
-
-@media (max-width: 500px) {
-  .login-box {
-    max-width: 100%;
-  }
-
-  .login-box h2 {
-    font-size: 26px;
-  }
-
-  .input-group input {
-    padding: 14px 18px 14px 48px;
-  }
-
-  button {
-    padding: 14px;
-  }
-}
-
-/* VIEW SMS FOR ADMINI */
-.message-details {
-  padding: 20px;
-}
-
-.detail-row {
-  display: flex;
-  margin-bottom: 18px;
-}
-
-.detail-row strong {
-  width: 150px;
-  color: #444;
-}
-
-.message-box {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  line-height: 1.8;
-  white-space: pre-wrap;
-}
-
-.btn {
-  background: #2563eb;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
-.btn-delete {
-  display: inline-block;
-  background: #dc2626;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
-/* ========================================= */
-/* HAMBURGER MENU (Ukubwa umeongezwa) */
-/* ========================================= */
-.hamburger-menu {
-  display: none; /* Imefichwa kwenye Desktop */
   flex-direction: column;
-  justify-content: space-between;
-  width: 4000px; /* UMEONGEZWA: Upana mkubwa zaidi */
-  height: 3000px; /* UMEONGEZWA: Urefu mkubwa zaidi */
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 1001;
-  margin-right: 15px;
+  transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hamburger-menu span {
-  /* width: 100%; */
-  max-width:12000vh;
-  height: 40000px; /* UMEONGEZWA: Mistari minene zaidi kuonekana wazi */
-  background: #13233f;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+.sidebar-logo {
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Animation ya X inapofunguka */
-.hamburger-menu.active span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
-.hamburger-menu.active span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger-menu.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(8px, -8px);
+.sidebar-logo i {
+  font-size: 28px;
+  color: var(--primary-color);
 }
 
-/* ========================================= */
-/* SIDEBAR OVERLAY (Giza la nyuma) */
-/* ========================================= */
+.sidebar-logo span {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: var(--text-gray);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.sidebar-nav a i {
+  width: 20px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.sidebar-nav a span:not(.badge):not(.sidebar-soon) {
+  flex: 1;
+  font-weight: 500;
+}
+
+.sidebar-nav a:hover {
+  background: rgba(74, 108, 247, 0.08);
+  color: var(--primary-color);
+}
+
+.sidebar-nav a.active {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.sidebar-nav a.active i {
+  color: var(--white);
+}
+
+.badge {
+  background: #ef4444;
+  color: white;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.sidebar-soon {
+  font-size: 10px;
+  background: #e5e7eb;
+  color: var(--text-gray);
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.sidebar-disabled:hover {
+  background: transparent !important;
+  color: var(--text-gray) !important;
+}
+
+.sidebar-bottom {
+  padding: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.logout-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ef4444;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.logout-link:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* ========================================
+   OVERLAY
+   ======================================== */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -422,52 +178,682 @@ small {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Giza la wastani */
-  z-index: 998;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-speed) ease;
 }
 
-.sidebar-overlay.show {
+.sidebar-overlay.active {
   display: block;
   opacity: 1;
 }
 
-/* ========================================= */
-/* RESPONSIVE: Mobile & Tablet View */
-/* ========================================= */
-@media (max-width: 992px) {
-  .hamburger-menu {
-    display: flex; /* Inaonekana kwenye simu/tablet */
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+.main {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   TOPBAR
+   ======================================== */
+.topbar {
+  background: var(--white);
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.top-left h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Hamburger Menu Button - Hidden by default, shows on tablet/mobile */
+.hamburger-menu {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-menu:hover {
+  background: rgba(74, 108, 247, 0.08);
+}
+
+.hamburger-menu i {
+  font-size: 28px;
+  color: var(--text-dark);
+  transition: transform 0.3s ease;
+}
+
+.hamburger-menu i.fa-xmark {
+  transform: rotate(90deg);
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.notification {
+  position: relative;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-light);
+  transition: all 0.2s ease;
+}
+
+.notification:hover {
+  background: rgba(74, 108, 247, 0.08);
+}
+
+.notification i {
+  font-size: 20px;
+  color: var(--text-gray);
+}
+
+.notification .count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: 600;
+  min-width: 18px;
+  text-align: center;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 6px 12px 6px 6px;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+}
+
+.profile:hover {
+  background: var(--bg-light);
+}
+
+.profile div h4 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.profile div small {
+  font-size: 12px;
+  color: var(--text-gray);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* ========================================
+   DASHBOARD CONTENT
+   ======================================== */
+.page-content {
+  flex: 1;
+  padding: 30px 32px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.dashboard-container {
+  width: 100%;
+}
+
+/* Welcome Section */
+.welcome-section {
+  background: linear-gradient(135deg, #4a6cf7 0%, #6d8ff7 100%);
+  padding: 32px 40px;
+  border-radius: var(--border-radius);
+  margin-bottom: 32px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.welcome-section h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.welcome-section p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.btn-add-product {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  color: var(--primary-color);
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.btn-add-product:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add-product i {
+  font-size: 16px;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.stat-card {
+  background: var(--white);
+  padding: 24px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(74, 108, 247, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon i {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-gray);
+  font-weight: 500;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  padding: 20px 32px;
+  text-align: center;
+  color: var(--text-gray);
+  font-size: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--white);
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Tablets (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
-  /* Sidebar inaelea JUU YA content, haikusi wala kuisukuma */
+  .page-content {
+    padding: 24px;
+  }
+
+  .topbar {
+    padding: 14px 24px;
+  }
+
+  .welcome-section {
+    padding: 28px 32px;
+  }
+}
+
+/* Tablets & Mobile - Show Hamburger */
+@media screen and (max-width: 991px) {
+  .hamburger-menu {
+    display: flex !important;
+  }
+
   .sidebar {
-    position: fixed;
-    left: -300px; /* Imefichwa nje ya screen upande wa kushoto */
-    top: 0;
-    height: 100vh;
-    width: 280px; /* Upana wa sidebar */
-    transition: left 0.3s ease;
-    z-index: 1000; /* Juu ya content na overlay */
-    overflow-y: auto;
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    transform: translateX(-100%);
+    width: 280px;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
   }
 
   .sidebar.active {
-    left: 0; /* Inaingia ndani ya screen */
+    transform: translateX(0);
   }
 
-  /* MUHIMU: Main content HAISOGEI, inabaki 100% */
-  .main-content {
+  .main {
     margin-left: 0 !important;
     width: 100% !important;
-    max-width: 100vw;
-    overflow-x: hidden; /* Inazuia content kusogea kulia/kushoto (horizontal scroll) */
   }
 
-  /* Hakikisha body yote haina scroll ya mlalo */
-  body {
+  .sidebar-overlay.active {
+    display: block;
+  }
+}
+
+/* Mobile Devices (up to 768px) */
+@media screen and (max-width: 768px) {
+  /* Topbar */
+  .topbar {
+    padding: 12px 16px;
+  }
+
+  .top-left h2 {
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+
+  .hamburger-menu {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hamburger-menu i {
+    font-size: 24px;
+  }
+
+  .top-right {
+    gap: 12px;
+  }
+
+  .profile div {
+    display: none;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  /* Welcome Section */
+  .welcome-section {
+    padding: 24px 20px;
+    margin-bottom: 24px;
+  }
+
+  .welcome-section h1 {
+    font-size: 22px;
+  }
+
+  .welcome-section p {
+    font-size: 14px;
+  }
+
+  .btn-add-product {
+    padding: 10px 20px;
+    font-size: 14px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .stat-card {
+    padding: 18px 16px;
+    gap: 12px;
+  }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .stat-icon i {
+    font-size: 20px;
+  }
+
+  .stat-number {
+    font-size: 24px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .page-content {
+    padding: 16px !important;
+  }
+
+  .footer {
+    padding: 16px;
+    font-size: 12px;
+  }
+}
+
+/* Small Mobile Devices (up to 480px) */
+@media screen and (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .top-left h2 {
+    font-size: 16px;
+    max-width: 100px;
+  }
+
+  .hamburger-menu {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
+
+  .hamburger-menu i {
+    font-size: 20px;
+  }
+
+  .topbar {
+    padding: 10px 12px;
+  }
+
+  .notification {
+    width: 32px;
+    height: 32px;
+  }
+
+  .notification i {
+    font-size: 16px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .welcome-section {
+    padding: 20px 16px;
+    margin-bottom: 20px;
+  }
+
+  .welcome-section h1 {
+    font-size: 20px;
+  }
+
+  .welcome-section p {
+    font-size: 13px;
+  }
+
+  .btn-add-product {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 14px 12px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stat-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .stat-icon i {
+    font-size: 18px;
+  }
+
+  .stat-number {
+    font-size: 22px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .page-content {
+    padding: 12px !important;
+  }
+
+  .footer {
+    padding: 12px;
+    font-size: 11px;
+  }
+}
+
+/* Very Small Devices (up to 360px) */
+@media screen and (max-width: 360px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 12px 10px;
+  }
+
+  .stat-number {
+    font-size: 18px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .top-left h2 {
+    font-size: 14px;
+    max-width: 80px;
+  }
+
+  .welcome-section h1 {
+    font-size: 18px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE FIXES FOR SPECIFIC COMPONENTS
+   ======================================== */
+
+/* Hide scrollbar for sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Fix for sticky topbar on mobile */
+@media screen and (max-width: 991px) {
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+}
+
+/* Fix for sidebar links on mobile */
+@media screen and (max-width: 991px) {
+  .sidebar-nav a {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .sidebar-nav a i {
+    font-size: 20px;
+  }
+}
+
+/* Fix for notification badge */
+@media screen and (max-width: 480px) {
+  .notification .count {
+    font-size: 9px;
+    padding: 1px 5px;
+    min-width: 16px;
+  }
+}
+
+/* Ensure content fits without horizontal scroll */
+@media screen and (max-width: 768px) {
+  .page-content {
     overflow-x: hidden;
+  }
+
+  .dashboard-container {
+    overflow-x: hidden;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sidebar.active {
+  animation: slideIn 0.3s ease forwards;
+}
+
+.sidebar-overlay.active {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+@media print {
+  .sidebar,
+  .topbar,
+  .footer,
+  .sidebar-overlay {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+    padding: 20px !important;
   }
 }

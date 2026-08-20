@@ -2,23 +2,17 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 
-    <title>
-        {% block title %}MNYALA Admin{% endblock %}
-    </title>
+    <title>{% block title %}MNYALA Admin{% endblock %}</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
@@ -26,133 +20,94 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/variables.css') }}">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/components.css') }}">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/dashboard.css') }}">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/responsive.css') }}">
 </head>
 
 <body>
 
-    <!-- ======================
-SIDEBAR
-====================== -->
-    <aside class="sidebar">
-
-
+    <!-- ====================== SIDEBAR ====================== -->
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
             <i class="fa-solid fa-store"></i>
             <span>MNYALA</span>
         </div>
 
         <nav class="sidebar-nav">
-
-            <!-- Dashboard -->
             <a href="{{ url_for('auth.dashboard') }}"
                 class="{% if request.endpoint == 'auth.dashboard' %}active{% endif %}">
                 <i class="fa-solid fa-house"></i>
                 <span>Dashboard</span>
             </a>
 
-            <!-- Products (preview only - management not built yet) -->
             <a href="{{ url_for('public.products') }}" target="_blank" rel="noopener" class="sidebar-disabled">
                 <i class="fa-solid fa-box"></i>
                 <span>Products</span>
-                <span class="sidebar-soon">View site</span>
+                <span class="sidebar-soon">View</span>
             </a>
 
-            <!-- Gallery (preview only - management not built yet) -->
             <a href="{{ url_for('public.gallery') }}" target="_blank" rel="noopener" class="sidebar-disabled">
                 <i class="fa-solid fa-image"></i>
                 <span>Gallery</span>
-                <span class="sidebar-soon">View site</span>
+                <span class="sidebar-soon">View</span>
             </a>
 
-            <!-- Orders (not built yet) -->
             <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span>Orders</span>
                 <span class="sidebar-soon">Soon</span>
             </a>
 
-            <!-- Customers (not built yet) -->
             <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
                 <i class="fa-solid fa-users"></i>
                 <span>Customers</span>
                 <span class="sidebar-soon">Soon</span>
             </a>
 
-            <!-- Messages -->
             <a href="{{ url_for('auth.messages') }}"
                 class="{% if request.endpoint == 'auth.messages' or request.endpoint == 'auth.view_message' %}active{% endif %}">
                 <i class="fa-solid fa-envelope"></i>
                 <span>Messages</span>
-
                 {% if unread_messages is defined and unread_messages > 0 %}
-                <span class="badge">
-                    {{ unread_messages }}
-                </span>
+                <span class="badge">{{ unread_messages }}</span>
                 {% endif %}
             </a>
 
-            <!-- Reports (not built yet) -->
             <a href="javascript:void(0)" class="sidebar-disabled" aria-disabled="true">
                 <i class="fa-solid fa-chart-line"></i>
                 <span>Reports</span>
                 <span class="sidebar-soon">Soon</span>
             </a>
 
-            <!-- Settings -->
             <a href="{{ url_for('auth.settings') }}"
                 class="{% if request.endpoint == 'auth.settings' %}active{% endif %}">
                 <i class="fa-solid fa-gear"></i>
                 <span>Settings</span>
             </a>
-            <button class="mobile-sidebar-toggle" id="sidebarToggle"
-                style="display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: #13233f;">
-                <i class="fa-solid fa-bars"></i>
-            </button>
         </nav>
 
-        <!-- Logout -->
         <div class="sidebar-bottom">
-
             <a href="{{ url_for('auth.logout') }}" class="logout-link">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Logout</span>
             </a>
-
         </div>
-
     </aside>
 
-    <!-- ======================
-MAIN CONTENT
-====================== -->
+    <!-- ====================== OVERLAY ====================== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <div class="main">
+    <!-- ====================== MAIN CONTENT ====================== -->
+    <div class="main" id="mainContent">
 
         <!-- TOPBAR -->
         <header class="topbar">
-
             <div class="top-left">
-
-                <!-- ========================================== -->
-                <!-- WEKA HAMBURGER BUTTON HAPA (Ndani ya top-left) -->
-                <!-- ========================================== -->
                 <button class="hamburger-menu" id="hamburgerMenu" onclick="toggleSidebar()" aria-label="Toggle Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <i class="fa-solid fa-bars"></i>
                 </button>
-
-                <h2>
-                    {% block page_name %}
-                    Dashboard
-                    {% endblock %}
-                </h2>
+                <h2>{% block page_name %}Dashboard{% endblock %}</h2>
             </div>
 
             <div class="top-right">
@@ -168,37 +123,76 @@ MAIN CONTENT
                     <div class="avatar">A</div>
                 </div>
             </div>
-
         </header>
-        <!-- ========================================== -->
-        <!-- WEKA OVERLAY HAPA (Nje ya header, mwanzoni mwa content) -->
-        <!-- ========================================== -->
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
 
         <!-- PAGE CONTENT -->
-
         <main class="page-content">
-
             {% block content %}
+            <!-- Dashboard Content -->
+            <div class="dashboard-container">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h1>Welcome, Admin 👋</h1>
+                    <p>Manage your business from one place.</p>
+                    <a href="#" class="btn-add-product">
+                        <i class="fa-solid fa-plus"></i> Add Product
+                    </a>
+                </div>
 
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Total Products</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Orders</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Customers</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Gallery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endblock %}
-
         </main>
 
         <!-- FOOTER -->
-
-        <footer class="footer" style="margin-left: 0px;">
+        <footer class="footer">
             © 2026 MNYALA Business Management System.
-
         </footer>
-
     </div>
 
     <!-- JS -->
-
     <script src="{{ url_for('static', filename='js/admin/sidebar.js') }}"></script>
-
     <script src="{{ url_for('static', filename='js/admin/dashboard.js') }}"></script>
     <script src="{{ url_for('static', filename='js/admin/search.js') }}"></script>
 </body>

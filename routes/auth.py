@@ -18,6 +18,8 @@ import secrets
 from datetime import datetime, timedelta
 
 from extensions import db
+from flask_mail import Message
+from extensions import mail
 
 from models import (
     User,
@@ -70,6 +72,205 @@ def super_admin_required():
 
     # Super Admin pekee
     return user.role == "super_admin"
+
+
+# ==========================================================
+# SEND RESET EMAIL
+# ==========================================================
+
+def send_reset_email(user, reset_url):
+    """Send password reset email to user"""
+    try:
+        # Email HTML template
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Reset Your Password</title>
+            <style>
+                body {{
+                    font-family: 'Poppins', Arial, sans-serif;
+                    background: #f8fafc;
+                    margin: 0;
+                    padding: 0;
+                }}
+                .container {{
+                    max-width: 600px;
+                    margin: 40px auto;
+                    background: #ffffff;
+                    border-radius: 16px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                    overflow: hidden;
+                }}
+                .header {{
+                    background: linear-gradient(135deg, #4a6cf7 0%, #6d8ff7 100%);
+                    padding: 40px 30px;
+                    text-align: center;
+                }}
+                .header h1 {{
+                    color: white;
+                    margin: 0;
+                    font-size: 28px;
+                    font-weight: 700;
+                }}
+                .header p {{
+                    color: rgba(255,255,255,0.9);
+                    margin: 8px 0 0;
+                    font-size: 16px;
+                }}
+                .content {{
+                    padding: 40px 30px;
+                }}
+                .content h2 {{
+                    color: #1e293b;
+                    font-size: 22px;
+                    margin: 0 0 16px;
+                }}
+                .content p {{
+                    color: #64748b;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    margin: 0 0 12px;
+                }}
+                .btn {{
+                    display: inline-block;
+                    background: #4a6cf7;
+                    color: white !important;
+                    padding: 14px 32px;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 16px;
+                    margin: 20px 0 10px;
+                    transition: all 0.3s ease;
+                }}
+                .btn:hover {{
+                    background: #3a5bd9;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+                }}
+                .footer {{
+                    padding: 20px 30px;
+                    text-align: center;
+                    border-top: 1px solid #e5e7eb;
+                    color: #94a3b8;
+                    font-size: 14px;
+                }}
+                .footer a {{
+                    color: #4a6cf7;
+                    text-decoration: none;
+                }}
+                .warning {{
+                    background: #fef3c7;
+                    border-left: 4px solid #f59e0b;
+                    padding: 12px 16px;
+                    border-radius: 4px;
+                    margin: 16px 0;
+                    font-size: 14px;
+                    color: #92400e;
+                }}
+                .code-box {{
+                    background: #f1f5f9;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    font-family: monospace;
+                    font-size: 14px;
+                    word-break: break-all;
+                    color: #1e293b;
+                    margin: 12px 0;
+                }}
+                @media (max-width: 480px) {{
+                    .container {{
+                        margin: 20px 10px;
+                    }}
+                    .header {{
+                        padding: 30px 20px;
+                    }}
+                    .content {{
+                        padding: 24px 20px;
+                    }}
+                    .btn {{
+                        width: 100%;
+                        text-align: center;
+                    }}
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🔐 Reset Password</h1>
+                    <p>MNYALA Business Management System</p>
+                </div>
+                <div class="content">
+                    <h2>Hello {user.fullname or 'User'} 👋</h2>
+                    <p>We received a request to reset the password for your MNYALA account.</p>
+                    <p>Click the button below to create a new password:</p>
+                    <div style="text-align: center;">
+                        <a href="{reset_url}" class="btn">Reset Password</a>
+                    </div>
+                    <p style="font-size: 14px; color: #94a3b8; text-align: center; margin-top: 8px;">
+                        Or copy and paste this link in your browser:
+                    </p>
+                    <div class="code-box">
+                        {reset_url}
+                    </div>
+                    <div class="warning">
+                        ⏰ This link will expire in <strong>30 minutes</strong>.
+                    </div>
+                    <p style="font-size: 14px; color: #64748b; margin-top: 20px;">
+                        If you didn't request this, please ignore this email or contact support.
+                    </p>
+                </div>
+                <div class="footer">
+                    <p style="margin: 0;">
+                        &copy; 2026 <a href="#">MNYALA</a> Business Management System.
+                    </p>
+                    <p style="margin: 4px 0 0; font-size: 12px;">
+                        This is an automated message, please do not reply.
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Plain text version
+        text_content = f"""
+        Reset Your Password - MNYALA
+        
+        Hello {user.fullname or 'User'},
+        
+        We received a request to reset the password for your MNYALA account.
+        
+        Click the link below to reset your password:
+        {reset_url}
+        
+        This link will expire in 30 minutes.
+        
+        If you didn't request this, please ignore this email.
+        
+        ---
+        © 2026 MNYALA Business Management System
+        """
+        
+        # Create message
+        msg = Message(
+            subject='Reset Your MNYALA Account Password',
+            recipients=[user.email],
+            body=text_content,
+            html=html_content
+        )
+        
+        # Send email
+        mail.send(msg)
+        return True
+        
+    except Exception as e:
+        print(f"❌ Email send error: {str(e)}")
+        return False
 
 
 # ==========================================================
@@ -232,8 +433,9 @@ def login():
         "auth/login.html"
     )
 
+
 # ==========================================================
-# FORGOT PASSWORD
+# FORGOT PASSWORD - WITH EMAIL
 # ==========================================================
 
 @auth.route(
@@ -247,7 +449,6 @@ def forgot_password():
     # ------------------------------------------------------
 
     if request.method == "GET":
-
         return render_template(
             "auth/forgot_password.html"
         )
@@ -306,7 +507,7 @@ def forgot_password():
     token = secrets.token_urlsafe(32)
 
     # ------------------------------------------------------
-    # TOKEN EXPIRATION
+    # TOKEN EXPIRATION (30 minutes)
     # ------------------------------------------------------
 
     expires_at = (
@@ -315,13 +516,11 @@ def forgot_password():
     )
 
     # ------------------------------------------------------
-    # SAVE TOKEN DIRECTLY TO USER
+    # SAVE TOKEN TO USER
     # ------------------------------------------------------
 
     user.reset_token = token
-
     user.reset_token_expires = expires_at
-
     db.session.commit()
 
     # ------------------------------------------------------
@@ -335,27 +534,33 @@ def forgot_password():
     )
 
     # ------------------------------------------------------
-    # DEVELOPMENT TEST
-    #
-    # Kwa sasa link inaonekana terminal.
-    # Baadaye tunaweza kuiunganisha na email.
+    # SEND EMAIL
     # ------------------------------------------------------
 
-    print()
-    print("=" * 70)
-    print("PASSWORD RESET LINK")
-    print("=" * 70)
-    print(reset_url)
-    print("=" * 70)
-    print()
+    email_sent = send_reset_email(user, reset_url)
 
     # ------------------------------------------------------
-    # SHOW RESET LINK FOR DEVELOPMENT
+    # CHECK EMAIL STATUS
     # ------------------------------------------------------
 
-    return render_template(
-        "auth/forgot_password.html",
-        reset_url=reset_url
+    if email_sent:
+        flash(
+            "Password reset instructions have been sent to your email.",
+            "success"
+        )
+    else:
+        flash(
+            "Unable to send email. Please try again later.",
+            "danger"
+        )
+        
+        # Clear token if email failed
+        user.reset_token = None
+        user.reset_token_expires = None
+        db.session.commit()
+
+    return redirect(
+        url_for("auth.login")
     )
 
 
@@ -403,9 +608,7 @@ def reset_password(token):
 
         # Clear expired token
         user.reset_token = None
-
         user.reset_token_expires = None
-
         db.session.commit()
 
         flash(
@@ -418,9 +621,7 @@ def reset_password(token):
         )
 
     # ------------------------------------------------------
-    # GET REQUEST
-    #
-    # Display reset password page
+    # GET REQUEST - Display reset password page
     # ------------------------------------------------------
 
     if request.method == "GET":
@@ -524,7 +725,6 @@ def reset_password(token):
     # ------------------------------------------------------
 
     user.reset_token = None
-
     user.reset_token_expires = None
 
     # ------------------------------------------------------
