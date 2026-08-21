@@ -5,7 +5,8 @@ from flask import (
     redirect,
     url_for,
     flash,
-    session
+    session,
+    jsonify
 )
 
 from werkzeug.security import (
@@ -23,19 +24,19 @@ from extensions import mail
 
 from models import (
     User,
-    Message
+    Message,
+    ActivityLog
 )
-
 
 auth = Blueprint("auth", __name__)
 
 
 # ==========================================================
-# ADMIN REQUIRED
+# ADMIN REQUIRED - CHECK FUNCTION
 # ==========================================================
 
 def admin_required():
-
+    """Check if user is admin or super admin"""
     # User hajalogin
     if "user_id" not in session:
         return False
@@ -53,11 +54,11 @@ def admin_required():
 
 
 # ==========================================================
-# SUPER ADMIN REQUIRED
+# SUPER ADMIN REQUIRED - CHECK FUNCTION
 # ==========================================================
 
 def super_admin_required():
-
+    """Check if user is super admin"""
     # User hajalogin
     if "user_id" not in session:
         return False
@@ -75,6 +76,25 @@ def super_admin_required():
 
 
 # ==========================================================
+# ACTIVITY LOG
+# ==========================================================
+
+def log_activity(user_id, action, details=None):
+    """Log user activity"""
+    try:
+        log = ActivityLog(
+            user_id=user_id,
+            action=action,
+            details=details,
+            ip_address=request.remote_addr
+        )
+        db.session.add(log)
+        db.session.commit()
+    except Exception as e:
+        print(f"❌ Log error: {str(e)}")
+
+
+# ==========================================================
 # SEND RESET EMAIL
 # ==========================================================
 
@@ -87,115 +107,13 @@ def send_reset_email(user, reset_url):
         <html>
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Reset Your Password</title>
             <style>
-                body {{
-                    font-family: 'Poppins', Arial, sans-serif;
-                    background: #f8fafc;
-                    margin: 0;
-                    padding: 0;
-                }}
-                .container {{
-                    max-width: 600px;
-                    margin: 40px auto;
-                    background: #ffffff;
-                    border-radius: 16px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                    overflow: hidden;
-                }}
-                .header {{
-                    background: linear-gradient(135deg, #4a6cf7 0%, #6d8ff7 100%);
-                    padding: 40px 30px;
-                    text-align: center;
-                }}
-                .header h1 {{
-                    color: white;
-                    margin: 0;
-                    font-size: 28px;
-                    font-weight: 700;
-                }}
-                .header p {{
-                    color: rgba(255,255,255,0.9);
-                    margin: 8px 0 0;
-                    font-size: 16px;
-                }}
-                .content {{
-                    padding: 40px 30px;
-                }}
-                .content h2 {{
-                    color: #1e293b;
-                    font-size: 22px;
-                    margin: 0 0 16px;
-                }}
-                .content p {{
-                    color: #64748b;
-                    font-size: 16px;
-                    line-height: 1.6;
-                    margin: 0 0 12px;
-                }}
-                .btn {{
-                    display: inline-block;
-                    background: #4a6cf7;
-                    color: white !important;
-                    padding: 14px 32px;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    font-size: 16px;
-                    margin: 20px 0 10px;
-                    transition: all 0.3s ease;
-                }}
-                .btn:hover {{
-                    background: #3a5bd9;
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
-                }}
-                .footer {{
-                    padding: 20px 30px;
-                    text-align: center;
-                    border-top: 1px solid #e5e7eb;
-                    color: #94a3b8;
-                    font-size: 14px;
-                }}
-                .footer a {{
-                    color: #4a6cf7;
-                    text-decoration: none;
-                }}
-                .warning {{
-                    background: #fef3c7;
-                    border-left: 4px solid #f59e0b;
-                    padding: 12px 16px;
-                    border-radius: 4px;
-                    margin: 16px 0;
-                    font-size: 14px;
-                    color: #92400e;
-                }}
-                .code-box {{
-                    background: #f1f5f9;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    font-family: monospace;
-                    font-size: 14px;
-                    word-break: break-all;
-                    color: #1e293b;
-                    margin: 12px 0;
-                }}
-                @media (max-width: 480px) {{
-                    .container {{
-                        margin: 20px 10px;
-                    }}
-                    .header {{
-                        padding: 30px 20px;
-                    }}
-                    .content {{
-                        padding: 24px 20px;
-                    }}
-                    .btn {{
-                        width: 100%;
-                        text-align: center;
-                    }}
-                }}
+                body {{ font-family: Arial, sans-serif; background: #f8fafc; padding: 20px; }}
+                .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; padding: 30px; }}
+                .header {{ background: #4a6cf7; color: white; padding: 20px; border-radius: 12px 12px 0 0; text-align: center; }}
+                .btn {{ display: inline-block; background: #4a6cf7; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; }}
+                .footer {{ text-align: center; color: #94a3b8; font-size: 12px; margin-top: 20px; }}
             </style>
         </head>
         <body>
@@ -204,63 +122,35 @@ def send_reset_email(user, reset_url):
                     <h1>🔐 Reset Password</h1>
                     <p>MNYALA Business Management System</p>
                 </div>
-                <div class="content">
+                <div style="padding: 20px;">
                     <h2>Hello {user.fullname or 'User'} 👋</h2>
-                    <p>We received a request to reset the password for your MNYALA account.</p>
+                    <p>We received a request to reset your password.</p>
                     <p>Click the button below to create a new password:</p>
                     <div style="text-align: center;">
                         <a href="{reset_url}" class="btn">Reset Password</a>
                     </div>
                     <p style="font-size: 14px; color: #94a3b8; text-align: center; margin-top: 8px;">
-                        Or copy and paste this link in your browser:
+                        Or copy this link: {reset_url}
                     </p>
-                    <div class="code-box">
-                        {reset_url}
-                    </div>
-                    <div class="warning">
-                        ⏰ This link will expire in <strong>30 minutes</strong>.
-                    </div>
                     <p style="font-size: 14px; color: #64748b; margin-top: 20px;">
-                        If you didn't request this, please ignore this email or contact support.
+                        This link will expire in 30 minutes.
+                    </p>
+                    <p style="font-size: 14px; color: #64748b;">
+                        If you didn't request this, please ignore this email.
                     </p>
                 </div>
                 <div class="footer">
-                    <p style="margin: 0;">
-                        &copy; 2026 <a href="#">MNYALA</a> Business Management System.
-                    </p>
-                    <p style="margin: 4px 0 0; font-size: 12px;">
-                        This is an automated message, please do not reply.
-                    </p>
+                    © 2026 MNYALA Business Management System
                 </div>
             </div>
         </body>
         </html>
         """
         
-        # Plain text version
-        text_content = f"""
-        Reset Your Password - MNYALA
-        
-        Hello {user.fullname or 'User'},
-        
-        We received a request to reset the password for your MNYALA account.
-        
-        Click the link below to reset your password:
-        {reset_url}
-        
-        This link will expire in 30 minutes.
-        
-        If you didn't request this, please ignore this email.
-        
-        ---
-        © 2026 MNYALA Business Management System
-        """
-        
         # Create message
         msg = Message(
             subject='Reset Your MNYALA Account Password',
             recipients=[user.email],
-            body=text_content,
             html=html_content
         )
         
@@ -276,6 +166,7 @@ def send_reset_email(user, reset_url):
 # ==========================================================
 # LOGIN
 # ==========================================================
+
 @auth.route("/login", methods=["GET", "POST"])
 def login():
 
@@ -358,6 +249,13 @@ def login():
             session["user_id"] = user.id
             session["user_role"] = user.role
 
+            # Log login activity
+            log_activity(
+                user.id,
+                "User logged in",
+                f"Email: {user.email}"
+            )
+
             # ------------------------------------------------
             # SUPER ADMIN
             # ------------------------------------------------
@@ -435,143 +333,84 @@ def login():
 
 
 # ==========================================================
-# FORGOT PASSWORD - WITH EMAIL
+# FORGOT PASSWORD
 # ==========================================================
 
-@auth.route(
-    "/forgot-password",
-    methods=["GET", "POST"]
-)
+@auth.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
-
+    
     # ------------------------------------------------------
-    # SHOW PAGE
+    # SHOW PAGE (GET)
     # ------------------------------------------------------
-
     if request.method == "GET":
-        return render_template(
-            "auth/forgot_password.html"
-        )
-
+        return render_template("auth/forgot_password.html")
+    
     # ------------------------------------------------------
-    # GET EMAIL
+    # PROCESS FORM (POST)
     # ------------------------------------------------------
-
-    email = request.form.get(
-        "email",
-        ""
-    ).strip().lower()
-
+    email = request.form.get("email", "").strip().lower()
+    
     # ------------------------------------------------------
     # VALIDATE EMAIL
     # ------------------------------------------------------
-
     if not email:
-
-        flash(
-            "Please enter your email address.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.forgot_password")
-        )
-
+        flash("Please enter your email address.", "danger")
+        return redirect(url_for("auth.forgot_password"))
+    
     # ------------------------------------------------------
     # FIND USER
     # ------------------------------------------------------
-
-    user = User.query.filter_by(
-        email=email
-    ).first()
-
+    user = User.query.filter_by(email=email).first()
+    
     # ------------------------------------------------------
-    # USER NOT FOUND
+    # IF USER NOT FOUND - SHOW SAME MESSAGE (Security)
     # ------------------------------------------------------
-
     if not user:
-
-        flash(
-            "No account was found with that email address.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.forgot_password")
-        )
-
+        flash("If an account exists with that email, a reset link has been sent.", "info")
+        flash("📧 Please check your inbox (and spam folder).", "info")
+        return render_template("auth/forgot_password.html", email_sent=True, user_email=email)
+    
     # ------------------------------------------------------
-    # GENERATE SECURE TOKEN
+    # GENERATE TOKEN
     # ------------------------------------------------------
-
     token = secrets.token_urlsafe(32)
-
-    # ------------------------------------------------------
-    # TOKEN EXPIRATION (30 minutes)
-    # ------------------------------------------------------
-
-    expires_at = (
-        datetime.utcnow()
-        + timedelta(minutes=30)
-    )
-
-    # ------------------------------------------------------
-    # SAVE TOKEN TO USER
-    # ------------------------------------------------------
-
+    expires_at = datetime.utcnow() + timedelta(minutes=30)
+    
     user.reset_token = token
     user.reset_token_expires = expires_at
     db.session.commit()
-
+    
     # ------------------------------------------------------
     # CREATE RESET URL
     # ------------------------------------------------------
-
-    reset_url = url_for(
-        "auth.reset_password",
-        token=token,
-        _external=True
-    )
-
+    reset_url = url_for("auth.reset_password", token=token, _external=True)
+    
     # ------------------------------------------------------
     # SEND EMAIL
     # ------------------------------------------------------
-
     email_sent = send_reset_email(user, reset_url)
-
+    
     # ------------------------------------------------------
-    # CHECK EMAIL STATUS
+    # REDIRECT WITH MESSAGE
     # ------------------------------------------------------
-
     if email_sent:
-        flash(
-            "Password reset instructions have been sent to your email.",
-            "success"
-        )
+        flash("✅ Password reset link has been sent to your email address!", "success")
+        flash("📧 Please check your inbox (and spam folder). The link expires in 30 minutes.", "info")
     else:
-        flash(
-            "Unable to send email. Please try again later.",
-            "danger"
-        )
-        
-        # Clear token if email failed
-        user.reset_token = None
-        user.reset_token_expires = None
-        db.session.commit()
-
-    return redirect(
-        url_for("auth.login")
-    )
+        flash("❌ Unable to send email. Please try again later.", "danger")
+        flash(f"🔗 Use this link: {reset_url}", "warning")
+    
+    # ------------------------------------------------------
+    # RENDER SAME PAGE WITH SUCCESS MESSAGE
+    # ------------------------------------------------------
+    return render_template("auth/forgot_password.html", email_sent=True, user_email=email)
 
 
 # ==========================================================
 # RESET PASSWORD
 # ==========================================================
 
-@auth.route(
-    "/reset-password/<token>",
-    methods=["GET", "POST"]
-)
+@auth.route("/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token):
 
     # ------------------------------------------------------
@@ -732,6 +571,13 @@ def reset_password(token):
     # ------------------------------------------------------
 
     db.session.commit()
+
+    # Log password reset
+    log_activity(
+        user.id,
+        "Password reset successfully",
+        f"User: {user.email}"
+    )
 
     # ------------------------------------------------------
     # SUCCESS
@@ -913,9 +759,7 @@ def view_message(id):
 # DELETE MESSAGE
 # ==========================================================
 
-@auth.route(
-    "/messages/delete/<int:id>"
-)
+@auth.route("/messages/delete/<int:id>")
 def delete_message(id):
 
     # ------------------------------------------------------
@@ -969,10 +813,7 @@ def delete_message(id):
 # SETTINGS
 # ==========================================================
 
-@auth.route(
-    "/settings",
-    methods=["GET", "POST"]
-)
+@auth.route("/settings", methods=["GET", "POST"])
 def settings():
 
     # ------------------------------------------------------
@@ -1086,10 +927,7 @@ def settings():
 # CHANGE PASSWORD
 # ==========================================================
 
-@auth.route(
-    "/settings/password",
-    methods=["POST"]
-)
+@auth.route("/settings/password", methods=["POST"])
 def change_password():
 
     # ------------------------------------------------------
@@ -1233,6 +1071,13 @@ def change_password():
 
     db.session.commit()
 
+    # Log password change
+    log_activity(
+        user.id,
+        "Password changed",
+        f"User: {user.email}"
+    )
+
     # ------------------------------------------------------
     # SUCCESS
     # ------------------------------------------------------
@@ -1253,6 +1098,16 @@ def change_password():
 
 @auth.route("/logout")
 def logout():
+
+    # Log logout activity
+    if "user_id" in session:
+        user = User.query.get(session["user_id"])
+        if user:
+            log_activity(
+                user.id,
+                "User logged out",
+                f"Email: {user.email}"
+            )
 
     # ------------------------------------------------------
     # CLEAR SESSION
@@ -1276,3 +1131,294 @@ def logout():
     return redirect(
         url_for("auth.login")
     )
+
+
+# ==========================================================
+# SUPER ADMIN - DASHBOARD
+# ==========================================================
+
+@auth.route("/super-admin/dashboard")
+def super_admin_dashboard():
+    """Super Admin Dashboard"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    # Statistics
+    total_users = User.query.count()
+    total_admins = User.query.filter(User.role.in_(['admin', 'super_admin'])).count()
+    total_customers = User.query.filter_by(role='customer').count()
+    total_active = User.query.filter_by(is_active=True).count() if hasattr(User, 'is_active') else total_users
+    
+    # Recent users
+    recent_users = User.query.order_by(
+        User.id.desc()
+    ).limit(10).all()
+    
+    return render_template(
+        "admin/super_admin/dashboard.html",
+        total_users=total_users,
+        total_admins=total_admins,
+        total_customers=total_customers,
+        total_active=total_active,
+        recent_users=recent_users
+    )
+
+
+# ==========================================================
+# SUPER ADMIN - MANAGE ADMINS
+# ==========================================================
+
+@auth.route("/super-admin/admins")
+def manage_admins():
+    """View all administrators"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    admins = User.query.filter(
+        User.role.in_(['admin', 'super_admin'])
+    ).order_by(User.id.desc()).all()
+    
+    return render_template(
+        "admin/super_admin/admins.html",
+        admins=admins
+    )
+
+
+@auth.route("/super-admin/admins/add", methods=["GET", "POST"])
+def add_admin():
+    """Add new administrator"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    if request.method == "POST":
+        fullname = request.form.get("fullname", "").strip()
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "").strip()
+        role = request.form.get("role", "admin").strip()
+        
+        # Validation
+        if not fullname or not email or not password:
+            flash("All fields are required.", "danger")
+            return redirect(url_for("auth.add_admin"))
+        
+        if len(password) < 6:
+            flash("Password must be at least 6 characters.", "danger")
+            return redirect(url_for("auth.add_admin"))
+        
+        # Check if email exists
+        existing = User.query.filter_by(email=email).first()
+        if existing:
+            flash(f"Email '{email}' is already registered.", "danger")
+            return redirect(url_for("auth.add_admin"))
+        
+        # Create admin
+        new_admin = User(
+            fullname=fullname,
+            username=fullname.replace(" ", "_").lower(),
+            email=email,
+            password=generate_password_hash(password),
+            role=role,
+            email_verified=True
+        )
+        
+        db.session.add(new_admin)
+        db.session.commit()
+        
+        # Log activity
+        log_activity(
+            session['user_id'],
+            f"Added new {role}: {email}",
+            f"Name: {fullname}"
+        )
+        
+        flash(f"✅ {role.title()} '{fullname}' added successfully!", "success")
+        return redirect(url_for("auth.manage_admins"))
+    
+    return render_template("admin/super_admin/add_admin.html")
+
+
+@auth.route("/super-admin/admins/edit/<int:user_id>", methods=["GET", "POST"])
+def edit_admin(user_id):
+    """Edit administrator details"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    admin = User.query.get_or_404(user_id)
+    
+    # Prevent editing self
+    if admin.id == session['user_id']:
+        flash("You cannot edit your own account here. Use Settings.", "warning")
+        return redirect(url_for("auth.manage_admins"))
+    
+    if request.method == "POST":
+        fullname = request.form.get("fullname", "").strip()
+        email = request.form.get("email", "").strip().lower()
+        role = request.form.get("role", "admin").strip()
+        is_active = request.form.get("is_active") == "on"
+        
+        # Validation
+        if not fullname or not email:
+            flash("Name and email are required.", "danger")
+            return redirect(url_for("auth.edit_admin", user_id=user_id))
+        
+        # Check email duplicate
+        existing = User.query.filter(User.email == email, User.id != user_id).first()
+        if existing:
+            flash(f"Email '{email}' is already taken.", "danger")
+            return redirect(url_for("auth.edit_admin", user_id=user_id))
+        
+        # Update
+        admin.fullname = fullname
+        admin.username = fullname.replace(" ", "_").lower()
+        admin.email = email
+        admin.role = role
+        if hasattr(admin, 'is_active'):
+            admin.is_active = is_active
+        
+        db.session.commit()
+        
+        # Log activity
+        log_activity(
+            session['user_id'],
+            f"Updated admin: {email}",
+            f"Role: {role}"
+        )
+        
+        flash(f"✅ Admin '{fullname}' updated successfully!", "success")
+        return redirect(url_for("auth.manage_admins"))
+    
+    return render_template("admin/super_admin/edit_admin.html", admin=admin)
+
+
+@auth.route("/super-admin/admins/delete/<int:user_id>", methods=["POST"])
+def delete_admin(user_id):
+    """Delete administrator"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    admin = User.query.get_or_404(user_id)
+    
+    # Prevent deleting self
+    if admin.id == session['user_id']:
+        flash("You cannot delete your own account.", "danger")
+        return redirect(url_for("auth.manage_admins"))
+    
+    # Prevent deleting the last super_admin
+    if admin.role == 'super_admin':
+        super_admins = User.query.filter_by(role='super_admin').count()
+        if super_admins <= 1:
+            flash("Cannot delete the last Super Admin.", "danger")
+            return redirect(url_for("auth.manage_admins"))
+    
+    # Log before deletion
+    log_activity(
+        session['user_id'],
+        f"Deleted admin: {admin.email}",
+        f"Name: {admin.fullname}"
+    )
+    
+    db.session.delete(admin)
+    db.session.commit()
+    
+    flash(f"✅ Admin '{admin.fullname}' deleted successfully!", "success")
+    return redirect(url_for("auth.manage_admins"))
+
+
+# ==========================================================
+# SUPER ADMIN - MANAGE ALL USERS
+# ==========================================================
+
+@auth.route("/super-admin/users")
+def manage_users():
+    """View all users"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    users = User.query.order_by(User.id.desc()).all()
+    
+    return render_template(
+        "admin/super_admin/users.html",
+        users=users
+    )
+
+
+@auth.route("/super-admin/users/toggle/<int:user_id>", methods=["POST"])
+def toggle_user_status(user_id):
+    """Activate/Deactivate user"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    user = User.query.get_or_404(user_id)
+    
+    # Prevent toggling self
+    if user.id == session['user_id']:
+        flash("You cannot change your own status.", "danger")
+        return redirect(url_for("auth.manage_users"))
+    
+    if hasattr(user, 'is_active'):
+        user.is_active = not user.is_active
+        db.session.commit()
+        
+        status = "activated" if user.is_active else "deactivated"
+        log_activity(
+            session['user_id'],
+            f"{status.title()} user: {user.email}",
+            f"User: {user.fullname}"
+        )
+        
+        flash(f"✅ User '{user.fullname}' {status}!", "success")
+    else:
+        flash("User status toggle not available.", "warning")
+    
+    return redirect(url_for("auth.manage_users"))
+
+
+@auth.route("/super-admin/users/delete/<int:user_id>", methods=["POST"])
+def delete_user(user_id):
+    """Delete user"""
+    
+    # Check if user is super admin
+    if not super_admin_required():
+        flash("Super Admin access required.", "danger")
+        return redirect(url_for("auth.dashboard"))
+    
+    user = User.query.get_or_404(user_id)
+    
+    # Prevent deleting admin/super_admin
+    if user.role in ['admin', 'super_admin']:
+        flash("Use the admin management page to delete administrators.", "danger")
+        return redirect(url_for("auth.manage_users"))
+    
+    # Log before deletion
+    log_activity(
+        session['user_id'],
+        f"Deleted user: {user.email}",
+        f"Name: {user.fullname}"
+    )
+    
+    db.session.delete(user)
+    db.session.commit()
+    
+    flash(f"✅ User '{user.fullname}' deleted successfully!", "success")
+    return redirect(url_for("auth.manage_users"))

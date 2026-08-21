@@ -1,8 +1,13 @@
+from datetime import datetime
+import os
 from dotenv import load_dotenv
 
+# =============================================
+# LOAD .env FILE FIRST
+# =============================================
 load_dotenv()
-from datetime import datetime
-from flask import Flask, render_template
+
+from flask import Flask
 from flask_migrate import Migrate
 
 from extensions import db, mail
@@ -24,16 +29,19 @@ if not app.config.get("SECRET_KEY") or not app.config.get("SQLALCHEMY_DATABASE_U
     )
 
 # =============================================
-# CHECK EMAIL CONFIGURATION (Warning only)
+# CHECK EMAIL CONFIGURATION
 # =============================================
-if not app.config.get("MAIL_USERNAME") or not app.config.get("MAIL_PASSWORD"):
+mail_username = app.config.get("MAIL_USERNAME")
+mail_password = app.config.get("MAIL_PASSWORD")
+
+if not mail_username or not mail_password:
     print("⚠️  WARNING: Email configuration is not set!")
     print("   MAIL_USERNAME and MAIL_PASSWORD must be set in .env")
     print("   Password reset functionality will not work!")
 else:
     print("✅ Email configuration found:")
-    print(f"   MAIL_USERNAME: {app.config.get('MAIL_USERNAME')}")
-    print(f"   MAIL_PASSWORD: {'*' * len(app.config.get('MAIL_PASSWORD', ''))}")
+    print(f"   MAIL_USERNAME: {mail_username}")
+    print(f"   MAIL_PASSWORD: {'*' * len(mail_password)}")
     print(f"   MAIL_SERVER: {app.config.get('MAIL_SERVER')}")
     print(f"   MAIL_PORT: {app.config.get('MAIL_PORT')}")
     print(f"   MAIL_USE_TLS: {app.config.get('MAIL_USE_TLS')}")
@@ -66,20 +74,40 @@ def inject_unread_messages():
 
 
 # =============================================
-# ERROR HANDLERS
+# CONTEXT PROCESSOR - Current Date/Time
+# =============================================
+@app.context_processor
+def inject_now():
+    return {'now': datetime.now()}
+
+
+# =============================================
+# ERROR HANDLERS (With fallback) - FIXED
 # =============================================
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template("errors/404.html"), 404
+    try:
+        from flask import render_template
+        return render_template("errors/404.html"), 404
+    except:
+        return "<h1>404 - Page Not Found</h1><p>The page you are looking for does not exist.</p>", 404
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template("errors/500.html"), 500
+    try:
+        from flask import render_template
+        return render_template("errors/500.html"), 500
+    except:
+        return "<h1>500 - Internal Server Error</h1><p>Something went wrong. Please try again later.</p>", 500
 
 @app.errorhandler(403)
 def forbidden(e):
-    return render_template("errors/403.html"), 403
+    try:
+        from flask import render_template
+        return render_template("errors/403.html"), 403
+    except:
+        return "<h1>403 - Forbidden</h1><p>You don't have permission to access this page.</p>", 403
 
 
 # =============================================
@@ -91,19 +119,17 @@ app.register_blueprint(admin, url_prefix="/admin")
 
 
 # =============================================
-# TEST EMAIL FUNCTION (Optional - Development)
+# TEST EMAIL FUNCTION
 # =============================================
 @app.cli.command("test-email")
 def test_email():
     """Test email configuration by sending a test email."""
     from flask_mail import Message
-    import os
     
     print("=" * 60)
     print("TESTING EMAIL CONFIGURATION")
     print("=" * 60)
     
-    # Check if email is configured
     if not app.config.get("MAIL_USERNAME") or not app.config.get("MAIL_PASSWORD"):
         print("❌ Email not configured! Set MAIL_USERNAME and MAIL_PASSWORD in .env")
         return
@@ -148,7 +174,14 @@ if __name__ == "__main__":
     print("🚀 MNYALA BUSINESS MANAGEMENT SYSTEM")
     print("=" * 60)
     print(f"🔗 Server URL: http://127.0.0.1:5000")
-    print(f"📧 Email: {'✅ Configured' if app.config.get('MAIL_USERNAME') else '❌ Not Configured'}")
+    
+    mail_status = "✅ Configured" if app.config.get("MAIL_USERNAME") and app.config.get("MAIL_PASSWORD") else "❌ Not Configured"
+    print(f"📧 Email: {mail_status}")
+    
+    if app.config.get("MAIL_USERNAME"):
+        print(f"   📧 Sender: {app.config.get('MAIL_USERNAME')}")
+        print(f"   🔧 Server: {app.config.get('MAIL_SERVER')}:{app.config.get('MAIL_PORT')}")
+    
     print("=" * 60)
     
     app.run(debug=True)
