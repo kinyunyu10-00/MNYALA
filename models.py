@@ -15,6 +15,13 @@ class User(UserMixin, db.Model):
         db.Integer,
         primary_key=True
     )
+    # ID CREATIONS
+    
+    account_id = db.Column(db.String(30), unique=True, nullable=True)
+
+    username = db.Column(db.String(100), nullable=False)
+    fullname = db.Column(db.String(150), nullable=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
 
     username = db.Column(
         db.String(100),

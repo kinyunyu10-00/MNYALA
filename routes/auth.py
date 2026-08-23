@@ -32,6 +32,29 @@ from models import (
 auth = Blueprint("auth", __name__)
 
 # ============================================================
+# ACCOUNT ID GENERATOR
+# ============================================================
+def generate_account_id(role):
+    role_prefixes = {
+        "super_admin": "SADM",
+        "admin": "ADM",
+        "staff": "STF",
+        "customer": "USR"
+    }
+    prefix = role_prefixes.get(role.lower(), "USR")
+    
+    now = datetime.now()
+    year_day_str = f"{now.strftime('%Y')}{now.strftime('%d')}" # Mfano: 202623
+    
+    count = User.query.filter_by(role=role).count() + 1
+    account_id = f"{prefix}-{year_day_str}-{count:04d}"
+    
+    while User.query.filter_by(account_id=account_id).first():
+        count += 1
+        account_id = f"{prefix}-{year_day_str}-{count:04d}"
+        
+    return account_id
+# ============================================================
 # PASSWORD POLICY
 # ============================================================
 
@@ -558,10 +581,7 @@ def login():
             )
 
         elif user.role == "admin":
-
-            return redirect(
-                url_for("auth.dashboard")
-            )
+             return redirect(url_for("auth.admin_dashboard"))
 
         elif user.role == "customer":
 
@@ -945,6 +965,25 @@ def dashboard():
         latest_messages=latest_messages
     )
 
+#==============================-----------
+#ADMIN-----DASHBOARD(wa kawaida)
+#====================================
+@auth.route("/admin-dashboard")
+def admin_dashboard():
+    if not admin_required():
+        flash("You are not authorized to access the admin dashboard.", "danger")
+        return redirect(url_for("auth.login"))
+
+    total_messages = Message.query.count()
+    unread_messages = Message.query.filter_by(is_read=False).count()
+    latest_messages = Message.query.order_by(Message.created_at.desc()).limit(5).all()
+
+    return render_template(
+        "admin/admin_dashboard.html",
+        total_messages=total_messages,
+        unread_messages=unread_messages,
+        latest_messages=latest_messages
+    )
 
 # ==========================================================
 # MESSAGES
@@ -1142,7 +1181,7 @@ def manage_admins():
     
     return render_template("admin/super_admin/admins.html", admins=admins)
 
-
+#ADD ADMIN
 @auth.route("/super-admin/admins/add", methods=["GET", "POST"])
 def add_admin():
     if not super_admin_required():
@@ -1168,7 +1207,11 @@ def add_admin():
             flash(f"Email '{email}' is already registered.", "danger")
             return redirect(url_for("auth.add_admin"))
         
+        # GENERATE SECURE ACCOUNT ID AUTOMATICALLY
+        new_account_id = generate_account_id(role)
+        
         new_admin = User(
+            account_id=new_account_id,  # ADDED HERE
             fullname=fullname,
             username=fullname.replace(" ", "_").lower(),
             email=email,
@@ -1180,9 +1223,9 @@ def add_admin():
         db.session.add(new_admin)
         db.session.commit()
         
-        log_activity(session['user_id'], f"Added new {role}: {email}", f"Name: {fullname}")
+        log_activity(session['user_id'], f"Added new {role}: {email}", f"Name: {fullname} | ID: {new_account_id}")
         
-        flash(f"✅ {role.title()} '{fullname}' added successfully!", "success")
+        flash(f"✅ {role.title()} '{fullname}' added successfully with ID: {new_account_id}!", "success")
         return redirect(url_for("auth.manage_admins"))
     
     return render_template("admin/super_admin/add_admin.html")

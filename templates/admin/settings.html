@@ -1149,6 +1149,9 @@ Settings
             </div>
 
         </div>
+
+
+
         <!-- =====================================================
      ACCOUNT INFORMATION
 ===================================================== -->
@@ -1183,7 +1186,13 @@ Settings
                     <label>Account ID</label>
 
                     <div class="account-value">
+
+                        {% if user.account_id %}
+                        {{ user.account_id }}
+                        {% else %}
                         #{{ user.id }}
+                        {% endif %}
+
                     </div>
 
                 </div>
@@ -1196,8 +1205,12 @@ Settings
 
                     <div class="account-value">
 
-                        {% if user.role %}
-                        {{ user.role.name }}
+                        {% if user.role == 'super_admin' %}
+                        👑 Super Admin
+                        {% elif user.role == 'admin' %}
+                        Admin
+                        {% elif user.role %}
+                        {{ user.role|title }}
                         {% else %}
                         Not assigned
                         {% endif %}
@@ -1275,7 +1288,6 @@ Settings
             </div>
 
         </section>
-
 
     </div>
 

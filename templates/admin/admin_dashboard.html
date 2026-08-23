@@ -1,0 +1,220 @@
+<!-- KWA NORMAL ADMINS -->
+
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Admin Dashboard | MNYALA{% endblock %}
+
+{% block page_name %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- ========================= -->
+<!-- WELCOME SECTION -->
+<!-- ========================= -->
+
+<div class="welcome">
+    <div>
+        <h1>Welcome, Admin 👋</h1>
+        <p>Manage your business from one place.</p>
+    </div>
+
+    <button class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i>
+        Add Product
+    </button>
+</div>
+
+<!-- ========================= -->
+<!-- STATISTICS -->
+<!-- ========================= -->
+
+<div class="dashboard-cards">
+
+    <div class="card">
+        <div class="card-icon blue">
+            <i class="fa-solid fa-box"></i>
+        </div>
+        <div class="card-info">
+            <h2>0</h2>
+            <p>Total Products</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-icon green">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+        <div class="card-info">
+            <h2>0</h2>
+            <p>Orders</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-icon orange">
+            <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="card-info">
+            <h2>0</h2>
+            <p>Customers</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-icon purple">
+            <i class="fa-solid fa-image"></i>
+        </div>
+        <div class="card-info">
+            <h2>0</h2>
+            <p>Gallery</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-icon red">
+            <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="card-info">
+            <h2>{{ total_messages }}</h2>
+            <p>Messages</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-icon teal">
+            <i class="fa-solid fa-money-bill-wave"></i>
+        </div>
+        <div class="card-info">
+            <h2>TZS 0</h2>
+            <p>Revenue</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- ORDERS + MESSAGES -->
+<!-- ========================= -->
+
+<div class="dashboard-grid">
+
+    <!-- Recent Orders -->
+    <div class="card">
+        <div class="section-header">
+            <h3>Recent Orders</h3>
+            <a href="#">View All</a>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#0001</td>
+                    <td>No Data</td>
+                    <td><span class="status pending">Pending</span></td>
+                    <td>TZS 0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Messages -->
+    <div class="card">
+        <div class="section-header">
+            <h3>Latest Messages</h3>
+            <a href="{{ url_for('auth.messages') }}">Open</a>
+        </div>
+
+        {% if latest_messages %}
+        {% for msg in latest_messages %}
+        <div class="message-item">
+            <div class="message-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="message-content">
+                <h4>{{ msg.fullname }}</h4>
+                <p>{{ msg.subject }}</p>
+                <small>{{ msg.created_at.strftime("%d %b %Y %H:%M") }}</small>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="message-item">
+            <div class="message-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="message-content">
+                <h4>No Messages</h4>
+                <small>Messages from customers will appear here.</small>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- GALLERY + QUICK ACTIONS -->
+<!-- ========================= -->
+
+<div class="dashboard-grid">
+
+    <!-- Gallery -->
+    <div class="card">
+        <div class="section-header">
+            <h3>Gallery Preview</h3>
+            <a href="#">Upload</a>
+        </div>
+
+        <div class="gallery-preview">
+            <div class="gallery-box">
+                <i class="fa-solid fa-image"></i>
+            </div>
+            <div class="gallery-box">
+                <i class="fa-solid fa-image"></i>
+            </div>
+            <div class="gallery-box">
+                <i class="fa-solid fa-image"></i>
+            </div>
+            <div class="gallery-box">
+                <i class="fa-solid fa-image"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <div class="section-header">
+            <h3>Quick Actions</h3>
+        </div>
+
+        <div class="quick-actions">
+            <button class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i>
+                Add Product
+            </button>
+            <button class="btn btn-success">
+                <i class="fa-solid fa-image"></i>
+                Upload Image
+            </button>
+            <button class="btn btn-warning">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Orders
+            </button>
+            <a href="{{ url_for('auth.messages') }}" class="btn btn-danger">
+                <i class="fa-solid fa-envelope"></i>
+                Messages
+            </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

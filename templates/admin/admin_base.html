@@ -38,12 +38,20 @@
         </div>
 
         <nav class="sidebar-nav">
-            <!-- Dashboard -->
-            <a href="{{ url_for('auth.dashboard') }}"
-                class="{% if request.endpoint == 'auth.dashboard' %}active{% endif %}">
+            <!-- Dashboard - INAENDA KWENYE DASHBOARD YA ROLE -->
+            {% if session.user_role == 'super_admin' %}
+            <a href="{{ url_for('auth.super_admin_dashboard') }}"
+                class="{% if request.endpoint == 'auth.super_admin_dashboard' %}active{% endif %}">
                 <i class="fa-solid fa-house"></i>
                 <span>Dashboard</span>
             </a>
+            {% else %}
+            <a href="{{ url_for('auth.admin_dashboard') }}"
+                class="{% if request.endpoint == 'auth.admin_dashboard' %}active{% endif %}">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+            {% endif %}
 
             <!-- ========================================== -->
             <!-- SUPER ADMIN - DROPDOWN MENU -->
@@ -76,7 +84,7 @@
             {% endif %}
 
             <!-- ========================================== -->
-            <!-- REGULAR MENU - All Admins -->
+            <!-- REGULAR MENU - All Admins (Regular + Super) -->
             <!-- ========================================== -->
             <div class="sidebar-divider">📦 Management</div>
 
@@ -261,8 +269,6 @@
                 }
             });
         });
-
-        
     </script>
 </body>
 
