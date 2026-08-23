@@ -6,6 +6,12 @@ from dotenv import load_dotenv
 # LOAD .env FILE FIRST
 # =============================================
 load_dotenv()
+# =============================================
+# LOAD .env FILE FIRST (ABSOLUTE PATH - LAZIMA)
+# =============================================
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
 
 from flask import Flask
 from flask_migrate import Migrate
