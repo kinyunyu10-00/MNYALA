@@ -8,6 +8,7 @@ from flask import (
     session,
     jsonify
 )
+import re
 
 from werkzeug.security import (
     check_password_hash,
@@ -19,7 +20,7 @@ import secrets
 from datetime import datetime, timedelta
 
 from extensions import db
-from flask_mail import Message
+from flask_mail import Message as MailMessage
 from extensions import mail
 
 from models import (
@@ -30,26 +31,54 @@ from models import (
 
 auth = Blueprint("auth", __name__)
 
+# ============================================================
+# PASSWORD POLICY
+# ============================================================
 
+def validate_password_strength(password):
+    """
+    Password must:
+    - Have at least 9 characters
+    - Contain at least one uppercase letter
+    - Contain at least one lowercase letter
+    - Contain at least one number
+    - Contain at least one special character
+    """
+
+    if not password:
+        return False, "Password is required."
+
+    if len(password) < 9:
+        return False, "Password must contain at least 9 characters."
+
+    if not re.search(r"[A-Z]", password):
+        return False, "Password must contain at least one uppercase letter."
+
+    if not re.search(r"[a-z]", password):
+        return False, "Password must contain at least one lowercase letter."
+
+    if not re.search(r"[0-9]", password):
+        return False, "Password must contain at least one number."
+
+    if not re.search(r"[^A-Za-z0-9]", password):
+        return False, "Password must contain at least one special character."
+
+    return True, "Password is strong."
 # ==========================================================
 # ADMIN REQUIRED - CHECK FUNCTION
 # ==========================================================
 
 def admin_required():
     """Check if user is admin or super admin"""
-    # User hajalogin
     if "user_id" not in session:
         return False
 
-    # Tafuta user kwenye database
     user = User.query.get(session["user_id"])
 
-    # User hayupo tena kwenye database
     if not user:
         session.clear()
         return False
 
-    # Admin na Super Admin wanaruhusiwa
     return user.role in ["admin", "super_admin"]
 
 
@@ -59,19 +88,15 @@ def admin_required():
 
 def super_admin_required():
     """Check if user is super admin"""
-    # User hajalogin
     if "user_id" not in session:
         return False
 
-    # Tafuta user kwenye database
     user = User.query.get(session["user_id"])
 
-    # User hayupo kwenye database
     if not user:
         session.clear()
         return False
 
-    # Super Admin pekee
     return user.role == "super_admin"
 
 
@@ -94,74 +119,280 @@ def log_activity(user_id, action, details=None):
         print(f"❌ Log error: {str(e)}")
 
 
+
 # ==========================================================
-# SEND RESET EMAIL
+# SEND PASSWORD RESET EMAIL
 # ==========================================================
 
 def send_reset_email(user, reset_url):
     """Send password reset email to user"""
+
     try:
-        # Email HTML template
+
         html_content = f"""
         <!DOCTYPE html>
-        <html>
+
+        <html lang="en">
+
         <head>
+
             <meta charset="UTF-8">
-            <title>Reset Your Password</title>
-            <style>
-                body {{ font-family: Arial, sans-serif; background: #f8fafc; padding: 20px; }}
-                .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; padding: 30px; }}
-                .header {{ background: #4a6cf7; color: white; padding: 20px; border-radius: 12px 12px 0 0; text-align: center; }}
-                .btn {{ display: inline-block; background: #4a6cf7; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; }}
-                .footer {{ text-align: center; color: #94a3b8; font-size: 12px; margin-top: 20px; }}
-            </style>
+
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1.0">
+
+            <title>Reset Your MNYALA Password</title>
+
         </head>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h1>🔐 Reset Password</h1>
-                    <p>MNYALA Business Management System</p>
+
+        <body
+            style="
+                margin:0;
+                padding:0;
+                background:#f4f7f6;
+                font-family:Arial,Helvetica,sans-serif;
+            "
+        >
+
+            <div
+                style="
+                    max-width:600px;
+                    margin:40px auto;
+                    background:#ffffff;
+                    border-radius:16px;
+                    overflow:hidden;
+                    box-shadow:0 8px 30px rgba(0,0,0,.08);
+                "
+            >
+
+                <!-- HEADER -->
+
+                <div
+                    style="
+                        background:#1f7a4d;
+                        color:#ffffff;
+                        padding:35px 25px;
+                        text-align:center;
+                    "
+                >
+
+                    <h1
+                        style="
+                            margin:0 0 8px;
+                            font-size:28px;
+                        "
+                    >
+                        MNYALA CO. LTD
+                    </h1>
+
+                    <p
+                        style="
+                            margin:0;
+                            font-size:14px;
+                            opacity:.9;
+                        "
+                    >
+                        Sustainable Energy Solutions
+                    </p>
+
                 </div>
-                <div style="padding: 20px;">
-                    <h2>Hello {user.fullname or 'User'} 👋</h2>
-                    <p>We received a request to reset your password.</p>
-                    <p>Click the button below to create a new password:</p>
-                    <div style="text-align: center;">
-                        <a href="{reset_url}" class="btn">Reset Password</a>
+
+
+                <!-- CONTENT -->
+
+                <div
+                    style="
+                        padding:35px 30px;
+                        color:#334155;
+                    "
+                >
+
+                    <h2
+                        style="
+                            margin-top:0;
+                            color:#1e293b;
+                        "
+                    >
+                        Reset Your Password
+                    </h2>
+
+                    <p>
+                        Hello
+                        <strong>
+                            {user.fullname or "User"}
+                        </strong>,
+                    </p>
+
+                    <p>
+                        We received a request to reset the password
+                        for your MNYALA account.
+                    </p>
+
+                    <p>
+                        Click the button below to create a new password.
+                    </p>
+
+
+                    <!-- BUTTON -->
+
+                    <div
+                        style="
+                            text-align:center;
+                            margin:30px 0;
+                        "
+                    >
+
+                        <a
+                            href="{reset_url}"
+                            style="
+                                display:inline-block;
+                                background:#1f7a4d;
+                                color:#ffffff;
+                                text-decoration:none;
+                                padding:14px 28px;
+                                border-radius:8px;
+                                font-weight:bold;
+                            "
+                        >
+                            Reset Password
+                        </a>
+
                     </div>
-                    <p style="font-size: 14px; color: #94a3b8; text-align: center; margin-top: 8px;">
-                        Or copy this link: {reset_url}
+
+
+                    <p
+                        style="
+                            font-size:13px;
+                            color:#64748b;
+                        "
+                    >
+                        If the button does not work, copy and paste
+                        the following link into your browser:
                     </p>
-                    <p style="font-size: 14px; color: #64748b; margin-top: 20px;">
-                        This link will expire in 30 minutes.
+
+                    <p
+                        style="
+                            word-break:break-all;
+                            font-size:13px;
+                            color:#1f7a4d;
+                        "
+                    >
+                        {reset_url}
                     </p>
-                    <p style="font-size: 14px; color: #64748b;">
-                        If you didn't request this, please ignore this email.
+
+
+                    <div
+                        style="
+                            margin-top:25px;
+                            padding:15px;
+                            background:#f8fafc;
+                            border-radius:8px;
+                            font-size:13px;
+                            color:#64748b;
+                        "
+                    >
+
+                        This password reset link will expire
+                        in <strong>30 minutes</strong>.
+
+                    </div>
+
+
+                    <p
+                        style="
+                            margin-top:25px;
+                            font-size:13px;
+                            color:#64748b;
+                        "
+                    >
+                        If you did not request a password reset,
+                        you can safely ignore this email.
                     </p>
+
                 </div>
-                <div class="footer">
-                    © 2026 MNYALA Business Management System
+
+
+                <!-- FOOTER -->
+
+                <div
+                    style="
+                        background:#f8fafc;
+                        padding:20px;
+                        text-align:center;
+                        color:#94a3b8;
+                        font-size:12px;
+                    "
+                >
+
+                    © 2026 MNYALA CO. LTD<br>
+
+                    Sustainable Energy Solutions
+
                 </div>
+
             </div>
+
         </body>
+
         </html>
         """
-        
-        # Create message
-        msg = Message(
-            subject='Reset Your MNYALA Account Password',
-            recipients=[user.email],
-            html=html_content
-        )
-        
-        # Send email
-        mail.send(msg)
-        return True
-        
-    except Exception as e:
-        print(f"❌ Email send error: {str(e)}")
-        return False
 
+
+        # IMPORTANT:
+        # Use Flask-Mail Message, NOT models.Message
+
+        msg = MailMessage(
+            subject="Reset Your MNYALA Account Password",
+            recipients=[user.email],
+            sender=None
+        )
+
+        msg.body = f"""
+Hello {user.fullname or 'User'},
+
+We received a request to reset your MNYALA account password.
+
+Reset your password using this link:
+
+{reset_url}
+
+This link expires in 30 minutes.
+
+If you did not request this password reset, please ignore this email.
+
+MNYALA CO. LTD
+Sustainable Energy Solutions
+        """
+
+        msg.html = html_content
+
+
+        # SEND EMAIL
+
+        mail.send(msg)
+
+        print(
+            f"✅ Password reset email sent successfully to: "
+            f"{user.email}"
+        )
+
+        return True
+
+
+    except Exception as e:
+
+        print(
+            "❌ PASSWORD RESET EMAIL ERROR:"
+        )
+
+        print(
+            f"   {type(e).__name__}: {str(e)}"
+        )
+
+        return False
+# ==========================================================
+# LOGIN
+# ==========================================================
 
 # ==========================================================
 # LOGIN
@@ -170,9 +401,9 @@ def send_reset_email(user, reset_url):
 @auth.route("/login", methods=["GET", "POST"])
 def login():
 
-    # ------------------------------------------------------
-    # ALREADY LOGGED IN
-    # ------------------------------------------------------
+    # ======================================================
+    # CHECK EXISTING SESSION
+    # ======================================================
 
     if "user_id" in session:
 
@@ -181,20 +412,16 @@ def login():
         if user:
 
             if user.role in ["admin", "super_admin"]:
-                return redirect(
-                    url_for("auth.dashboard")
-                )
+                return redirect(url_for("auth.dashboard"))
 
             elif user.role == "customer":
-                return redirect(
-                    url_for("public.home")
-                )
+                return redirect(url_for("public.index"))
 
         session.clear()
 
-    # ------------------------------------------------------
-    # LOGIN FORM
-    # ------------------------------------------------------
+    # ======================================================
+    # LOGIN POST
+    # ======================================================
 
     if request.method == "POST":
 
@@ -208,9 +435,9 @@ def login():
             ""
         ).strip()
 
-        # --------------------------------------------------
-        # VALIDATION
-        # --------------------------------------------------
+        # ==================================================
+        # VALIDATE INPUT
+        # ==================================================
 
         if not email or not password:
 
@@ -223,188 +450,280 @@ def login():
                 "auth/login.html"
             )
 
-        # --------------------------------------------------
+        # ==================================================
         # FIND USER
-        # --------------------------------------------------
+        # ==================================================
 
         user = User.query.filter_by(
             email=email
         ).first()
 
-        # --------------------------------------------------
-        # CHECK USER + PASSWORD
-        # --------------------------------------------------
+        if not user:
 
-        if user and check_password_hash(
+            flash(
+                "Invalid email or password.",
+                "danger"
+            )
+
+            return render_template(
+                "auth/login.html"
+            )
+
+        # ==================================================
+        # CHECK ACCOUNT STATUS
+        # ==================================================
+
+        if hasattr(user, "is_active") and not user.is_active:
+
+            flash(
+                "Your account has been deactivated. "
+                "Please contact the administrator.",
+                "danger"
+            )
+
+            return render_template(
+                "auth/login.html"
+            )
+
+        # ==================================================
+        # CHECK PASSWORD
+        # ==================================================
+
+        if not check_password_hash(
             user.password,
             password
         ):
 
-            # ------------------------------------------------
-            # CREATE SESSION
-            # ------------------------------------------------
+            flash(
+                "Invalid email or password.",
+                "danger"
+            )
+
+            return render_template(
+                "auth/login.html"
+            )
+
+        # ==================================================
+        # CHECK PASSWORD STRENGTH
+        # ==================================================
+
+        password_valid, password_message = (
+            validate_password_strength(password)
+        )
+
+        if not password_valid:
+
+            flash(
+                "Your password does not meet the current "
+                "security requirements. Please reset your password.",
+                "warning"
+            )
+
+            return redirect(
+                url_for("auth.forgot_password")
+            )
+
+        # ==================================================
+        # LOGIN SUCCESS
+        # ==================================================
+
+        session.clear()
+
+        session["user_id"] = user.id
+        session["user_role"] = user.role
+
+        # ==================================================
+        # ACTIVITY LOG
+        # ==================================================
+
+        log_activity(
+            user.id,
+            "User logged in",
+            f"Email: {user.email}"
+        )
+
+        flash(
+            "Login successful.",
+            "success"
+        )
+
+        # ==================================================
+        # REDIRECT BY ROLE
+        # ==================================================
+
+        if user.role == "super_admin":
+
+            return redirect(
+                url_for("auth.dashboard")
+            )
+
+        elif user.role == "admin":
+
+            return redirect(
+                url_for("auth.dashboard")
+            )
+
+        elif user.role == "customer":
+
+            return redirect(
+                url_for("public.index")
+            )
+
+        else:
 
             session.clear()
 
-            session["user_id"] = user.id
-            session["user_role"] = user.role
-
-            # Log login activity
-            log_activity(
-                user.id,
-                "User logged in",
-                f"Email: {user.email}"
+            flash(
+                "Your account role is not recognized.",
+                "danger"
             )
 
-            # ------------------------------------------------
-            # SUPER ADMIN
-            # ------------------------------------------------
+            return redirect(
+                url_for("auth.login")
+            )
 
-            if user.role == "super_admin":
-
-                flash(
-                    "Welcome, Super Administrator!",
-                    "success"
-                )
-
-                return redirect(
-                    url_for("auth.dashboard")
-                )
-
-            # ------------------------------------------------
-            # ADMIN
-            # ------------------------------------------------
-
-            elif user.role == "admin":
-
-                flash(
-                    "Welcome to the Admin Dashboard.",
-                    "success"
-                )
-
-                return redirect(
-                    url_for("auth.dashboard")
-                )
-
-            # ------------------------------------------------
-            # CUSTOMER
-            # ------------------------------------------------
-
-            elif user.role == "customer":
-
-                flash(
-                    "Welcome back!",
-                    "success"
-                )
-
-                return redirect(
-                    url_for("public.home")
-                )
-
-            # ------------------------------------------------
-            # UNKNOWN ROLE
-            # ------------------------------------------------
-
-            else:
-
-                session.clear()
-
-                flash(
-                    "Your account role is not recognized.",
-                    "danger"
-                )
-
-                return redirect(
-                    url_for("auth.login")
-                )
-
-        # --------------------------------------------------
-        # INVALID LOGIN
-        # --------------------------------------------------
-
-        flash(
-            "Invalid email or password.",
-            "danger"
-        )
+    # ======================================================
+    # GET REQUEST
+    # ======================================================
 
     return render_template(
         "auth/login.html"
     )
-
-
-# ==========================================================
-# FORGOT PASSWORD
-# ==========================================================
-
+#================================
+#FORGORT PASSWORD
+#=============================
 @auth.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
-    
-    # ------------------------------------------------------
-    # SHOW PAGE (GET)
-    # ------------------------------------------------------
-    if request.method == "GET":
-        return render_template("auth/forgot_password.html")
-    
-    # ------------------------------------------------------
-    # PROCESS FORM (POST)
-    # ------------------------------------------------------
-    email = request.form.get("email", "").strip().lower()
-    
-    # ------------------------------------------------------
-    # VALIDATE EMAIL
-    # ------------------------------------------------------
-    if not email:
-        flash("Please enter your email address.", "danger")
-        return redirect(url_for("auth.forgot_password"))
-    
-    # ------------------------------------------------------
-    # FIND USER
-    # ------------------------------------------------------
-    user = User.query.filter_by(email=email).first()
-    
-    # ------------------------------------------------------
-    # IF USER NOT FOUND - SHOW SAME MESSAGE (Security)
-    # ------------------------------------------------------
-    if not user:
-        flash("If an account exists with that email, a reset link has been sent.", "info")
-        flash("📧 Please check your inbox (and spam folder).", "info")
-        return render_template("auth/forgot_password.html", email_sent=True, user_email=email)
-    
-    # ------------------------------------------------------
-    # GENERATE TOKEN
-    # ------------------------------------------------------
-    token = secrets.token_urlsafe(32)
-    expires_at = datetime.utcnow() + timedelta(minutes=30)
-    
-    user.reset_token = token
-    user.reset_token_expires = expires_at
-    db.session.commit()
-    
-    # ------------------------------------------------------
-    # CREATE RESET URL
-    # ------------------------------------------------------
-    reset_url = url_for("auth.reset_password", token=token, _external=True)
-    
-    # ------------------------------------------------------
-    # SEND EMAIL
-    # ------------------------------------------------------
-    email_sent = send_reset_email(user, reset_url)
-    
-    # ------------------------------------------------------
-    # REDIRECT WITH MESSAGE
-    # ------------------------------------------------------
-    if email_sent:
-        flash("✅ Password reset link has been sent to your email address!", "success")
-        flash("📧 Please check your inbox (and spam folder). The link expires in 30 minutes.", "info")
-    else:
-        flash("❌ Unable to send email. Please try again later.", "danger")
-        flash(f"🔗 Use this link: {reset_url}", "warning")
-    
-    # ------------------------------------------------------
-    # RENDER SAME PAGE WITH SUCCESS MESSAGE
-    # ------------------------------------------------------
-    return render_template("auth/forgot_password.html", email_sent=True, user_email=email)
 
+    if request.method == "POST":
+
+        # ==================================================
+        # GET EMAIL
+        # ==================================================
+
+        email = request.form.get(
+            "email",
+            ""
+        ).strip().lower()
+
+
+        # ==================================================
+        # VALIDATE EMAIL INPUT
+        # ==================================================
+
+        if not email:
+
+            flash(
+                "Please enter your email address.",
+                "danger"
+            )
+
+            return render_template(
+                "auth/forgot_password.html"
+            )
+
+
+        # ==================================================
+        # FIND USER
+        # ==================================================
+
+        user = User.query.filter_by(
+            email=email
+        ).first()
+
+
+        # ==================================================
+        # EMAIL DOES NOT EXIST
+        # ==================================================
+
+        if not user:
+
+            flash(
+                "This email address is not registered. "
+                "Please enter the email associated with your account.",
+                "danger"
+            )
+
+            return render_template(
+                "auth/forgot_password.html"
+            )
+
+
+        # ==================================================
+        # GENERATE RESET TOKEN
+        # ==================================================
+
+        token = secrets.token_urlsafe(32)
+
+
+        # ==================================================
+        # SAVE TOKEN TO USER
+        # ==================================================
+
+        user.reset_token = token
+
+        user.reset_token_expires = (
+            datetime.utcnow()
+            + timedelta(minutes=30)
+        )
+
+
+        # ==================================================
+        # SAVE TO DATABASE
+        # ==================================================
+
+        db.session.commit()
+
+
+        # ==================================================
+        # CREATE RESET URL
+        # ==================================================
+
+        reset_url = url_for(
+            "auth.reset_password",
+            token=token,
+            _external=True
+        )
+        # ==================================================
+        # SEND RESET EMAIL
+        # ==================================================
+
+        email_sent = send_reset_email(
+        user,
+        reset_url
+        ) 
+
+        # ==================================================
+        # DEVELOPMENT TEST
+        # ==================================================
+
+        print()
+        print("=" * 70)
+        print("PASSWORD RESET URL")
+        print(reset_url)
+        print("=" * 70)
+        print()
+
+
+        # ==================================================
+        # SHOW SUCCESS PAGE
+        # ==================================================
+
+        return render_template(
+    "auth/forgot_password.html",
+    email_sent=True,
+    email_success=email_sent,
+    user_email=email
+)
+
+
+    # ======================================================
+    # GET REQUEST
+    # ======================================================
+
+    return render_template(
+        "auth/forgot_password.html"
+    )
 
 # ==========================================================
 # RESET PASSWORD
@@ -413,22 +732,22 @@ def forgot_password():
 @auth.route("/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token):
 
-    # ------------------------------------------------------
+    # ======================================================
     # FIND USER USING RESET TOKEN
-    # ------------------------------------------------------
+    # ======================================================
 
     user = User.query.filter_by(
         reset_token=token
     ).first()
 
-    # ------------------------------------------------------
-    # TOKEN NOT FOUND
-    # ------------------------------------------------------
+    # ======================================================
+    # INVALID TOKEN
+    # ======================================================
 
     if not user:
 
         flash(
-            "Invalid or expired password reset link.",
+            "This password reset link is invalid or has already been used.",
             "danger"
         )
 
@@ -436,22 +755,23 @@ def reset_password(token):
             url_for("auth.forgot_password")
         )
 
-    # ------------------------------------------------------
+    # ======================================================
     # CHECK TOKEN EXPIRATION
-    # ------------------------------------------------------
+    # ======================================================
 
     if (
         not user.reset_token_expires
-        or datetime.utcnow() > user.reset_token_expires
+        or user.reset_token_expires < datetime.utcnow()
     ):
 
-        # Clear expired token
         user.reset_token = None
         user.reset_token_expires = None
+
         db.session.commit()
 
         flash(
-            "This password reset link has expired.",
+            "This password reset link has expired. "
+            "Please request a new one.",
             "danger"
         )
 
@@ -459,9 +779,9 @@ def reset_password(token):
             url_for("auth.forgot_password")
         )
 
-    # ------------------------------------------------------
-    # GET REQUEST - Display reset password page
-    # ------------------------------------------------------
+    # ======================================================
+    # GET REQUEST
+    # ======================================================
 
     if request.method == "GET":
 
@@ -470,9 +790,9 @@ def reset_password(token):
             token=token
         )
 
-    # ------------------------------------------------------
+    # ======================================================
     # POST REQUEST
-    # ------------------------------------------------------
+    # ======================================================
 
     password = request.form.get(
         "password",
@@ -484,9 +804,9 @@ def reset_password(token):
         ""
     ).strip()
 
-    # ------------------------------------------------------
+    # ======================================================
     # REQUIRED FIELDS
-    # ------------------------------------------------------
+    # ======================================================
 
     if not password or not confirm_password:
 
@@ -500,25 +820,9 @@ def reset_password(token):
             token=token
         )
 
-    # ------------------------------------------------------
-    # PASSWORD LENGTH
-    # ------------------------------------------------------
-
-    if len(password) < 6:
-
-        flash(
-            "Password must be at least 6 characters.",
-            "danger"
-        )
-
-        return render_template(
-            "auth/reset_password.html",
-            token=token
-        )
-
-    # ------------------------------------------------------
-    # PASSWORD MATCH
-    # ------------------------------------------------------
+    # ======================================================
+    # CHECK PASSWORD MATCH
+    # ======================================================
 
     if password != confirm_password:
 
@@ -532,17 +836,18 @@ def reset_password(token):
             token=token
         )
 
-    # ------------------------------------------------------
-    # PREVENT SAME PASSWORD
-    # ------------------------------------------------------
+    # ======================================================
+    # PASSWORD STRENGTH
+    # ======================================================
 
-    if check_password_hash(
-        user.password,
-        password
-    ):
+    password_valid, password_message = (
+        validate_password_strength(password)
+    )
+
+    if not password_valid:
 
         flash(
-            "New password must be different from your current password.",
+            password_message,
             "danger"
         )
 
@@ -551,40 +856,64 @@ def reset_password(token):
             token=token
         )
 
-    # ------------------------------------------------------
+    # ======================================================
+    # PREVENT SAME PASSWORD
+    # ======================================================
+
+    if check_password_hash(
+        user.password,
+        password
+    ):
+
+        flash(
+            "Your new password must be different "
+            "from your previous password.",
+            "danger"
+        )
+
+        return render_template(
+            "auth/reset_password.html",
+            token=token
+        )
+
+    # ======================================================
     # HASH NEW PASSWORD
-    # ------------------------------------------------------
+    # ======================================================
 
     user.password = generate_password_hash(
         password
     )
 
-    # ------------------------------------------------------
-    # CLEAR USED RESET TOKEN
-    # ------------------------------------------------------
+    # ======================================================
+    # CLEAR RESET TOKEN
+    # ======================================================
 
     user.reset_token = None
     user.reset_token_expires = None
 
-    # ------------------------------------------------------
-    # SAVE DATABASE
-    # ------------------------------------------------------
+    # ======================================================
+    # SAVE CHANGES
+    # ======================================================
 
     db.session.commit()
 
-    # Log password reset
+    # ======================================================
+    # LOG ACTIVITY
+    # ======================================================
+
     log_activity(
         user.id,
-        "Password reset successfully",
-        f"User: {user.email}"
+        "Password reset",
+        f"Password reset for: {user.email}"
     )
 
-    # ------------------------------------------------------
+    # ======================================================
     # SUCCESS
-    # ------------------------------------------------------
+    # ======================================================
 
     flash(
-        "Password reset successfully. You can now login.",
+        "Your password has been reset successfully. "
+        "You can now login with your new password.",
         "success"
     )
 
@@ -599,47 +928,14 @@ def reset_password(token):
 
 @auth.route("/dashboard")
 def dashboard():
-
-    # ------------------------------------------------------
-    # CHECK ADMIN ACCESS
-    # ------------------------------------------------------
-
     if not admin_required():
-
-        flash(
-            "You are not authorized to access the admin dashboard.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.login")
-        )
-
-    # ------------------------------------------------------
-    # MESSAGE STATISTICS
-    # ------------------------------------------------------
+        flash("You are not authorized to access the admin dashboard.", "danger")
+        return redirect(url_for("auth.login"))
 
     total_messages = Message.query.count()
-
-    unread_messages = Message.query.filter_by(
-        is_read=False
-    ).count()
-
-    read_messages = Message.query.filter_by(
-        is_read=True
-    ).count()
-
-    # ------------------------------------------------------
-    # LATEST MESSAGES
-    # ------------------------------------------------------
-
-    latest_messages = Message.query.order_by(
-        Message.created_at.desc()
-    ).limit(5).all()
-
-    # ------------------------------------------------------
-    # RENDER DASHBOARD
-    # ------------------------------------------------------
+    unread_messages = Message.query.filter_by(is_read=False).count()
+    read_messages = Message.query.filter_by(is_read=True).count()
+    latest_messages = Message.query.order_by(Message.created_at.desc()).limit(5).all()
 
     return render_template(
         "admin/dashboard.html",
@@ -656,47 +952,14 @@ def dashboard():
 
 @auth.route("/messages")
 def messages():
-
-    # ------------------------------------------------------
-    # CHECK ADMIN ACCESS
-    # ------------------------------------------------------
-
     if not admin_required():
+        flash("You are not authorized to access messages.", "danger")
+        return redirect(url_for("auth.login"))
 
-        flash(
-            "You are not authorized to access messages.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.login")
-        )
-
-    # ------------------------------------------------------
-    # GET ALL MESSAGES
-    # ------------------------------------------------------
-
-    messages = Message.query.order_by(
-        Message.created_at.desc()
-    ).all()
-
-    # ------------------------------------------------------
-    # STATISTICS
-    # ------------------------------------------------------
-
+    messages = Message.query.order_by(Message.created_at.desc()).all()
     total = Message.query.count()
-
-    unread = Message.query.filter_by(
-        is_read=False
-    ).count()
-
-    read = Message.query.filter_by(
-        is_read=True
-    ).count()
-
-    # ------------------------------------------------------
-    # RENDER
-    # ------------------------------------------------------
+    unread = Message.query.filter_by(is_read=False).count()
+    read = Message.query.filter_by(is_read=True).count()
 
     return render_template(
         "admin/messages.html",
@@ -713,46 +976,15 @@ def messages():
 
 @auth.route("/messages/<int:id>")
 def view_message(id):
-
-    # ------------------------------------------------------
-    # CHECK ADMIN ACCESS
-    # ------------------------------------------------------
-
     if not admin_required():
+        flash("You are not authorized to view this message.", "danger")
+        return redirect(url_for("auth.login"))
 
-        flash(
-            "You are not authorized to view this message.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.login")
-        )
-
-    # ------------------------------------------------------
-    # FIND MESSAGE
-    # ------------------------------------------------------
-
-    message = Message.query.get_or_404(
-        id
-    )
-
-    # ------------------------------------------------------
-    # MARK AS READ
-    # ------------------------------------------------------
-
+    message = Message.query.get_or_404(id)
     message.is_read = True
-
     db.session.commit()
 
-    # ------------------------------------------------------
-    # RENDER
-    # ------------------------------------------------------
-
-    return render_template(
-        "admin/view_message.html",
-        message=message
-    )
+    return render_template("admin/view_message.html", message=message)
 
 
 # ==========================================================
@@ -761,52 +993,16 @@ def view_message(id):
 
 @auth.route("/messages/delete/<int:id>")
 def delete_message(id):
-
-    # ------------------------------------------------------
-    # CHECK ADMIN ACCESS
-    # ------------------------------------------------------
-
     if not admin_required():
+        flash("You are not authorized to delete messages.", "danger")
+        return redirect(url_for("auth.login"))
 
-        flash(
-            "You are not authorized to delete messages.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.login")
-        )
-
-    # ------------------------------------------------------
-    # FIND MESSAGE
-    # ------------------------------------------------------
-
-    message = Message.query.get_or_404(
-        id
-    )
-
-    # ------------------------------------------------------
-    # DELETE
-    # ------------------------------------------------------
-
-    db.session.delete(
-        message
-    )
-
+    message = Message.query.get_or_404(id)
+    db.session.delete(message)
     db.session.commit()
 
-    # ------------------------------------------------------
-    # SUCCESS
-    # ------------------------------------------------------
-
-    flash(
-        "Message deleted successfully.",
-        "success"
-    )
-
-    return redirect(
-        url_for("auth.messages")
-    )
+    flash("Message deleted successfully.", "success")
+    return redirect(url_for("auth.messages"))
 
 
 # ==========================================================
@@ -815,112 +1011,33 @@ def delete_message(id):
 
 @auth.route("/settings", methods=["GET", "POST"])
 def settings():
-
-    # ------------------------------------------------------
-    # CHECK ADMIN ACCESS
-    # ------------------------------------------------------
-
     if not admin_required():
+        flash("You are not authorized to access settings.", "danger")
+        return redirect(url_for("auth.login"))
 
-        flash(
-            "You are not authorized to access settings.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.login")
-        )
-
-    # ------------------------------------------------------
-    # GET CURRENT USER
-    # ------------------------------------------------------
-
-    user = User.query.get_or_404(
-        session["user_id"]
-    )
-
-    # ------------------------------------------------------
-    # UPDATE PROFILE
-    # ------------------------------------------------------
+    user = User.query.get_or_404(session["user_id"])
 
     if request.method == "POST":
-
-        fullname = request.form.get(
-            "fullname",
-            ""
-        ).strip()
-
-        email = request.form.get(
-            "email",
-            ""
-        ).strip().lower()
-
-        # --------------------------------------------------
-        # VALIDATION
-        # --------------------------------------------------
+        fullname = request.form.get("fullname", "").strip()
+        email = request.form.get("email", "").strip().lower()
 
         if not fullname or not email:
+            flash("Full name and email are required.", "danger")
+            return redirect(url_for("auth.settings"))
 
-            flash(
-                "Full name and email are required.",
-                "danger"
-            )
-
-            return redirect(
-                url_for("auth.settings")
-            )
-
-        # --------------------------------------------------
-        # CHECK DUPLICATE EMAIL
-        # --------------------------------------------------
-
-        existing_user = User.query.filter(
-            User.email == email,
-            User.id != user.id
-        ).first()
-
+        existing_user = User.query.filter(User.email == email, User.id != user.id).first()
         if existing_user:
-
-            flash(
-                "This email is already being used.",
-                "danger"
-            )
-
-            return redirect(
-                url_for("auth.settings")
-            )
-
-        # --------------------------------------------------
-        # UPDATE USER
-        # --------------------------------------------------
+            flash("This email is already being used.", "danger")
+            return redirect(url_for("auth.settings"))
 
         user.fullname = fullname
-
         user.email = email
-
         db.session.commit()
 
-        # --------------------------------------------------
-        # SUCCESS
-        # --------------------------------------------------
+        flash("Profile updated successfully.", "success")
+        return redirect(url_for("auth.settings"))
 
-        flash(
-            "Profile updated successfully.",
-            "success"
-        )
-
-        return redirect(
-            url_for("auth.settings")
-        )
-
-    # ------------------------------------------------------
-    # DISPLAY SETTINGS
-    # ------------------------------------------------------
-
-    return render_template(
-        "admin/settings.html",
-        user=user
-    )
+    return render_template("admin/settings.html", user=user)
 
 
 # ==========================================================
@@ -929,167 +1046,43 @@ def settings():
 
 @auth.route("/settings/password", methods=["POST"])
 def change_password():
-
-    # ------------------------------------------------------
-    # CHECK ADMIN ACCESS
-    # ------------------------------------------------------
-
     if not admin_required():
+        flash("You are not authorized to change password.", "danger")
+        return redirect(url_for("auth.login"))
 
-        flash(
-            "You are not authorized to change password.",
-            "danger"
-        )
+    user = User.query.get_or_404(session["user_id"])
 
-        return redirect(
-            url_for("auth.login")
-        )
+    current_password = request.form.get("current_password", "").strip()
+    new_password = request.form.get("new_password", "").strip()
+    confirm_password = request.form.get("confirm_password", "").strip()
 
-    # ------------------------------------------------------
-    # GET USER
-    # ------------------------------------------------------
+    if not current_password or not new_password or not confirm_password:
+        flash("All password fields are required.", "danger")
+        return redirect(url_for("auth.settings"))
 
-    user = User.query.get_or_404(
-        session["user_id"]
-    )
-
-    # ------------------------------------------------------
-    # GET FORM DATA
-    # ------------------------------------------------------
-
-    current_password = request.form.get(
-        "current_password",
-        ""
-    ).strip()
-
-    new_password = request.form.get(
-        "new_password",
-        ""
-    ).strip()
-
-    confirm_password = request.form.get(
-        "confirm_password",
-        ""
-    ).strip()
-
-    # ------------------------------------------------------
-    # VALIDATION
-    # ------------------------------------------------------
-
-    if (
-        not current_password
-        or not new_password
-        or not confirm_password
-    ):
-
-        flash(
-            "All password fields are required.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.settings")
-        )
-
-    # ------------------------------------------------------
-    # CHECK CURRENT PASSWORD
-    # ------------------------------------------------------
-
-    if not check_password_hash(
-        user.password,
-        current_password
-    ):
-
-        flash(
-            "Current password is incorrect.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.settings")
-        )
-
-    # ------------------------------------------------------
-    # PASSWORD LENGTH
-    # ------------------------------------------------------
+    if not check_password_hash(user.password, current_password):
+        flash("Current password is incorrect.", "danger")
+        return redirect(url_for("auth.settings"))
 
     if len(new_password) < 6:
-
-        flash(
-            "New password must be at least 6 characters.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.settings")
-        )
-
-    # ------------------------------------------------------
-    # CONFIRM PASSWORD
-    # ------------------------------------------------------
+        flash("New password must be at least 6 characters.", "danger")
+        return redirect(url_for("auth.settings"))
 
     if new_password != confirm_password:
+        flash("New passwords do not match.", "danger")
+        return redirect(url_for("auth.settings"))
 
-        flash(
-            "New passwords do not match.",
-            "danger"
-        )
+    if check_password_hash(user.password, new_password):
+        flash("New password must be different from your current password.", "danger")
+        return redirect(url_for("auth.settings"))
 
-        return redirect(
-            url_for("auth.settings")
-        )
-
-    # ------------------------------------------------------
-    # PREVENT SAME PASSWORD
-    # ------------------------------------------------------
-
-    if check_password_hash(
-        user.password,
-        new_password
-    ):
-
-        flash(
-            "New password must be different from your current password.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("auth.settings")
-        )
-
-    # ------------------------------------------------------
-    # HASH NEW PASSWORD
-    # ------------------------------------------------------
-
-    user.password = generate_password_hash(
-        new_password
-    )
-
-    # ------------------------------------------------------
-    # SAVE
-    # ------------------------------------------------------
-
+    user.password = generate_password_hash(new_password)
     db.session.commit()
 
-    # Log password change
-    log_activity(
-        user.id,
-        "Password changed",
-        f"User: {user.email}"
-    )
+    log_activity(user.id, "Password changed", f"User: {user.email}")
 
-    # ------------------------------------------------------
-    # SUCCESS
-    # ------------------------------------------------------
-
-    flash(
-        "Password changed successfully.",
-        "success"
-    )
-
-    return redirect(
-        url_for("auth.settings")
-    )
+    flash("Password changed successfully.", "success")
+    return redirect(url_for("auth.settings"))
 
 
 # ==========================================================
@@ -1098,39 +1091,14 @@ def change_password():
 
 @auth.route("/logout")
 def logout():
-
-    # Log logout activity
     if "user_id" in session:
         user = User.query.get(session["user_id"])
         if user:
-            log_activity(
-                user.id,
-                "User logged out",
-                f"Email: {user.email}"
-            )
-
-    # ------------------------------------------------------
-    # CLEAR SESSION
-    # ------------------------------------------------------
+            log_activity(user.id, "User logged out", f"Email: {user.email}")
 
     session.clear()
-
-    # ------------------------------------------------------
-    # SUCCESS MESSAGE
-    # ------------------------------------------------------
-
-    flash(
-        "Logged out successfully.",
-        "success"
-    )
-
-    # ------------------------------------------------------
-    # REDIRECT TO LOGIN
-    # ------------------------------------------------------
-
-    return redirect(
-        url_for("auth.login")
-    )
+    flash("Logged out successfully.", "success")
+    return redirect(url_for("auth.login"))
 
 
 # ==========================================================
@@ -1139,23 +1107,16 @@ def logout():
 
 @auth.route("/super-admin/dashboard")
 def super_admin_dashboard():
-    """Super Admin Dashboard"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
     
-    # Statistics
     total_users = User.query.count()
     total_admins = User.query.filter(User.role.in_(['admin', 'super_admin'])).count()
     total_customers = User.query.filter_by(role='customer').count()
     total_active = User.query.filter_by(is_active=True).count() if hasattr(User, 'is_active') else total_users
     
-    # Recent users
-    recent_users = User.query.order_by(
-        User.id.desc()
-    ).limit(10).all()
+    recent_users = User.query.order_by(User.id.desc()).limit(10).all()
     
     return render_template(
         "admin/super_admin/dashboard.html",
@@ -1173,28 +1134,17 @@ def super_admin_dashboard():
 
 @auth.route("/super-admin/admins")
 def manage_admins():
-    """View all administrators"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
     
-    admins = User.query.filter(
-        User.role.in_(['admin', 'super_admin'])
-    ).order_by(User.id.desc()).all()
+    admins = User.query.filter(User.role.in_(['admin', 'super_admin'])).order_by(User.id.desc()).all()
     
-    return render_template(
-        "admin/super_admin/admins.html",
-        admins=admins
-    )
+    return render_template("admin/super_admin/admins.html", admins=admins)
 
 
 @auth.route("/super-admin/admins/add", methods=["GET", "POST"])
 def add_admin():
-    """Add new administrator"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
@@ -1205,7 +1155,6 @@ def add_admin():
         password = request.form.get("password", "").strip()
         role = request.form.get("role", "admin").strip()
         
-        # Validation
         if not fullname or not email or not password:
             flash("All fields are required.", "danger")
             return redirect(url_for("auth.add_admin"))
@@ -1214,13 +1163,11 @@ def add_admin():
             flash("Password must be at least 6 characters.", "danger")
             return redirect(url_for("auth.add_admin"))
         
-        # Check if email exists
         existing = User.query.filter_by(email=email).first()
         if existing:
             flash(f"Email '{email}' is already registered.", "danger")
             return redirect(url_for("auth.add_admin"))
         
-        # Create admin
         new_admin = User(
             fullname=fullname,
             username=fullname.replace(" ", "_").lower(),
@@ -1233,12 +1180,7 @@ def add_admin():
         db.session.add(new_admin)
         db.session.commit()
         
-        # Log activity
-        log_activity(
-            session['user_id'],
-            f"Added new {role}: {email}",
-            f"Name: {fullname}"
-        )
+        log_activity(session['user_id'], f"Added new {role}: {email}", f"Name: {fullname}")
         
         flash(f"✅ {role.title()} '{fullname}' added successfully!", "success")
         return redirect(url_for("auth.manage_admins"))
@@ -1248,16 +1190,12 @@ def add_admin():
 
 @auth.route("/super-admin/admins/edit/<int:user_id>", methods=["GET", "POST"])
 def edit_admin(user_id):
-    """Edit administrator details"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
     
     admin = User.query.get_or_404(user_id)
     
-    # Prevent editing self
     if admin.id == session['user_id']:
         flash("You cannot edit your own account here. Use Settings.", "warning")
         return redirect(url_for("auth.manage_admins"))
@@ -1268,18 +1206,15 @@ def edit_admin(user_id):
         role = request.form.get("role", "admin").strip()
         is_active = request.form.get("is_active") == "on"
         
-        # Validation
         if not fullname or not email:
             flash("Name and email are required.", "danger")
             return redirect(url_for("auth.edit_admin", user_id=user_id))
         
-        # Check email duplicate
         existing = User.query.filter(User.email == email, User.id != user_id).first()
         if existing:
             flash(f"Email '{email}' is already taken.", "danger")
             return redirect(url_for("auth.edit_admin", user_id=user_id))
         
-        # Update
         admin.fullname = fullname
         admin.username = fullname.replace(" ", "_").lower()
         admin.email = email
@@ -1289,12 +1224,7 @@ def edit_admin(user_id):
         
         db.session.commit()
         
-        # Log activity
-        log_activity(
-            session['user_id'],
-            f"Updated admin: {email}",
-            f"Role: {role}"
-        )
+        log_activity(session['user_id'], f"Updated admin: {email}", f"Role: {role}")
         
         flash(f"✅ Admin '{fullname}' updated successfully!", "success")
         return redirect(url_for("auth.manage_admins"))
@@ -1304,33 +1234,23 @@ def edit_admin(user_id):
 
 @auth.route("/super-admin/admins/delete/<int:user_id>", methods=["POST"])
 def delete_admin(user_id):
-    """Delete administrator"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
     
     admin = User.query.get_or_404(user_id)
     
-    # Prevent deleting self
     if admin.id == session['user_id']:
         flash("You cannot delete your own account.", "danger")
         return redirect(url_for("auth.manage_admins"))
     
-    # Prevent deleting the last super_admin
     if admin.role == 'super_admin':
         super_admins = User.query.filter_by(role='super_admin').count()
         if super_admins <= 1:
             flash("Cannot delete the last Super Admin.", "danger")
             return redirect(url_for("auth.manage_admins"))
     
-    # Log before deletion
-    log_activity(
-        session['user_id'],
-        f"Deleted admin: {admin.email}",
-        f"Name: {admin.fullname}"
-    )
+    log_activity(session['user_id'], f"Deleted admin: {admin.email}", f"Name: {admin.fullname}")
     
     db.session.delete(admin)
     db.session.commit()
@@ -1345,33 +1265,23 @@ def delete_admin(user_id):
 
 @auth.route("/super-admin/users")
 def manage_users():
-    """View all users"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
     
     users = User.query.order_by(User.id.desc()).all()
     
-    return render_template(
-        "admin/super_admin/users.html",
-        users=users
-    )
+    return render_template("admin/super_admin/users.html", users=users)
 
 
 @auth.route("/super-admin/users/toggle/<int:user_id>", methods=["POST"])
 def toggle_user_status(user_id):
-    """Activate/Deactivate user"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
     
     user = User.query.get_or_404(user_id)
     
-    # Prevent toggling self
     if user.id == session['user_id']:
         flash("You cannot change your own status.", "danger")
         return redirect(url_for("auth.manage_users"))
@@ -1381,11 +1291,7 @@ def toggle_user_status(user_id):
         db.session.commit()
         
         status = "activated" if user.is_active else "deactivated"
-        log_activity(
-            session['user_id'],
-            f"{status.title()} user: {user.email}",
-            f"User: {user.fullname}"
-        )
+        log_activity(session['user_id'], f"{status.title()} user: {user.email}", f"User: {user.fullname}")
         
         flash(f"✅ User '{user.fullname}' {status}!", "success")
     else:
@@ -1396,26 +1302,17 @@ def toggle_user_status(user_id):
 
 @auth.route("/super-admin/users/delete/<int:user_id>", methods=["POST"])
 def delete_user(user_id):
-    """Delete user"""
-    
-    # Check if user is super admin
     if not super_admin_required():
         flash("Super Admin access required.", "danger")
         return redirect(url_for("auth.dashboard"))
     
     user = User.query.get_or_404(user_id)
     
-    # Prevent deleting admin/super_admin
     if user.role in ['admin', 'super_admin']:
         flash("Use the admin management page to delete administrators.", "danger")
         return redirect(url_for("auth.manage_users"))
     
-    # Log before deletion
-    log_activity(
-        session['user_id'],
-        f"Deleted user: {user.email}",
-        f"Name: {user.fullname}"
-    )
+    log_activity(session['user_id'], f"Deleted user: {user.email}", f"Name: {user.fullname}")
     
     db.session.delete(user)
     db.session.commit()

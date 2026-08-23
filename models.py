@@ -6,6 +6,7 @@ from datetime import datetime
 # ==========================================================
 # USER MODEL
 # ==========================================================
+
 class User(UserMixin, db.Model):
 
     __tablename__ = "users"
@@ -36,9 +37,9 @@ class User(UserMixin, db.Model):
         nullable=False
     )
 
-    # ------------------------------------------------------
+    # ======================================================
     # USER ROLE
-    # ------------------------------------------------------
+    # ======================================================
 
     role = db.Column(
         db.String(20),
@@ -46,9 +47,19 @@ class User(UserMixin, db.Model):
         default="customer"
     )
 
-    # ------------------------------------------------------
+    # ======================================================
+    # ACCOUNT STATUS
+    # ======================================================
+
+    is_active = db.Column(
+        db.Boolean,
+        default=True,
+        nullable=False
+    )
+
+    # ======================================================
     # EMAIL VERIFICATION
-    # ------------------------------------------------------
+    # ======================================================
 
     email_verified = db.Column(
         db.Boolean,
@@ -66,9 +77,9 @@ class User(UserMixin, db.Model):
         nullable=True
     )
 
-    # ------------------------------------------------------
+    # ======================================================
     # PASSWORD RESET
-    # ------------------------------------------------------
+    # ======================================================
 
     reset_token = db.Column(
         db.String(255),
@@ -79,16 +90,17 @@ class User(UserMixin, db.Model):
         db.DateTime,
         nullable=True
     )
-    
-    is_active = db.Column(db.Boolean, default=True, nullable=False)
-    
-    email_verified = db.Column(db.Boolean, default=False, nullable=False)
-    verification_token = db.Column(db.String(255), nullable=True)
-    verification_token_expires = db.Column(db.DateTime, nullable=True)
-    reset_token = db.Column(db.String(255), nullable=True)
-    reset_token_expires = db.Column(db.DateTime, nullable=True)
-    
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # ======================================================
+    # CREATED AT
+    # ======================================================
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
+
 # ==========================================================
 # MESSAGE MODEL
 # ==========================================================
@@ -134,20 +146,53 @@ class Message(db.Model):
         db.Boolean,
         default=False
     )
-    
-# models.py - Ongeza hii
+
+
+# ==========================================================
+# ACTIVITY LOG MODEL
+# ==========================================================
 
 class ActivityLog(db.Model):
-    __tablename__ = 'activity_logs'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-    action = db.Column(db.String(200), nullable=False)
-    details = db.Column(db.Text, nullable=True)
-    ip_address = db.Column(db.String(50), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    user = db.relationship('User', backref='activities', lazy=True)
-    
+
+    __tablename__ = "activity_logs"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=True
+    )
+
+    action = db.Column(
+        db.String(200),
+        nullable=False
+    )
+
+    details = db.Column(
+        db.Text,
+        nullable=True
+    )
+
+    ip_address = db.Column(
+        db.String(50),
+        nullable=True
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
+    user = db.relationship(
+        "User",
+        backref="activities",
+        lazy=True
+    )
+
     def __repr__(self):
-        return f"<ActivityLog {self.action}>"    
+
+        return f"<ActivityLog {self.action}>"
