@@ -7,7 +7,7 @@ load_dotenv()
 
 class Config:
     # Database - Use DATABASE_URL from environment
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL').replace('postgresql://', 'postgresql+psycopg://')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # Security
