@@ -59,12 +59,12 @@
 
         <!-- LEFT LOGO -->
 
-        <div class="header-logo left">
 
-            <img src="{{ url_for('static', filename='images/logo.png') }}">
+        <div class="header-logo left" style="border-radius: 50px;">
+
+            <img src="{{ url_for('static', filename='images/must.png') }}">
 
         </div>
-
 
 
 
@@ -94,9 +94,10 @@
 
         <!-- RIGHT LOGO -->
 
+
         <div class="header-logo right">
 
-            <img src="{{ url_for('static', filename='images/must.png') }}">
+            <img src="{{ url_for('static', filename='images/logo.png') }}">
 
         </div>
 
@@ -111,10 +112,10 @@
 
     <nav class="menu-bar">
         <div class="nav-container">
-            <a href="{{ url_for('public.home') }}" class="nav-logo">
+            <!-- <a href="{{ url_for('public.home') }}" class="nav-logo">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Mnyala Logo">
                 <span>Mnyala</span>
-            </a>
+            </a> -->
 
             <button class="hamburger" type="button" aria-label="Open Menu">
                 <i class="fa-solid fa-bars"></i>
