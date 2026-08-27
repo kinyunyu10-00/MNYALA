@@ -31,6 +31,57 @@ from models import (
 
 auth = Blueprint("auth", __name__)
 
+@auth.route("/register", methods=["GET", "POST"])
+def register():
+    existing_super_admin = User.query.filter_by(role='super_admin').first()
+    if existing_super_admin:
+        flash("System already has a Super Admin. Please login.", "info")
+        return redirect(url_for("auth.login"))
+    
+    if request.method == "POST":
+        fullname = request.form.get("fullname", "").strip()
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "").strip()
+        confirm_password = request.form.get("confirm_password", "").strip()
+        
+        if not fullname or not email or not password or not confirm_password:
+            flash("All fields are required.", "danger")
+            return render_template("auth/register.html")
+        
+        # Password must be at least 9 characters
+        if len(password) < 9:
+            flash("Password must be at least 9 characters.", "danger")
+            return render_template("auth/register.html")
+        
+        if password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return render_template("auth/register.html")
+        
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash("This email is already registered.", "danger")
+            return render_template("auth/register.html")
+        
+        new_admin = User(
+            account_id="ADM-001",
+            username=fullname.replace(" ", "_").lower(),
+            fullname=fullname,
+            email=email,
+            password=generate_password_hash(password),
+            role="super_admin",
+            is_active=True,
+            email_verified=True
+        )
+        
+        db.session.add(new_admin)
+        db.session.commit()
+        
+        log_activity(new_admin.id, "Super Admin registered", f"Email: {email}")
+        
+        flash("Super Admin registered successfully! Please login.", "success")
+        return redirect(url_for("auth.login"))
+    
+    return render_template("auth/register.html")
 # ============================================================
 # ACCOUNT ID GENERATOR
 # ============================================================
